@@ -13,8 +13,7 @@ import { LoginComponent } from './authentication/login/login.component';
 
 
 const routes: Routes = [
-  {path: '' , component:LoginComponent},
-  {path: 'dashboard' , component:DashboardComponent},
+  {path: '' , component:DashboardComponent},
   {path: 'header',component:HeaderComponent},
   {path: 'footer' , component:FooterComponent},
   {path: 'sidebar' , component:SidebarComponent},

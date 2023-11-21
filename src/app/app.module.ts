@@ -13,7 +13,8 @@ import { GenralTablesComponent } from './genral-tables/genral-tables.component';
 import { DataTablesComponent } from './data-tables/data-tables.component';
 import { DoctorProfileComponent } from './doctor-profile/doctor-profile.component';
 import {HttpClientModule} from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './authentication/login/login.component';
 
 
 
@@ -30,12 +31,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     GenralTablesComponent,
     DataTablesComponent,
     DoctorProfileComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

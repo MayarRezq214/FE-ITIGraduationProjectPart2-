@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup , Validators} from '@angular/forms';
 import { LoginDto } from '../../types/LoginDto';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Token } from '@angular/compiler';
+import { phoneNumberLengthValidator } from 'src/app/services/loginPhonNumber.serrvice';
 
 @Component({
   selector: 'app-login',
@@ -12,18 +13,30 @@ import { Token } from '@angular/compiler';
 export class LoginComponent {
   constructor(private authenticationService: AuthenticationService){}
   form = new FormGroup({
-    username: new FormControl<string>('string'),
-    password: new FormControl<string>('string'),
+    username: new FormControl<string>('' , [Validators.required ,  phoneNumberLengthValidator , this.onlyNumbersValidator]),
+    password: new FormControl<string>('' , [Validators.required]),
+    isRememberable: new FormControl<boolean>(false)
   });
-  credentials?: LoginDto;
+
+  onlyNumbersValidator(control:any) {
+    const numericInputValue = control.value;
+    const isValid = /^\d+$/.test(numericInputValue);
+
+    return isValid ? null : { 'invalidNumber': true };
+  }
+  credentials: LoginDto = {phoneNumber : '', password: ''};
+  rememberMe!: boolean;
   handleLogin(e: Event){
     e.preventDefault();
-    
-    // var credentials = new LoginDto();
-    this.credentials!.phoneNumber = this.form.controls.username.value ?? '';
+    console.log(this.form.controls.isRememberable.value)
+    this.rememberMe = this.form.controls.isRememberable.value!;
+   // var credentials = new LoginDto();
+    this.credentials!.phoneNumber = this.form.controls.username.value?? '';
     this.credentials!.password = this.form.controls.password.value ?? '';
-    this.authenticationService.login(this.credentials!).subscribe((token) => {
-      console.log(token)
+    this.authenticationService.login(this.credentials! , this.rememberMe).subscribe((token) => {
     }) 
+  }
+  get formVal() {
+    return this.form.controls;
   }
 }

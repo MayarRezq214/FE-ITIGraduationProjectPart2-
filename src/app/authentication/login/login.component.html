@@ -25,23 +25,30 @@
                   <form [formGroup]="form" class="row g-3 needs-validation">
 
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <label for="yourUsername" class="form-label">Phone Number</label>
                       <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
                         <input type="text" formControlName="username" class="form-control" id="yourUsername" required>
+                        <div>
+                          <div *ngIf="form.controls.username.dirty && form.controls.username.errors?.['required']" class="text-danger text-start ErrorFont">*Phone Number is required</div>
+                          <div *ngIf=" form.controls.username.dirty&& form.get('phoneNumber')?.hasError('invalidNumber')" class="text-danger text-start ErrorFont">
+                            *Please enter a valid number.
+                          </div>
+                          <div *ngIf="form.controls.username.touched && form.controls.username.errors?.['phoneNumberLength']" class="text-danger text-start ErrorFont">*Phone Number must be at least 11 characters</div>
+                        </div>
                         <div class="invalid-feedback">Please enter your username.</div>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" formControlName="password" class="form-control" id="yourPassword" required>
+                      <input type="password" formControlName="password" class="form-control" id="yourPassword" >
+                      <div *ngIf="formVal.password.touched && formVal.password.errors?.['required']" class="text-danger text-start ErrorFont">*Password is required</div>
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
 
                     <div class="col-12">
                       <div class="form-check">
-                        <!-- <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe"> -->
+                        <input formControlName="isRememberable" class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
                         <label class="form-check-label" for="rememberMe">Remember me</label>
                       </div>
                     </div>
