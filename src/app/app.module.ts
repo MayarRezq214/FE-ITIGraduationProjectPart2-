@@ -12,7 +12,7 @@ import { FormLayoutComponent } from './form-layout/form-layout.component';
 import { GenralTablesComponent } from './genral-tables/genral-tables.component';
 import { DataTablesComponent } from './data-tables/data-tables.component';
 import { DoctorProfileComponent } from './doctor-profile/doctor-profile.component';
-import { LoginComponent } from './login/login.component';
+import {HttpClientModule} from '@angular/common/http';
 
 
 
@@ -28,11 +28,11 @@ import { LoginComponent } from './login/login.component';
     GenralTablesComponent,
     DataTablesComponent,
     DoctorProfileComponent,
-    LoginComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
