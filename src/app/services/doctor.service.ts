@@ -17,4 +17,7 @@ export class DoctorService {
   public GetAllSpecializations(): Observable<GetAllSpecializationsDto[]>{
     return this.client.get<GetAllSpecializationsDto[]>('https://localhost:7267/api/Doctor/GetAllSpecialization');}
 
+    public UploadPhoto(drId : string, photo:string):Observable<object>{
+      return this.client.post(`https://localhost:7267/api/Doctor/doctors/uploadimage/${drId}`,photo);
+    }
 }
