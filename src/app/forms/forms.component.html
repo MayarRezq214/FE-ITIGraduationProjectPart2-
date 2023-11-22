@@ -130,7 +130,7 @@
                     <select class="form-select" aria-label="Default select example"  formControlName="specializationId" (change)="onSelect($event)">
                       <option selected  >Open this select menu</option>
 
-                      <option value="1" *ngFor="let specialization of specializations">{{specialization.name}}</option>
+                      <option value="1" *ngFor="let specialization of specializations" [value]="specialization.id ">{{specialization.name}}</option>
                      
                     </select>
                   </div>

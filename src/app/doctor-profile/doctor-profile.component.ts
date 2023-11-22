@@ -4,6 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorDto';
+import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navigate-to-doctor-profile-after-onboarding.service';
+import { SearchService } from '../services/search.service';
+import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
+import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
+import { DoctorsForAllSpecializations } from '../Types/DoctorsForAllSpecializations';
+import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -11,10 +17,10 @@ import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorDto';
   styleUrls: ['./doctor-profile.component.css']
 })
 export class DoctorProfileComponent  implements OnInit{
-  doctor? : GetDoctorByPhoneDto
+  doctor? : GetDoctorByIDDto
   updateDoctor? : UpdateDoctorStatusDto
   isUploading : boolean = false
-  id ? :string 
+  id ? :number 
   form = new FormGroup ({
     name : new FormControl<string>(''),
     title : new FormControl<string>(''),
@@ -26,23 +32,81 @@ export class DoctorProfileComponent  implements OnInit{
     password : new FormControl<string>(''),
     photo : new FormControl<string>(''),
   })
+  
+  sId : number =0;
+  
+  dId! : string;
+  doctorId: string = '0';
+
+  doctors?: GetAllDoctorsDto[];
+  specializations?: GetAllSpecializationsDto[];
+  Doctors? : DoctorsForAllSpecializations[];
+  doctorById?: GetDoctorByIDDto;
+  isDoctorSelected : boolean =false;
+  isSpecializationSelected: boolean = false;
   constructor( private route: ActivatedRoute ,
-                private doctorService : DoctorService) {}
+                private doctorService : DoctorService, 
+                private navigate : NavigateToDoctorProfileAfterOnboardingService,
+                ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      console.log(this.route.snapshot.queryParams['phoneNumber'])
-      this.doctorService.GetDoctorByPhone(params['phoneNumber']).subscribe({
-        next:(doctor) => {
-          this.doctor = doctor;
-         },
+    
+      console.log(this.navigate.doctor)
+      //this.doctor = this.navigate.doctor
+      this.doctorService.getDoctors().subscribe({
+        next:(doctors) => {
+          this.doctors = doctors;
+        },
         error: (error) => {
-          console.log('calling dr by id api failed', error);
+          console.log('calling All doctors api failed', error);
         },
       });
-      
-    });
+    
+      this.doctorService.GetAllSpecializations().subscribe({
+        next:(specializations) => {
+          this.specializations = specializations;
+          
+        },
+        error: (error) => {
+          console.log('calling All specializations api failed', error);
+        },
+      })
   }
+  selected(e: Event):void{
+
+    this.isSpecializationSelected = true;
+    this.id = (e.target as any).value;
+    
+    
+    if(this.id == 0){
+      this.isSpecializationSelected = false;
+    }
+    this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
+    console.log(this.Doctors)
+  }
+
+
+doctorSelected(event: Event):void{
+
+  this.doctorId = (event.target as HTMLSelectElement).value;
+  
+  this.isDoctorSelected = true;
+  if(this.doctorId == "allDoctors"){
+    this.isDoctorSelected = false;
+  }
+
+}
+onSearch(e: Event){
+  this.doctorService.getDoctorById(this.doctorId).subscribe({
+    next:(doctorById) => {
+      this.doctor = doctorById;
+      
+     },
+    error: (error) => {
+      console.log('calling dr by id api failed', error);
+    },
+  })
+}
   uploadPhoto(e:Event){
     e.preventDefault()
     this.isUploading = true
@@ -51,7 +115,7 @@ export class DoctorProfileComponent  implements OnInit{
 
   onSave(e : Event){
     e.preventDefault();
-    console.log(this.form.controls.photo.value?.split('\\')[2])
+    console.log((e.target as HTMLInputElement).value)
     
   //   if(this.form.controls.photo){
   //     if(this.route.snapshot.queryParams['id']){
@@ -65,6 +129,7 @@ export class DoctorProfileComponent  implements OnInit{
   //     }
   //   })
   // }}
+
       this.updateDoctor = {
         name : this.form.controls.name.value!,
         title : this.form.controls.title.value!,
@@ -73,15 +138,15 @@ export class DoctorProfileComponent  implements OnInit{
         phoneNumber : this.form.controls.phoneNumber.value!,
         dateOfBirth : this.form.controls.dateOfBirth.value!,
       }
+      console.log(this.updateDoctor)
+      this.doctorService.UpdateDoctor(this.doctor?.id!,this.updateDoctor).subscribe({
+        next:()=>{
 
-      // this.doctorService.UpdateDoctor(params['id'],this.updateDoctor).subscribe({
-      //   next:()=>{
-
-      //   },
-      //   error:(error)=>{
-      //     console.log("update api failed")
-      //   }
-      // })
+        },
+        error:(error)=>{
+          console.log("update api failed",error)
+        }
+      })
     
   }
   

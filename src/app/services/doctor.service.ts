@@ -6,6 +6,8 @@ import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
 import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
 import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
 import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorDto';
+import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
+import { GetDoctorsBySpecializationDto } from '../Types/GetDoctorsBySpecializationDto';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,10 +30,16 @@ export class DoctorService {
     public getDoctorById(id: string): Observable<GetDoctorByIDDto>{
       return this.client.get<GetDoctorByIDDto>(`https://localhost:7267/api/Doctor/doctors/${id}`);
     }
-
+    public getDoctors(): Observable<GetAllDoctorsDto[]>{
+      return this.client.get<GetAllDoctorsDto[]>('https://localhost:7267/api/Doctor');
+    }
+    public getDoctorsBySpecialization(id : number): Observable<GetDoctorsBySpecializationDto[]>{
+      return this.client.get<GetDoctorsBySpecializationDto[]>(`https://localhost:7267/api/Doctor/doctors/specialization/${id}`);
+    }
     
    public UpdateDoctor(drId:string, doctor : UpdateDoctorStatusDto):Observable<object>{
-    return this.client.post(`https://localhost:7267/api/Admins/admins/updatedoctor/${drId}`,doctor);
+    return this.client.put(`https://localhost:7267/api/Admins/admins/updatedoctor/${drId}`,doctor);
 
    }
+   
   }

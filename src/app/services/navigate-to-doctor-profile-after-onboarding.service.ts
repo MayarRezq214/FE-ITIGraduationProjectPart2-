@@ -9,26 +9,25 @@ import { Router } from '@angular/router';
 })
 export class NavigateToDoctorProfileAfterOnboardingService {
 
+  phoneNumber? : string
   doctor? : GetDoctorByPhoneDto
-   
+
   constructor(
     private doctorService : DoctorService,
     private router : Router) { }
 
-  open(phone : string){
-    this.doctorService.GetDoctorByPhone(phone).subscribe({
-      next:(doctor)=>
-      {
-        this.doctor = doctor
-       
-        this.router.navigate(['/doctorProfile'],{queryParams: doctor})
-
+  open(){
+    
+    this.doctorService.GetDoctorByPhone(this.phoneNumber!).subscribe({
+      next:(doctor) => {
+        this.doctor = doctor;
+        this.router.navigate(['/doctorProfile'])
+       },
+      error: (error) => {
+        console.log('calling dr by id api failed', error);
       },
-      error:(error)=>
-      {
-        console.log("api failed",error)
-      }
+    });
+    
 
-    })
   }
 }

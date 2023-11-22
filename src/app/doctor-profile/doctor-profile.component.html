@@ -1,5 +1,22 @@
 <main id="main" class="main">
 
+  <div class="row justify-content-center pt-2">
+    <select (change)="selected($event)" class="col form-select border-2 py-3 mx-3">
+      <option selected="" value="0" id="All">All Specialization</option>
+      <option  *ngFor="let Specialization of this.specializations" [value]="Specialization.id "> {{ Specialization.name }}</option>
+      </select>
+    <select  (change)="doctorSelected($event)" class=" col form-select border-2 py-3">
+    <option value="allDoctors" selected="">All Doctors</option>
+    <ng-container *ngIf="isSpecializationSelected" >
+      <option *ngFor="let doctor of Doctors"  [value]="doctor.id"> {{doctor.name}} </option>
+    </ng-container>
+    <ng-container *ngIf="!isSpecializationSelected" >
+      <option *ngFor="let doctor of doctors" [value]="doctor.id"> {{doctor.name}}</option>
+    </ng-container>
+   
+  </select>
+  <button class=" col-md-2 btn appointment-btn scrollto btn-lg me-4 text-dark-50 fw-bold mb-0" (click)="onSearch($event)">Search</button>
+  </div>
     <div class="pagetitle">
       <h1>Profile</h1>
       <nav>
@@ -86,20 +103,20 @@
                     <div class="col-lg-9 col-md-8">{{doctor?.description}}</div>
                   </div>
 
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone Number</div>
                     <div class="col-lg-9 col-md-8">{{doctor?.phoneNumber}}</div>
-                  </div>
+                  </div> -->
 
                   
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-lg-3 col-md-4 label">Salary</div>
                     <div class="col-lg-9 col-md-8">{{doctor?.salary}}</div>
                   </div>
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Date Of Birth</div>
                     <div class="col-lg-9 col-md-8">{{doctor?.dateOfBirth?.replace('T00:00:00',' ')}}</div>
-                  </div>
+                  </div> -->
 
                
 
@@ -135,16 +152,10 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="{{doctor?.name}}" formControlName="name">
+                        <input name="fullName" type="text" class="form-control" id="fullName"  formControlName="name" value="{{doctor?.name}}" >
                       </div>
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">Description</label>
-                      <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" formControlName="description" id="about" style="height: 100px">{{doctor?.description}}</textarea>
-                      </div>
-                    </div>
 
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Title</label>
@@ -154,18 +165,25 @@
                     </div>
 
                     <div class="row mb-3">
+                      <label for="about" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                      <div class="col-md-8 col-lg-9">
+                        <textarea name="about" class="form-control" formControlName="description" id="about" style="height: 100px">{{doctor?.description}}</textarea>
+                      </div>
+                    </div>
+                    
+                    <!-- <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="job" type="text" class="form-control" formControlName="phoneNumber" id="Job" value="{{doctor?.phoneNumber}}">
                       </div>
-                    </div>
+                    </div> -->
 
-                    <div class="row mb-3">
+                    <!-- <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Salary</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="country" type="text" class="form-control" formControlName="salary" id="Country" value="{{doctor?.salary}}">
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Date Of Birth</label>

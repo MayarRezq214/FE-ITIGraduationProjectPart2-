@@ -99,9 +99,9 @@ export class FormsComponent implements OnInit{
 
        // this.router.navigate(['/doctorProfile'])
         alert("doctor added successfully")
-        this.form.reset()
-        
-       this.navigate.open(this.registerDoctor.phoneNumber)
+      //  this.form.reset()
+        this.navigate.phoneNumber = this.registerDoctor.phoneNumber
+       this.navigate.open()
 
       },
       error:(error)=>
@@ -119,7 +119,8 @@ export class FormsComponent implements OnInit{
   }
   onSelect(e:Event)
   {
-    this.doctorSpecialization = (e.target as any).value;
     
+    this.doctorSpecialization = (e.target as any).value;
+    console.log(this.doctorSpecialization)
   }
 }
