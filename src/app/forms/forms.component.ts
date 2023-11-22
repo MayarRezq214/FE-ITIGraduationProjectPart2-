@@ -9,6 +9,7 @@ import {RegisterDoctorDto} from '../Types/RegisterDoctorDto';
 
 import { Router } from '@angular/router';
 import { phoneNumberLengthValidator } from '../services/registerPhoneNumber';
+import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navigate-to-doctor-profile-after-onboarding.service';
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
@@ -52,14 +53,15 @@ export class FormsComponent implements OnInit{
     // assistantPhoneNumber : new FormControl<string>(''),
     // assistantDateOfBirth : new
   });
-  constructor(private doctorService : DoctorService, private router : Router) {}
+  constructor(private doctorService : DoctorService, 
+    private router : Router,
+    private navigate : NavigateToDoctorProfileAfterOnboardingService) {}
   ngOnInit(): void {
 
    
     this.doctorService.GetAllSpecializations().subscribe({
       next:(specializations) => {
         this.specializations = specializations;
-        console.log(specializations)
       },
       error: (error) => {
         console.log('calling All specializations api failed', error);
@@ -90,7 +92,6 @@ export class FormsComponent implements OnInit{
         assistantName : '',
         assistantPhoneNumber : ''
     };
-    console.log(this.registerDoctor)
    
     this.doctorService.registerDoctor(this.registerDoctor).subscribe({
       next:()=>
@@ -99,6 +100,9 @@ export class FormsComponent implements OnInit{
        // this.router.navigate(['/doctorProfile'])
         alert("doctor added successfully")
         this.form.reset()
+        
+       this.navigate.open(this.registerDoctor.phoneNumber)
+
       },
       error:(error)=>
       {
