@@ -8,6 +8,7 @@ import { TokenDto } from '../types/TokenDto';
   providedIn: 'root'
 })
 export class AuthenticationService {
+  PhoneNumber?:string;
   public isLoggedIn$ = new BehaviorSubject<boolean>(false);
   constructor(private client: HttpClient ) { }
   public login(credentials: LoginDto , isRememberable?: boolean): Observable<TokenDto>{
@@ -18,6 +19,7 @@ export class AuthenticationService {
         this.isLoggedIn$.next(true);
         if(isRememberable){
           localStorage.setItem('token' , tokenDto.token);
+          localStorage.setItem('phoneNumber', credentials.phoneNumber);
         }
       })
     )

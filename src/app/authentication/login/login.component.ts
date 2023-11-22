@@ -34,8 +34,13 @@ export class LoginComponent {
     this.credentials!.phoneNumber = this.form.controls.username.value?? '';
     this.credentials!.password = this.form.controls.password.value ?? '';
     this.authenticationService.login(this.credentials! , this.rememberMe).subscribe((token) => {
-    }) 
+      this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+    });
+    
   }
+
+
+
   get formVal() {
     return this.form.controls;
   }
