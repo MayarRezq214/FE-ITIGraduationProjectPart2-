@@ -9,7 +9,9 @@ import { FormLayoutComponent } from './form-layout/form-layout.component';
 import { GenralTablesComponent } from './genral-tables/genral-tables.component';
 import { DataTablesComponent } from './data-tables/data-tables.component';
 import { DoctorProfileComponent } from './doctor-profile/doctor-profile.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+
 
 const routes: Routes = [
   {path: '' , component:DashboardComponent},
@@ -22,7 +24,7 @@ const routes: Routes = [
   {path : 'genralTables' , component : GenralTablesComponent},
   {path : 'dataTables' , component : DataTablesComponent},
   {path : 'doctorProfile' , component : DoctorProfileComponent},
-  {path : 'login' , component : LoginComponent}
+  {path : 'adminProfile' , component : AdminProfileComponent}
 ];
 
 @NgModule({
