@@ -92,6 +92,7 @@ export class FormsComponent implements OnInit{
         assistantName : '',
         assistantPhoneNumber : ''
     };
+    
    
     this.doctorService.registerDoctor(this.registerDoctor).subscribe({
       next:()=>

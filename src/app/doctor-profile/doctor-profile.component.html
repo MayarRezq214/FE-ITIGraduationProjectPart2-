@@ -103,20 +103,20 @@
                     <div class="col-lg-9 col-md-8">{{doctor?.description}}</div>
                   </div>
 
-                  <!-- <div class="row">
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label">Phone Number</div>
                     <div class="col-lg-9 col-md-8">{{doctor?.phoneNumber}}</div>
-                  </div> -->
+                  </div> 
 
                   
-                  <!-- <div class="row">
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label">Salary</div>
                     <div class="col-lg-9 col-md-8">{{doctor?.salary}}</div>
                   </div>
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Date Of Birth</div>
                     <div class="col-lg-9 col-md-8">{{doctor?.dateOfBirth?.replace('T00:00:00',' ')}}</div>
-                  </div> -->
+                  </div>
 
                
 
@@ -152,7 +152,7 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName"  formControlName="name" value="{{doctor?.name}}" >
+                        <input name="fullName" type="text" class="form-control" id="fullName"  formControlName="name" [value]="doctor?.name" >
                       </div>
                     </div>
 
@@ -160,41 +160,41 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Title</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="{{doctor?.title}}">
+                        <input name="company" type="text" class="form-control" id="company" [value]="doctor?.title"  formControlName="title">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">Description</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" formControlName="description" id="about" style="height: 100px">{{doctor?.description}}</textarea>
+                        <textarea name="about" [value]="doctor?.description" class="form-control" formControlName="description" id="about" style="height: 100px"></textarea>
                       </div>
                     </div>
                     
-                    <!-- <div class="row mb-3">
+                    <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" formControlName="phoneNumber" id="Job" value="{{doctor?.phoneNumber}}">
+                        <input name="job" type="text" class="form-control" formControlName="phoneNumber" id="Job" [value]="doctor?.phoneNumber" >
                       </div>
-                    </div> -->
+                    </div> 
 
-                    <!-- <div class="row mb-3">
+                     <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Salary</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" formControlName="salary" id="Country" value="{{doctor?.salary}}">
+                        <input name="country" type="text" class="form-control" formControlName="salary" id="Country" [value]="doctor?.salary">
                       </div>
-                    </div> -->
+                    </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Date Of Birth</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="date" class="form-control" formControlName="dateOfBirth"  id="Address" value="{{doctor?.dateOfBirth?.replace('T00:00:00,' ')}}">
+                        <input name="address" type="date" class="form-control" formControlName="dateOfBirth"  id="Address" >
                       </div>
-                    </div>
+                    </div> 
 
        
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary" (click)="onSave($event)">Save Changes</button>
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 

@@ -8,6 +8,7 @@ import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
 import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorDto';
 import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
 import { GetDoctorsBySpecializationDto } from '../Types/GetDoctorsBySpecializationDto';
+import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
 @Injectable({
   providedIn: 'root'
 })
@@ -39,7 +40,10 @@ export class DoctorService {
     
    public UpdateDoctor(drId:string, doctor : UpdateDoctorStatusDto):Observable<object>{
     return this.client.put(`https://localhost:7267/api/Admins/admins/updatedoctor/${drId}`,doctor);
-
    }
+
+   public getDoctorByIdForAdmin(id:string): Observable<GetDoctorByIDForAdminDto>{
+    return this.client.get<GetDoctorByIDForAdminDto>(`https://localhost:7267/api/Admins/admin/${id}`);
+  }
    
   }

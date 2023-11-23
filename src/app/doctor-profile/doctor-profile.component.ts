@@ -10,6 +10,7 @@ import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
 import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
 import { DoctorsForAllSpecializations } from '../Types/DoctorsForAllSpecializations';
 import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
+import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -17,37 +18,46 @@ import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
   styleUrls: ['./doctor-profile.component.css']
 })
 export class DoctorProfileComponent  implements OnInit{
-  doctor? : GetDoctorByIDDto
-  updateDoctor? : UpdateDoctorStatusDto
-  isUploading : boolean = false
-  id ? :number 
-  form = new FormGroup ({
-    name : new FormControl<string>(''),
-    title : new FormControl<string>(''),
-    description : new FormControl<string>(''),
-    salary : new FormControl<number>(0), 
-    specializationId : new FormControl<number>(0),
-    phoneNumber : new FormControl<string>('0'),
-    dateOfBirth : new FormControl<string>(''),
-    password : new FormControl<string>(''),
-    photo : new FormControl<string>(''),
-  })
+  doctor? : GetDoctorByIDForAdminDto
+  updateDoctor? : UpdateDoctorStatusDto = 
+  {
+    name : '',
+    title : '',
+    description :'',
+    salary : 0,
+    phoneNumber : '',
+    dateOfBirth : '',
+  }
+  
+      isUploading : boolean = false
+      id ? :number 
+      form = new FormGroup ({
+        name : new FormControl<string>(''),
+        title : new FormControl<string>(''),
+        description : new FormControl<string>(''),
+        salary : new FormControl<number>(0), 
+        specializationId : new FormControl<number>(0),
+        phoneNumber : new FormControl<string>('0'),
+        dateOfBirth : new FormControl<string>(''),
+        password : new FormControl<string>(''),
+        photo : new FormControl<string>(''),
+      })
   
   sId : number =0;
   
-  dId! : string;
-  doctorId: string = '0';
+      dId! : string;
+      doctorId: string = '0';
 
-  doctors?: GetAllDoctorsDto[];
-  specializations?: GetAllSpecializationsDto[];
-  Doctors? : DoctorsForAllSpecializations[];
-  doctorById?: GetDoctorByIDDto;
-  isDoctorSelected : boolean =false;
-  isSpecializationSelected: boolean = false;
-  constructor( private route: ActivatedRoute ,
-                private doctorService : DoctorService, 
-                private navigate : NavigateToDoctorProfileAfterOnboardingService,
-                ) {}
+      doctors?: GetAllDoctorsDto[];
+      specializations?: GetAllSpecializationsDto[];
+      Doctors? : DoctorsForAllSpecializations[];
+      doctorById?: GetDoctorByIDDto;
+      isDoctorSelected : boolean =false;
+      isSpecializationSelected: boolean = false;
+      constructor( private route: ActivatedRoute ,
+                    private doctorService : DoctorService, 
+                    private navigate : NavigateToDoctorProfileAfterOnboardingService,
+                    ) {}
 
   ngOnInit() {
     
@@ -86,68 +96,75 @@ export class DoctorProfileComponent  implements OnInit{
   }
 
 
-doctorSelected(event: Event):void{
+      doctorSelected(event: Event):void{
 
-  this.doctorId = (event.target as HTMLSelectElement).value;
-  
-  this.isDoctorSelected = true;
-  if(this.doctorId == "allDoctors"){
-    this.isDoctorSelected = false;
-  }
-
-}
-onSearch(e: Event){
-  this.doctorService.getDoctorById(this.doctorId).subscribe({
-    next:(doctorById) => {
-      this.doctor = doctorById;
-      
-     },
-    error: (error) => {
-      console.log('calling dr by id api failed', error);
-    },
-  })
-}
-  uploadPhoto(e:Event){
-    e.preventDefault()
-    this.isUploading = true
-    
-  }
-
-  onSave(e : Event){
-    e.preventDefault();
-    console.log((e.target as HTMLInputElement).value)
-    
-  //   if(this.form.controls.photo){
-  //     if(this.route.snapshot.queryParams['id']){
-  //   this.doctorService.UploadPhoto(this.route.snapshot.queryParams['id'], this.form.controls.photo.value?.split('\\')[2]!).subscribe({
-  //     next:() =>{
-
-  //     },
-  //     error:(error)=>{
+        this.doctorId = (event.target as HTMLSelectElement).value;
         
-  //       console.log("upload phot api failed",error)
-  //     }
-  //   })
-  // }}
-
-      this.updateDoctor = {
-        name : this.form.controls.name.value!,
-        title : this.form.controls.title.value!,
-        description : this.form.controls.description.value!,
-        salary : this.form.controls.salary.value!,
-        phoneNumber : this.form.controls.phoneNumber.value!,
-        dateOfBirth : this.form.controls.dateOfBirth.value!,
-      }
-      console.log(this.updateDoctor)
-      this.doctorService.UpdateDoctor(this.doctor?.id!,this.updateDoctor).subscribe({
-        next:()=>{
-
-        },
-        error:(error)=>{
-          console.log("update api failed",error)
+        this.isDoctorSelected = true;
+        if(this.doctorId == "allDoctors"){
+          this.isDoctorSelected = false;
         }
-      })
-    
-  }
-  
-}
+
+      }
+      onSearch(e: Event){
+        this.doctorService.getDoctorByIdForAdmin(this.doctorId).subscribe({
+          next:(doctorByPhone) => {
+            this.doctor = doctorByPhone;
+            
+          },
+          error: (error) => {
+            console.log('calling dr by id api failed', error);
+          },
+        })
+
+      }
+      uploadPhoto(e:Event){
+        e.preventDefault()
+        this.isUploading = true
+        
+      }
+
+      // onSave(e : Event){
+      //   e.preventDefault();
+      //   console.log((e.target as HTMLInputElement).value)
+        
+      // //   if(this.form.controls.photo){
+      // //     console.log(this.form.controls.photo.value?.split('\\')[2])
+      // //   this.doctorService.UploadPhoto(this.doctorId, this.form.controls.photo.value!).subscribe({
+      // //     next:() =>{
+
+      // //     },
+      // //     error:(error)=>{
+            
+      // //       console.log("upload phot api failed",error)
+      // //     }
+      // //   })
+      // // }
+      //   // if(this.form.controls.name.value)
+      //   // {
+      //   //   this.updateDoctor!.name?   this.form.controls.name.value!
+            
+      //   // }
+        
+      //     // this.updateDoctor = {
+      //     //   name: this.form.controls.name.value!,
+      //     //   title : this.form.controls.title.value!,
+      //     //   description : this.form.controls.description.value!,
+      //     //   salary : this.form.controls.salary.value!,
+      //     //   phoneNumber : this.form.controls.phoneNumber.value!,
+      //     //   dateOfBirth : this.form.controls.dateOfBirth.value!,
+      //     // }
+      //     // console.log(this.updateDoctor)
+
+      //     // this.doctorService.UpdateDoctor(this.doctor?.iD!,this.doctor!).subscribe({
+      //     //   next:()=>{
+
+      //     //   },
+      //     //   error:(error)=>{
+      //     //     console.log("update api failed",error)
+      //     //   }
+      //     // })
+        
+      // }
+      
+    }
