@@ -11,19 +11,10 @@ import { FormLayoutComponent } from './form-layout/form-layout.component';
 import { GenralTablesComponent } from './genral-tables/genral-tables.component';
 import { DataTablesComponent } from './data-tables/data-tables.component';
 import { DoctorProfileComponent } from './doctor-profile/doctor-profile.component';
-<<<<<<< HEAD
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './authentication/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-=======
-import {HttpClientModule} from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './authentication/login/login.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
-
-
-
->>>>>>> main
 
 @NgModule({
   declarations: [
@@ -43,17 +34,10 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 
   imports: [
     BrowserModule,
-<<<<<<< HEAD
-    AppRoutingModule,  
-    ReactiveFormsModule,
-    HttpClientModule,
-
-=======
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
->>>>>>> main
   ],
   providers: [],
   bootstrap: [AppComponent]
