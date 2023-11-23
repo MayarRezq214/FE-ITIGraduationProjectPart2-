@@ -10,6 +10,7 @@ import { GenralTablesComponent } from './genral-tables/genral-tables.component';
 import { DataTablesComponent } from './data-tables/data-tables.component';
 import { DoctorProfileComponent } from './doctor-profile/doctor-profile.component';
 import { LoginComponent } from './authentication/login/login.component';
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path : 'genralTables' , component : GenralTablesComponent},
   {path : 'dataTables' , component : DataTablesComponent},
   {path : 'doctorProfile' , component : DoctorProfileComponent},
+  {path : 'adminProfile' , component : AdminProfileComponent}
 ];
 
 @NgModule({
