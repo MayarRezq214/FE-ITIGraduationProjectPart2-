@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
-import { FormControl, FormGroup } from '@angular/forms';
-import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorDto';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorstatusDto';
 import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navigate-to-doctor-profile-after-onboarding.service';
 import { SearchService } from '../services/search.service';
 import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
@@ -31,19 +31,21 @@ export class DoctorProfileComponent  implements OnInit{
   
       isUploading : boolean = false
       id ? :number 
-      form = new FormGroup ({
-        name : new FormControl<string>(''),
-        title : new FormControl<string>(''),
-        description : new FormControl<string>(''),
-        salary : new FormControl<number>(0), 
-        specializationId : new FormControl<number>(0),
-        phoneNumber : new FormControl<string>('0'),
-        dateOfBirth : new FormControl<string>(''),
-        password : new FormControl<string>(''),
-        photo : new FormControl<string>(''),
-      })
+      // form = new FormGroup ({
+      //   name : new FormControl<string>(''),
+      //   title : new FormControl<string>(''),
+      //   description : new FormControl<string>(''),
+      //   salary : new FormControl<number>(0), 
+      //   specializationId : new FormControl<number>(0),
+      //   phoneNumber : new FormControl<string>('0'),
+      //   dateOfBirth : new FormControl<string>(''),
+      //   password : new FormControl<string>(''),
+      //   photo : new FormControl<string>(''),
+      // })
   
-  sId : number =0;
+      @ViewChild('form') form : NgForm | undefined ;
+      
+      sId : number =0;
   
       dId! : string;
       doctorId: string = '0';
@@ -61,8 +63,8 @@ export class DoctorProfileComponent  implements OnInit{
 
   ngOnInit() {
     
-      console.log(this.navigate.doctor)
-      //this.doctor = this.navigate.doctor
+     // console.log(this.navigate.doctor)
+      this.doctor = this.navigate.doctor
       this.doctorService.getDoctors().subscribe({
         next:(doctors) => {
           this.doctors = doctors;
@@ -81,6 +83,21 @@ export class DoctorProfileComponent  implements OnInit{
           console.log('calling All specializations api failed', error);
         },
       })
+
+       
+  }
+
+  onEdit(){
+    this.form?.setValue({
+      name : this.doctor?.name,
+      title : this.doctor?.title,
+      description : this.doctor?.description,
+      phoneNumber : this.doctor?.phoneNumber,
+      salary : this.doctor?.salary,
+      dateOfBirth : this.doctor?.dateOfBirth,
+      
+   //   photo : this.doctor?.imageUrl
+    })
   }
   selected(e: Event):void{
 
@@ -124,47 +141,44 @@ export class DoctorProfileComponent  implements OnInit{
         
       }
 
-      // onSave(e : Event){
-      //   e.preventDefault();
-      //   console.log((e.target as HTMLInputElement).value)
+      onSave(e : Event, form : any){
+        e.preventDefault();
+        console.log((e.target as HTMLInputElement).value)
         
-      // //   if(this.form.controls.photo){
-      // //     console.log(this.form.controls.photo.value?.split('\\')[2])
-      // //   this.doctorService.UploadPhoto(this.doctorId, this.form.controls.photo.value!).subscribe({
-      // //     next:() =>{
+      //   if(this.form.controls.photo){
+      //     console.log(this.form.controls.photo.value?.split('\\')[2])
+      //   this.doctorService.UploadPhoto(this.doctorId, this.form.controls.photo.value!).subscribe({
+      //     next:() =>{
 
-      // //     },
-      // //     error:(error)=>{
+      //     },
+      //     error:(error)=>{
             
-      // //       console.log("upload phot api failed",error)
-      // //     }
-      // //   })
-      // // }
-      //   // if(this.form.controls.name.value)
-      //   // {
-      //   //   this.updateDoctor!.name?   this.form.controls.name.value!
-            
-      //   // }
-        
-      //     // this.updateDoctor = {
-      //     //   name: this.form.controls.name.value!,
-      //     //   title : this.form.controls.title.value!,
-      //     //   description : this.form.controls.description.value!,
-      //     //   salary : this.form.controls.salary.value!,
-      //     //   phoneNumber : this.form.controls.phoneNumber.value!,
-      //     //   dateOfBirth : this.form.controls.dateOfBirth.value!,
-      //     // }
-      //     // console.log(this.updateDoctor)
-
-      //     // this.doctorService.UpdateDoctor(this.doctor?.iD!,this.doctor!).subscribe({
-      //     //   next:()=>{
-
-      //     //   },
-      //     //   error:(error)=>{
-      //     //     console.log("update api failed",error)
-      //     //   }
-      //     // })
-        
+      //       console.log("upload phot api failed",error)
+      //     }
+      //   })
       // }
+      
+          this.updateDoctor = {
+            id : this.doctorId,
+            name: this.form?.value.name,
+            title : this.form?.value.title,
+            description : this.form?.value.description,
+            salary : this.form?.value.salary,
+            phoneNumber : this.form?.value.phoneNumber,
+            dateOfBirth : this.form?.value.dateOfBirth,
+          }
+          console.log(this.updateDoctor)
+          console.log(this.doctorId)
+
+          this.doctorService.UpdateDoctor(this.doctorId,this.updateDoctor).subscribe({
+            next:()=>{
+
+            },
+            error:(error)=>{
+              console.log("update api failed",error)
+            }
+          })
+        
+      }
       
     }

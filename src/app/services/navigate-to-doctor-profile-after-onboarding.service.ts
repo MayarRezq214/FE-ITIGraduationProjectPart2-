@@ -3,6 +3,7 @@ import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
 import { FormsComponent } from '../forms/forms.component';
 import { DoctorService } from './doctor.service';
 import { Router } from '@angular/router';
+import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class NavigateToDoctorProfileAfterOnboardingService {
 
   phoneNumber? : string
-  doctor? : GetDoctorByPhoneDto
+  doctor? : GetDoctorByIDForAdminDto
 
   constructor(
     private doctorService : DoctorService,
@@ -21,6 +22,7 @@ export class NavigateToDoctorProfileAfterOnboardingService {
     this.doctorService.GetDoctorByPhone(this.phoneNumber!).subscribe({
       next:(doctor) => {
         this.doctor = doctor;
+        console.log(this.doctor)
         this.router.navigate(['/doctorProfile'])
        },
       error: (error) => {

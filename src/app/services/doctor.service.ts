@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
 import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
 import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
-import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorDto';
+import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorstatusDto';
 import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
 import { GetDoctorsBySpecializationDto } from '../Types/GetDoctorsBySpecializationDto';
 import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
@@ -25,8 +25,8 @@ export class DoctorService {
     public UploadPhoto(drId : string, photo:string):Observable<object>{
       return this.client.post(`https://localhost:7267/api/Doctor/doctors/uploadimage/${drId}`,photo);
     }
-    public GetDoctorByPhone(phone : string ): Observable<GetDoctorByPhoneDto>{
-      return this.client.get<GetDoctorByPhoneDto>(`https://localhost:7267/api/Doctor/doctor/${phone}`);
+    public GetDoctorByPhone(phone : string ): Observable<GetDoctorByIDForAdminDto>{
+      return this.client.get<GetDoctorByIDForAdminDto>(`https://localhost:7267/api/Doctor/doctor/${phone}`);
     }
     public getDoctorById(id: string): Observable<GetDoctorByIDDto>{
       return this.client.get<GetDoctorByIDDto>(`https://localhost:7267/api/Doctor/doctors/${id}`);
@@ -43,7 +43,7 @@ export class DoctorService {
    }
 
    public getDoctorByIdForAdmin(id:string): Observable<GetDoctorByIDForAdminDto>{
-    return this.client.get<GetDoctorByIDForAdminDto>(`https://localhost:7267/api/Admins/admin/${id}`);
+    return this.client.get<GetDoctorByIDForAdminDto>(`https://localhost:7267/api/Admins/admin/getDoctorForAdmin/${id}`);
   }
    
   }
