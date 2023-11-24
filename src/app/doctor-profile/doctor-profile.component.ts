@@ -65,6 +65,9 @@ export class DoctorProfileComponent  implements OnInit{
     
      // console.log(this.navigate.doctor)
       this.doctor = this.navigate.doctor
+      this.doctorId = this.navigate.doctorId!
+      console.log(this.doctor)
+      console.log(this.doctorId)
       this.doctorService.getDoctors().subscribe({
         next:(doctors) => {
           this.doctors = doctors;

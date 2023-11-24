@@ -12,7 +12,7 @@ export class NavigateToDoctorProfileAfterOnboardingService {
 
   phoneNumber? : string
   doctor? : GetDoctorByIDForAdminDto
-
+  doctorId? : string
   constructor(
     private doctorService : DoctorService,
     private router : Router) { }
@@ -22,8 +22,9 @@ export class NavigateToDoctorProfileAfterOnboardingService {
     this.doctorService.GetDoctorByPhone(this.phoneNumber!).subscribe({
       next:(doctor) => {
         this.doctor = doctor;
-        console.log(this.doctor)
-        this.router.navigate(['/doctorProfile'])
+        
+        this.doctorId = doctor.iD!
+       this.router.navigate(['/doctorProfile'])
        },
       error: (error) => {
         console.log('calling dr by id api failed', error);

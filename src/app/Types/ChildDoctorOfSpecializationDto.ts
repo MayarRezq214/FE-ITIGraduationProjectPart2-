@@ -10,4 +10,5 @@ export interface ChildDoctorOfSpecializationDto {
     imageStoredFileName? :string  
     imageContentType? :string 
     imageUrl? : string 
+    status?: boolean
 }
