@@ -16,6 +16,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './authentication/login/login.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 
 
 
@@ -33,7 +34,8 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
     DataTablesComponent,
     DoctorProfileComponent,
     LoginComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    PatientProfileComponent
   ],
   imports: [
     BrowserModule,
