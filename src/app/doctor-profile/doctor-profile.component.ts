@@ -11,6 +11,7 @@ import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
 import { DoctorsForAllSpecializations } from '../Types/DoctorsForAllSpecializations';
 import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
 import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
+import { DataBetweenAddDrDrProfileService } from '../services/data-between-add-dr-dr-profile.service';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -59,15 +60,16 @@ export class DoctorProfileComponent  implements OnInit{
       constructor( private route: ActivatedRoute ,
                     private doctorService : DoctorService, 
                     private navigate : NavigateToDoctorProfileAfterOnboardingService,
+                    private dataFromRegisterDr: DataBetweenAddDrDrProfileService
                     ) {}
 
   ngOnInit() {
     
      // console.log(this.navigate.doctor)
+     this.dataFromRegisterDr.currentDoctorId.subscribe(doctorId=>this.doctorId=doctorId)
       this.doctor = this.navigate.doctor
-      this.doctorId = this.navigate.doctorId!
-      console.log(this.doctor)
-      console.log(this.doctorId)
+      //console.log(this.doctor)
+     console.log(this.doctorId)
       this.doctorService.getDoctors().subscribe({
         next:(doctors) => {
           this.doctors = doctors;

@@ -53,12 +53,12 @@ export class FormsComponent implements OnInit{
     // assistantPhoneNumber : new FormControl<string>(''),
     // assistantDateOfBirth : new
   });
+
   constructor(private doctorService : DoctorService, 
     private router : Router,
-    private navigate : NavigateToDoctorProfileAfterOnboardingService) {}
+    private navigate : NavigateToDoctorProfileAfterOnboardingService,
+   ) {}
   ngOnInit(): void {
-
-   
     this.doctorService.GetAllSpecializations().subscribe({
       next:(specializations) => {
         this.specializations = specializations;
@@ -73,12 +73,10 @@ export class FormsComponent implements OnInit{
   onSubmit(e : Event)
   {
     e.preventDefault();
-    
-    // if(this.form.invalid) return
-    
+        
     this.registerDoctor  = 
     {
-        
+
         name : this.form.controls.name.value!,
         description : this.form.controls.description.value!,
         title : this.form.controls.title.value!,
@@ -109,18 +107,11 @@ export class FormsComponent implements OnInit{
       {
         console.log("api failed",error)
       }
-
     })
-    // if(this.form.controls.photo)
-    // {
-
-        
-    // }
- 
+   
   }
   onSelect(e:Event)
   {
-    
     this.doctorSpecialization = (e.target as any).value;
     console.log(this.doctorSpecialization)
   }

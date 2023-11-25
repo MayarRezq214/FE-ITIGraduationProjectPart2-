@@ -1,21 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
 import { FormsComponent } from '../forms/forms.component';
 import { DoctorService } from './doctor.service';
 import { Router } from '@angular/router';
 import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
+import { DataBetweenAddDrDrProfileService } from './data-between-add-dr-dr-profile.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NavigateToDoctorProfileAfterOnboardingService {
+export class NavigateToDoctorProfileAfterOnboardingService implements OnInit{
 
   phoneNumber? : string
   doctor? : GetDoctorByIDForAdminDto
   doctorId? : string
   constructor(
     private doctorService : DoctorService,
-    private router : Router) { }
+    private router : Router,
+    private dataFromRegisterDr: DataBetweenAddDrDrProfileService) { }
+
+  ngOnInit()  {
+    this.dataFromRegisterDr.currentDoctorId.subscribe(doctorId=>this.doctorId=doctorId)
+
+  }
 
   open(){
     
@@ -24,6 +31,7 @@ export class NavigateToDoctorProfileAfterOnboardingService {
         this.doctor = doctor;
         
         this.doctorId = doctor.iD!
+        this.dataFromRegisterDr.changeDoctorId(this.doctorId)
        this.router.navigate(['/doctorProfile'])
        },
       error: (error) => {
@@ -31,6 +39,7 @@ export class NavigateToDoctorProfileAfterOnboardingService {
       },
     });
     
+
 
   }
 }
