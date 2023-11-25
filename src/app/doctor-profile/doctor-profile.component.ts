@@ -99,7 +99,7 @@ export class DoctorProfileComponent  implements OnInit{
       description : this.doctor?.description,
       phoneNumber : this.doctor?.phoneNumber,
       salary : this.doctor?.salary,
-      dateOfBirth : this.doctor?.dateOfBirth,
+      dateOfBirth : this.doctor?.dateOfBirth.replace('T00:00:00',' ').trim(),
       
    //   photo : this.doctor?.imageUrl
     })

@@ -10,6 +10,7 @@ import {RegisterDoctorDto} from '../Types/RegisterDoctorDto';
 import { Router } from '@angular/router';
 import { phoneNumberLengthValidator } from '../services/registerPhoneNumber';
 import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navigate-to-doctor-profile-after-onboarding.service';
+import { passwordValidators } from '../services/password.service';
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
@@ -39,14 +40,21 @@ export class FormsComponent implements OnInit{
       assistantPhoneNumber:''      
   };
   form = new FormGroup ({
-    name : new FormControl<string>('',[Validators.required]),
-    title : new FormControl<string>(''),
-    description : new FormControl<string>(''),
-    salary : new FormControl<number>(0), 
-    specializationId : new FormControl<number>(0),
-    phoneNumber : new FormControl<string>('0', [Validators.required]),
-    dateOfBirth : new FormControl<string>(''),
-    password : new FormControl<string>(''),
+    name : new FormControl<string>('',[Validators.required , Validators.minLength(3)]),
+    title : new FormControl<string>('',[Validators.required]),
+    description : new FormControl<string>('',[Validators.required]),
+    salary : new FormControl<number>(0,[Validators.required]), 
+    specializationId : new FormControl<number>(0,[Validators.required]),
+    phoneNumber : new FormControl<string>('0', [Validators.required, phoneNumberLengthValidator, this.onlyNumbersValidator]),
+    dateOfBirth : new FormControl<string>('',[Validators.required]),
+    password : new FormControl<string>('',[
+      Validators.required,
+      passwordValidators['PasswordTooShort'],
+      passwordValidators['PasswordRequiresNonAlphanumeric'],
+      passwordValidators['PasswordRequiresDigit'],
+      passwordValidators['PasswordRequiresUpper'],
+      passwordValidators['PasswordRequiresLower']
+    ]),
      photo : new FormControl<string>(''),
     // assistantID : new FormControl<string>(''),
     // assistantName : new FormControl<string>(''),
@@ -58,6 +66,13 @@ export class FormsComponent implements OnInit{
     private router : Router,
     private navigate : NavigateToDoctorProfileAfterOnboardingService,
    ) {}
+
+   onlyNumbersValidator(control:any) {
+    const numericInputValue = control.value;
+    const isValid = /^\d+$/.test(numericInputValue);
+
+    return isValid ? null : { 'invalidNumber': true };
+  }
   ngOnInit(): void {
     this.doctorService.GetAllSpecializations().subscribe({
       next:(specializations) => {

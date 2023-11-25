@@ -25,19 +25,41 @@
                   <label for="inputText" class="col-sm-2 col-form-label" >Name</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" formControlName="name"> 
+                    <div *ngIf="form.controls.name.dirty && form.controls.name.errors?.['required']" class="text-danger text-start ErrorFont">*Name is required</div>
+                    <div *ngIf="form.controls.name.touched && form.controls.name.errors?.['minlength']" class="text-danger text-start ErrorFont">*Name must be at least 3 characters</div>
+                 
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputEmail" class="col-sm-2 col-form-label" >Title</label>
                   <div class="col-sm-10">
                     <input type="email" class="form-control" formControlName="title">
+                    <div *ngIf="form.controls.title.dirty && form.controls.title.errors?.['required']" class="text-danger text-start ErrorFont">*Title is required</div>
+
                   </div>
                 </div>
-               
+               <div class="row mb-3">
+                  <label for="inputPassword" class="col-sm-2 col-form-label">Description</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" style="height: 100px" formControlName="description"></textarea>
+                    <div *ngIf="form.controls.description.dirty && form.controls.description.errors?.['required']" class="text-danger text-start ErrorFont">*Description is required</div>
+
+                  </div>
+                </div>
                 <div class="row mb-3">
                   <label for="text" class="col-sm-2 col-form-label" >Phone Number</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" formControlName="phoneNumber">
+                    <div>
+                      <div *ngIf="form.get('phoneNumber')?.hasError('phoneNumberExists')" class="text-danger text-start ErrorFont">
+                        *Phone number already exists!
+                      </div>
+                      <div *ngIf="form.controls.phoneNumber.dirty && form.controls.phoneNumber.errors?.['required']" class="text-danger text-start ErrorFont">*Phone Number is required</div>
+                      <div *ngIf="form.controls.phoneNumber.touched && form.controls.phoneNumber.errors?.['phoneNumberLength']" class="text-danger text-start ErrorFont">*Phone Number must be at least 11 characters</div>
+                      <div *ngIf=" form.controls.phoneNumber.dirty&& form.get('phoneNumber')?.hasError('invalidNumber')" class="text-danger text-start ErrorFont">
+                        *Please enter a valid number.
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -67,12 +89,7 @@
                     <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#4154f1" title="Choose your color">
                   </div>
                 </div> -->
-                <div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-2 col-form-label">Description</label>
-                  <div class="col-sm-10">
-                    <textarea class="form-control" style="height: 100px" formControlName="description"></textarea>
-                  </div>
-                </div>
+                
                 <!-- <fieldset class="row mb-3">
                   <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
                   <div class="col-sm-10">
