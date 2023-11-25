@@ -11,6 +11,9 @@ import { phoneNumberLengthValidator } from 'src/app/services/loginPhonNumber.ser
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  credentials: LoginDto = {phoneNumber : '', password: ''};
+  rememberMe!: boolean;
+  selctedOption?: string;
   constructor(private authenticationService: AuthenticationService){}
   form = new FormGroup({
     username: new FormControl<string>('' , [Validators.required ,  phoneNumberLengthValidator , this.onlyNumbersValidator]),
@@ -24,19 +27,35 @@ export class LoginComponent {
 
     return isValid ? null : { 'invalidNumber': true };
   }
-  credentials: LoginDto = {phoneNumber : '', password: ''};
-  rememberMe!: boolean;
+
+
   handleLogin(e: Event){
     e.preventDefault();
-    console.log(this.form.controls.isRememberable.value)
+    // console.log(this.form.controls.isRememberable.value)
     this.rememberMe = this.form.controls.isRememberable.value!;
+    // console.log(this.form.controls..value)
    // var credentials = new LoginDto();
     this.credentials!.phoneNumber = this.form.controls.username.value?? '';
     this.credentials!.password = this.form.controls.password.value ?? '';
-    this.authenticationService.login(this.credentials! , this.rememberMe).subscribe((token) => {
-      this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
-    });
+
+    if(this.selctedOption == 'Admin'){
+      this.authenticationService.login(this.credentials! , this.rememberMe).subscribe((token) => {
+        this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+      });
+    }else if(this.selctedOption == 'Doctor'){
+      this.authenticationService.Doctorlogin(this.credentials! , this.rememberMe).subscribe((token) => {
+        this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+      });
+    }else if(this.selctedOption == 'Reception'){
+      this.authenticationService.receptionLogin(this.credentials! , this.rememberMe).subscribe((token) => {
+        this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+      });
+    }
     
+  }
+
+  onSelect(e: Event){
+    this.selctedOption = (e.target as HTMLInputElement).value
   }
 
 
