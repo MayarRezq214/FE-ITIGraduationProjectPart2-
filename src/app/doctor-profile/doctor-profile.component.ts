@@ -3,7 +3,8 @@ import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
-import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorstatusDto';
+import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorStatusDto';
+import { NgModule }  from '@angular/core';
 import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navigate-to-doctor-profile-after-onboarding.service';
 import { SearchService } from '../services/search.service';
 import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
@@ -32,17 +33,7 @@ export class DoctorProfileComponent  implements OnInit{
   
       isUploading : boolean = false
       id ? :number 
-      // form = new FormGroup ({
-      //   name : new FormControl<string>(''),
-      //   title : new FormControl<string>(''),
-      //   description : new FormControl<string>(''),
-      //   salary : new FormControl<number>(0), 
-      //   specializationId : new FormControl<number>(0),
-      //   phoneNumber : new FormControl<string>('0'),
-      //   dateOfBirth : new FormControl<string>(''),
-      //   password : new FormControl<string>(''),
-      //   photo : new FormControl<string>(''),
-      // })
+      
   
       @ViewChild('form') form : NgForm | undefined ;
       
@@ -130,9 +121,9 @@ export class DoctorProfileComponent  implements OnInit{
       }
       onSearch(e: Event){
         this.doctorService.getDoctorByIdForAdmin(this.doctorId).subscribe({
-          next:(doctorByPhone) => {
-            this.doctor = doctorByPhone;
-            
+          next:(doctor) => {
+            this.doctor = doctor;
+
           },
           error: (error) => {
             console.log('calling dr by id api failed', error);

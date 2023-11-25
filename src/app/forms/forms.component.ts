@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { phoneNumberLengthValidator } from '../services/registerPhoneNumber';
 import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navigate-to-doctor-profile-after-onboarding.service';
 import { passwordValidators } from '../services/password.service';
+import { AddWeekScheduleDto } from '../Types/AddWeekScheduleDto';
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
@@ -111,9 +112,8 @@ export class FormsComponent implements OnInit{
       next:()=>
       {
 
-       // this.router.navigate(['/doctorProfile'])
         alert("doctor added successfully")
-      //  this.form.reset()
+     
         this.navigate.phoneNumber = this.registerDoctor.phoneNumber
        this.navigate.open()
 

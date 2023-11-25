@@ -78,9 +78,6 @@
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
-
                   <h5 class="card-title">Profile Details</h5>
 
                   <div class="row">
@@ -205,47 +202,155 @@
 
                 </div>
 
-                <div class="tab-pane fade pt-3" id="profile-settings">
+                <div class="tab-pane fade pt-3 profile-overview" id="profile-settings">
 
                   <!-- Settings Form -->
-                  <form>
+                  
+                  <div class="tab-content pt-3">
+                    <h5 class="card-title">Schedule Details</h5>
 
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                      <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                          <label class="form-check-label" for="changesMade">
-                            Changes made to your account
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                          <label class="form-check-label" for="newProducts">
-                            Information on new products and services
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="proOffers">
-                          <label class="form-check-label" for="proOffers">
-                            Marketing and promo offers
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                          <label class="form-check-label" for="securityNotify">
-                            Security alerts
-                          </label>
-                        </div>
-                      </div>
+                    <div class="card-body">
+                   
+                      <!-- Active Table -->
+                     
+                      <table class="table table-borderless">
+                        <thead>
+                          <tr>
+                            <!-- <th scope="col">#</th> -->
+                            <th scope="col">Day</th>
+                            <th scope="col">Shift Start</th>
+                            <th scope="col">Shift End</th>
+                            <th scope="col">Limit of Patients</th>
+                            <th scope="col">On Shift</th>
+                            <th scope="col">Add/Edit</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container *ngFor="let record of doctor?.weekSchadual">
+                            <ng-container *ngIf="record.startTime!='12:00AM'">
+                          <tr >
+                            <th scope="row">
+                              <span *ngIf="record.dayOfWeek==3" class="divider">Wednesday</span>
+                              <span *ngIf="record.dayOfWeek==4" class="divider">Thursday</span>
+                              <span *ngIf="record.dayOfWeek==5" class="divider">Friday</span>
+                              <span *ngIf="record.dayOfWeek==6" class="divider">Saturday</span>
+                              <span *ngIf="record.dayOfWeek==0" class="divider">Sunday </span>
+                              <span *ngIf="record.dayOfWeek==1" class="divider">Monday</span>
+                              <span *ngIf="record.dayOfWeek==2" class="divider">Tuesday</span>
+                            </th>
+                            <td>
+                              <span *ngIf="record.isAvailable" class="divider">{{record.startTime}}</span>
+                              <span *ngIf="!record.isAvailable" class="divider">--</span>
+
+                            </td>
+                            <td>
+                              <span *ngIf="record.isAvailable" class="divider">{{record.endTime}}</span>
+                              <span *ngIf="!record.isAvailable" class="divider">--</span>
+                            </td>
+
+                            <td>
+                              <span *ngIf="record.isAvailable" class="divider">{{record.limitOfPatients}}</span>
+                              <span *ngIf="!record.isAvailable" class="divider">--</span>
+                            </td>
+                            <td>
+                              <span *ngIf="record.isAvailable" class="divider">Available</span>
+                              <span *ngIf="!record.isAvailable" class="divider">Day Off</span>
+                            </td>
+                          </tr>
+                          </ng-container>
+                          <!-- <ng-container *ngIf="record.startTime=='2000-01-01T00:00:00'">
+                          <tr>
+                            <th scope="row">
+                              <span *ngIf="record.dayOfWeek==3" class="divider">Wednesday</span>
+                              <span *ngIf="record.dayOfWeek==4" class="divider">Thursday</span>
+                              <span *ngIf="record.dayOfWeek==5" class="divider">Friday</span>
+                              <span *ngIf="record.dayOfWeek==6" class="divider">Saturday</span>
+                              <span *ngIf="record.dayOfWeek==0" class="divider">Sunday </span>
+                              <span *ngIf="record.dayOfWeek==1" class="divider">Monday</span>
+                              <span *ngIf="record.dayOfWeek==2" class="divider">Tuesday</span>
+                            </th>
+                            <td>
+                              <span  class="divider">--</span>
+                            </td>
+                            <td>
+                              <span  class="divider">--</span>
+                            </td>
+                            <td>
+                              <span  class="divider">--</span>
+                            </td>
+                            <td>
+                              <span  class="divider">--</span>
+                            </td>
+                            <td>
+                              <span  class="divider">Edit</span>
+                            </td>
+                          </tr>
+                        
+                          </ng-container> -->
+                        </ng-container>
+                          <!-- <tr>
+                            <th scope="row">2</th>
+                            <td>Bridie Kessler</td>
+                            <td>Developer</td>
+                            <td>35</td>
+                            <td>2014-12-05</td>
+                          </tr> -->
+                          <!-- <tr>
+                            <th scope="row">3</th>
+                            <td>Ashleigh Langosh</td>
+                            <td>Finance</td>
+                            <td>45</td>
+                            <td>2011-08-12</td>
+                          </tr> -->
+                          <!-- <tr>
+                            <th scope="row">4</th>
+                            <td>Angus Grady</td>
+                            <td>HR</td>
+                            <td>34</td>
+                            <td>2012-06-11</td>
+                          </tr> -->
+                          <!-- <tr>
+                            <th scope="row">5</th>
+                            <td>Raheem Lehner</td>
+                            <td>Dynamic Division Officer</td>
+                            <td>47</td>
+                            <td>2011-04-19</td>
+                          </tr> -->
+                        </tbody>
+                      </table>
+                      <!-- End Tables without borders -->
+        
                     </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <!-- <div class="row">
+                      <div class="col-lg-3 col-md-4 label ">Saturday</div>
+                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
                     </div>
-                  </form><!-- End settings Form -->
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label ">Sunday</div>
+                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label ">Monday</div>
+                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label ">Tuesday</div>
+                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label ">Wednesday</div>
+                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label ">Thursday</div>
+                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label ">Friday</div>
+                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
+                    </div>End settings Form -->
 
-                </div>
+                </div> </div>
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->

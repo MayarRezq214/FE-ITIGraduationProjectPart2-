@@ -5,10 +5,11 @@ import { Observable } from 'rxjs';
 import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
 import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
 import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
-import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorstatusDto';
+import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorStatusDto';
 import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
 import { GetDoctorsBySpecializationDto } from '../Types/GetDoctorsBySpecializationDto';
 import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
+import { AddWeekScheduleDto } from '../Types/AddWeekScheduleDto';
 @Injectable({
   providedIn: 'root'
 })
@@ -45,5 +46,7 @@ export class DoctorService {
    public getDoctorByIdForAdmin(id:string): Observable<GetDoctorByIDForAdminDto>{
     return this.client.get<GetDoctorByIDForAdminDto>(`https://localhost:7267/api/Admins/admin/getDoctorForAdmin/${id}`);
   }
-   
+   public addWeekSchedule(schedule : AddWeekScheduleDto): Observable<object>{
+    return this.client.post(`https://localhost:7267/addWeekSchedule`,schedule);
+   }
   }

@@ -5,6 +5,7 @@ import { DoctorService } from './doctor.service';
 import { Router } from '@angular/router';
 import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
 import { DataBetweenAddDrDrProfileService } from './data-between-add-dr-dr-profile.service';
+import { AddWeekScheduleDto } from '../Types/AddWeekScheduleDto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class NavigateToDoctorProfileAfterOnboardingService implements OnInit{
   phoneNumber? : string
   doctor? : GetDoctorByIDForAdminDto
   doctorId? : string
+  schedule? : AddWeekScheduleDto
   constructor(
     private doctorService : DoctorService,
     private router : Router,
@@ -30,16 +32,39 @@ export class NavigateToDoctorProfileAfterOnboardingService implements OnInit{
       next:(doctor) => {
         this.doctor = doctor;
         
-        this.doctorId = doctor.iD!
+        this.doctorId = doctor.id!
         this.dataFromRegisterDr.changeDoctorId(this.doctorId)
-       this.router.navigate(['/doctorProfile'])
+        console.log(this.doctor)
+        
+        
+        for (let i = 0; i < 7;i++){
+           this.schedule = {
+            id : 0,
+            isAvailable : true,
+            limitOfPatients : 0,
+            startTime : "2000-01-01T00:00:00",
+            endTime : "2000-01-01T00:00:00",
+            doctorId : this.doctor.id!,
+            dayOfWeek : i
+           }
+     this.doctorService.addWeekSchedule(this.schedule).subscribe({
+          next:()=>{
+              console.log("added")
+              this.router.navigate(['/doctorProfile'])
+          },
+          error:(error)=>{
+            console.log("add week schedule api failed",error);
+          } })
+        }
+        
+       
        },
       error: (error) => {
         console.log('calling dr by id api failed', error);
       },
     });
     
-
+  
 
   }
 }
