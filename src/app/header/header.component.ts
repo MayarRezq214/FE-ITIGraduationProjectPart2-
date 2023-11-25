@@ -12,13 +12,30 @@ import { GetAdminByPhoneNumberDto } from '../types/GetAdminByPhoneNumberDto';
 export class HeaderComponent implements OnInit{
   admin? : GetAdminByPhoneNumberDto;
   phoneNumber?: string;
+  isLoggedIn:boolean = false;
+  isDoctorLoggedIn:boolean = false;
+  isReceptionLoggedIn:boolean = false;
 constructor(private authenticationService: AuthenticationService,
   private adminService: AdminService){}
   ngOnInit(): void {
+    
+    this.authenticationService.isLoggedIn$.subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+    });
+    this.authenticationService.isDoctorLoggedIn$.subscribe((isDoctorLoggedIn) => {
+      this.isDoctorLoggedIn = isDoctorLoggedIn;
+    });
+    this.authenticationService.isReceptionLoggedIn$.subscribe((isReceptionLoggedIn) => {
+      this.isReceptionLoggedIn = isReceptionLoggedIn;
+    });
+
     this.phoneNumber = localStorage.getItem('phoneNumber')!
+
     if(!this.phoneNumber){
       this.phoneNumber = this.authenticationService.PhoneNumber;
     }
+    //#endregion admin
+    if(this.isLoggedIn){
     this.adminService.getAdminByPhoneNumber(this.phoneNumber!).subscribe({
       next:(Admin) => {
         this.admin = Admin
@@ -28,9 +45,15 @@ constructor(private authenticationService: AuthenticationService,
       }
     })
   }
+    //#endregion
+  }
   signOut(e:Event){
     this.authenticationService.isLoggedIn$.next(false)
-    localStorage.removeItem('token')
+    this.authenticationService.isDoctorLoggedIn$.next(false)
+    this.authenticationService.isReceptionLoggedIn$.next(false)
+    localStorage.removeItem('AdminToken')
+    localStorage.removeItem('DoctorToken')
+    localStorage.removeItem('receptionToken')
     localStorage.removeItem('phoneNumber')
   } 
 
