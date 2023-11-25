@@ -231,8 +231,21 @@
         </a>
       </li><!-- End Blank Page Nav -->
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#patients-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Patients</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="patients-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a [routerLink]="['/patientProfile']">
+              <i class="bi bi-circle"></i><span>Profile</span>
+            </a>
+          </li>
+        </ul>
+      </li>
     </ul>
 
+
   </aside>
-  <!-- End 
+  <!-- End
   -->

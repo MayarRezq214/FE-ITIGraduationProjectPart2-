@@ -15,6 +15,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
     DataTablesComponent,
     DoctorProfileComponent,
     LoginComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    PatientProfileComponent
   ],
 
   imports: [

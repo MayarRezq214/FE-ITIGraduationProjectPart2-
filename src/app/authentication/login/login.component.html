@@ -47,17 +47,35 @@
                     </div>
 
                     <div class="col-12">
+                      <div class="form-check form-check-inline">
+                        <input type="radio" name="flexRadioDefault" id="Admin" class="form-check-input" value="Admin" (change)="onSelect($event)">
+                        <label for="Admin" class="form-check-label">Admin</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="radio" name="flexRadioDefault" id="Doctor" class="form-check-input" value="Doctor" (change)="onSelect($event)">
+                        <label for="Doctor" class="form-check-label ">Doctor</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="radio" name="flexRadioDefault" id="Reception" class="form-check-input" value="Reception" (change)="onSelect($event)">
+                        <label for="Reception" class="form-check-label">Reception</label>
+                      </div>
+                    </div>
+                    
+                    <div class="col-12">
                       <div class="form-check">
                         <input formControlName="isRememberable" class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
                         <label class="form-check-label" for="rememberMe">Remember me</label>
                       </div>
                     </div>
+                
+
                     <div class="col-12">
                       <button (click)="handleLogin($event)" class="btn btn-primary w-100" >Login</button>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
                     </div>
+    
                   </form>
 
                 </div>
