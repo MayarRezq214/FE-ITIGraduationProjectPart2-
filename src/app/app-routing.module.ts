@@ -12,6 +12,7 @@ import { DoctorProfileComponent } from './doctor-profile/doctor-profile.componen
 import { LoginComponent } from './authentication/login/login.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
+import { SpecializtionComponent } from './specializtion/specializtion.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
   {path : 'dataTables' , component : DataTablesComponent},
   {path : 'doctorProfile' , component : DoctorProfileComponent},
   {path : 'adminProfile' , component : AdminProfileComponent},
-  {path : 'patientProfile' , component : PatientProfileComponent}
+  {path : 'patientProfile' , component : PatientProfileComponent},
+  {path : 'specialization' , component : SpecializtionComponent}
 ];
 
 @NgModule({

@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './authentication/login/login.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
+import { SpecializtionComponent } from './specializtion/specializtion.component';
 
 
 
@@ -35,7 +36,8 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
     DoctorProfileComponent,
     LoginComponent,
     AdminProfileComponent,
-    PatientProfileComponent
+    PatientProfileComponent,
+    SpecializtionComponent
   ],
   imports: [
     BrowserModule,
