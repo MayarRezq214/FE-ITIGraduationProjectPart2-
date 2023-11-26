@@ -67,7 +67,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Shifts</button>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings" (click)="onOpenShifts()">Shifts</button>
                 </li>
 
                 <li class="nav-item">
@@ -149,7 +149,7 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName"  name="name" ngModel  >
+                        <input type="text" class="form-control" id="fullName"  name="name" ngModel  >
                       </div>
                     </div>
 
@@ -157,35 +157,35 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Title</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company"   name="title" ngModel>
+                        <input type="text" class="form-control" id="company"   name="title" ngModel>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">Description</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about"  class="form-control" name="description" ngModel id="about" style="height: 100px"></textarea>
+                        <textarea  class="form-control" name="description" ngModel id="about" style="height: 100px"></textarea>
                       </div>
                     </div>
                     
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" name="phoneNumber" ngModel id="Job" >
+                        <input  type="text" class="form-control" name="phoneNumber" ngModel id="Job" >
                       </div>
                     </div> 
 
                      <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Salary</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" name="salary" ngModel id="Country">
+                        <input type="text" class="form-control" name="salary" ngModel >
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Date Of Birth</label>
+                      <label class="col-md-4 col-lg-3 col-form-label">Date Of Birth</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="date" class="form-control" name="dateOfBirth" ngModel   >
+                        <input type="date" class="form-control" name="dateOfBirth" ngModel >
                       </div>
                     </div> 
 
@@ -201,7 +201,7 @@
                   </form><!-- End Profile Edit Form -->
 
                 </div>
-
+                
                 <div class="tab-pane fade pt-3 profile-overview" id="profile-settings">
 
                   <!-- Settings Form -->
@@ -212,11 +212,95 @@
                     <div class="card-body">
                    
                       <!-- Active Table -->
-                     
-                      <table class="table table-borderless">
+                     <form #weekScheduleForm="ngForm">
+                        <div class="row">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Sunday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">start</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">end</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">limit</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">available</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="available" ngModel >
+                            </div>
+                          </div>
+                         <button >Apply Changes</button>
+                        </div>
+
+
+                    <!-- <table class="table table-borderless">
                         <thead>
                           <tr>
-                            <!-- <th scope="col">#</th> -->
+                            <th scope="col">Day</th>
+                            <th scope="col">Shift Start</th>
+                            <th scope="col">Shift End</th>
+                            <th scope="col">Limit of Patients</th>
+                            <th scope="col">On Shift</th>
+                            <th scope="col">Edit</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container *ngFor="let record of doctor?.weekSchadual" >
+                             
+                          <tr >
+                            <th scope="row" >
+                              <span *ngIf="record.dayOfWeek==3" class="divider">Wednesday</span>
+                              <span *ngIf="record.dayOfWeek==4" class="divider" >Thursday</span>
+                              <span *ngIf="record.dayOfWeek==5" class="divider" >Friday</span>
+                              <span *ngIf="record.dayOfWeek==6" class="divider" >Saturday</span>
+                              <span *ngIf="record.dayOfWeek==0" class="divider" >Sunday </span>
+                              <span *ngIf="record.dayOfWeek==1" class="divider" >Monday</span>
+                              <span *ngIf="record.dayOfWeek==2" class="divider" >Tuesday</span>
+                            </th>
+                            <td >
+                              <div *ngIf="isEditing"> 
+                                <input type="text"  name="start" [(ngModel)]="record.startTime">
+                              </div>
+                              <div *ngIf="!isEditing"> 
+                                <span type="time" >{{record.startTime}}</span>
+                              </div>
+                            </td>
+                            <td>
+                              <input type="time" name="end" ngModel >
+                            </td>
+
+                            <td>
+                              <input type="number" name="limit" ngModel >
+                            </td>
+                            <td>
+                              <input type="text" name="available" ngModel>
+                            </td>
+                            <td>
+                              <button class="btn-primary" (click)="onOpenShifts(record)">Edit</button>
+                            </td>
+                          </tr>
+                        </ng-container>
+                        </tbody>
+                    </table> -->
+                     </form>
+
+
+                      <!-- <table class="table table-borderless">
+                        <thead>
+                          <tr>
+                             <th scope="col">#</th> 
                             <th scope="col">Day</th>
                             <th scope="col">Shift Start</th>
                             <th scope="col">Shift End</th>
@@ -226,39 +310,37 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <ng-container *ngFor="let record of doctor?.weekSchadual">
-                            <ng-container *ngIf="record.startTime!='12:00AM'">
+                          <ng-container *ngFor="let record of doctor?.weekSchadual" >
+                                                          <input type="time" name="end" ngModel >
+
+                            <ng-container>
+                              
                           <tr >
-                            <th scope="row">
+                            <th scope="row" >
                               <span *ngIf="record.dayOfWeek==3" class="divider">Wednesday</span>
-                              <span *ngIf="record.dayOfWeek==4" class="divider">Thursday</span>
-                              <span *ngIf="record.dayOfWeek==5" class="divider">Friday</span>
-                              <span *ngIf="record.dayOfWeek==6" class="divider">Saturday</span>
-                              <span *ngIf="record.dayOfWeek==0" class="divider">Sunday </span>
-                              <span *ngIf="record.dayOfWeek==1" class="divider">Monday</span>
-                              <span *ngIf="record.dayOfWeek==2" class="divider">Tuesday</span>
+                              <span *ngIf="record.dayOfWeek==4" class="divider" >Thursday</span>
+                              <span *ngIf="record.dayOfWeek==5" class="divider" >Friday</span>
+                              <span *ngIf="record.dayOfWeek==6" class="divider" >Saturday</span>
+                              <span *ngIf="record.dayOfWeek==0" class="divider" >Sunday </span>
+                              <span *ngIf="record.dayOfWeek==1" class="divider" >Monday</span>
+                              <span *ngIf="record.dayOfWeek==2" class="divider" >Tuesday</span>
                             </th>
-                            <td>
-                              <span *ngIf="record.isAvailable" class="divider">{{record.startTime}}</span>
-                              <span *ngIf="!record.isAvailable" class="divider">--</span>
-
+                            <td >
+                              <input type="time" name="start" ngModel > {{record.id}}
                             </td>
                             <td>
-                              <span *ngIf="record.isAvailable" class="divider">{{record.endTime}}</span>
-                              <span *ngIf="!record.isAvailable" class="divider">--</span>
+                              <input type="time" name="end" ngModel >
                             </td>
 
                             <td>
-                              <span *ngIf="record.isAvailable" class="divider">{{record.limitOfPatients}}</span>
-                              <span *ngIf="!record.isAvailable" class="divider">--</span>
+                              <input type="number" name="limit" ngModel >
                             </td>
                             <td>
-                              <span *ngIf="record.isAvailable" class="divider">Available</span>
-                              <span *ngIf="!record.isAvailable" class="divider">Day Off</span>
+                              <input type="text" name="available" ngModel>
                             </td>
                           </tr>
-                          </ng-container>
-                          <!-- <ng-container *ngIf="record.startTime=='2000-01-01T00:00:00'">
+                        </ng-container>
+                          <ng-container *ngIf="record.startTime=='2000-01-01T00:00:00'">
                           <tr>
                             <th scope="row">
                               <span *ngIf="record.dayOfWeek==3" class="divider">Wednesday</span>
@@ -286,9 +368,9 @@
                             </td>
                           </tr>
                         
-                          </ng-container> -->
+                          </ng-container> 
                         </ng-container>
-                          <!-- <tr>
+                          < <tr>
                             <th scope="row">2</th>
                             <td>Bridie Kessler</td>
                             <td>Developer</td>
@@ -316,10 +398,10 @@
                             <td>47</td>
                             <td>2011-04-19</td>
                           </tr> -->
-                        </tbody>
-                      </table>
+                        <!-- </tbody>
+                      </table> --> 
                       <!-- End Tables without borders -->
-        
+                     
                     </div>
                     <!-- <div class="row">
                       <div class="col-lg-3 col-md-4 label ">Saturday</div>
@@ -351,7 +433,7 @@
                     </div>End settings Form -->
 
                 </div> </div>
-
+               
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
                   <form>

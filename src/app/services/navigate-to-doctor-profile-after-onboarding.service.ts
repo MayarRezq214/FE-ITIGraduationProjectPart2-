@@ -49,7 +49,7 @@ export class NavigateToDoctorProfileAfterOnboardingService implements OnInit{
            }
      this.doctorService.addWeekSchedule(this.schedule).subscribe({
           next:()=>{
-              console.log("added")
+              //console.log("added")
               this.router.navigate(['/doctorProfile'])
           },
           error:(error)=>{

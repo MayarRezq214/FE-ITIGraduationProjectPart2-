@@ -13,6 +13,8 @@ import { DoctorsForAllSpecializations } from '../Types/DoctorsForAllSpecializati
 import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
 import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
 import { DataBetweenAddDrDrProfileService } from '../services/data-between-add-dr-dr-profile.service';
+import { WeekScheduleForDoctorsDto } from '../Types/WeekScheduleForDoctorsDto';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -36,7 +38,8 @@ export class DoctorProfileComponent  implements OnInit{
       
   
       @ViewChild('form') form : NgForm | undefined ;
-      
+      @ViewChild ('weekScheduleForm') weekScheduleForm : NgForm | undefined ;
+
       sId : number =0;
   
       dId! : string;
@@ -48,6 +51,7 @@ export class DoctorProfileComponent  implements OnInit{
       doctorById?: GetDoctorByIDDto;
       isDoctorSelected : boolean =false;
       isSpecializationSelected: boolean = false;
+      isEditing : boolean = false;
       constructor( private route: ActivatedRoute ,
                     private doctorService : DoctorService, 
                     private navigate : NavigateToDoctorProfileAfterOnboardingService,
@@ -95,18 +99,29 @@ export class DoctorProfileComponent  implements OnInit{
    //   photo : this.doctor?.imageUrl
     })
   }
-  selected(e: Event):void{
+      onOpenShifts(){
 
-    this.isSpecializationSelected = true;
-    this.id = (e.target as any).value;
-    
-    
-    if(this.id == 0){
-      this.isSpecializationSelected = false;
-    }
-    this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
-    console.log(this.Doctors)
-  }
+        this.isEditing = true
+          this.weekScheduleForm?.setValue({
+          start : moment(this.doctor?.weekSchadual[0].startTime, 'h:m:s A').format('HH:mm:ss'),
+          end: moment(this.doctor?.weekSchadual[0].endTime, 'h:m:s A').format('HH:mm:ss'),
+          limit : this.doctor?.weekSchadual[0].limitOfPatients,
+          available :this.doctor?.weekSchadual[0].isAvailable
+        })
+      
+      }
+      selected(e: Event):void{
+
+        this.isSpecializationSelected = true;
+        this.id = (e.target as any).value;
+        
+        
+        if(this.id == 0){
+          this.isSpecializationSelected = false;
+        }
+        this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
+        console.log(this.Doctors)
+      }
 
 
       doctorSelected(event: Event):void{
