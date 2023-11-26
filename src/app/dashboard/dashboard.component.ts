@@ -40,33 +40,5 @@ export class DashboardComponent implements OnInit {
       }
     }
 
-    onClick(){
-      const date = new Date()
-
-    
-      const year : number = date.getFullYear()
-      const month : number = date.getMonth()+1
-      const day : number = date.getDate()+0
-      let startDate  = `${year}-${month.toString().padStart(2,'0')}-${day.toString().padStart(2,'0')}`
-  
-      let endDate =new Date (date.setDate(date.getDate() + 9));
-  
-      const endyear : number = endDate.getFullYear()
-      const endmonth : number = endDate.getMonth()+1
-      const endDay : number = endDate.getDate()+0
-    
-     let endDate1 = `${endyear}-${endmonth.toString().padStart(2,'0')}-${endDay.toString().padStart(2,'0')}`
-  
-          if(day==26){
-          this.doctorService.addVisitCount(startDate,endDate1).subscribe({
-            next:()=>{
-                console.log(startDate)
-                console.log(endDate1)
-            },
-            error:(error)=>{
-              console.log("add visit count api failed",error)
-            }
-          })
-        }
-    }
+   
 }

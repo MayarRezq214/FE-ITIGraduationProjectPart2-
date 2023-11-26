@@ -15,6 +15,7 @@ import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
 import { DataBetweenAddDrDrProfileService } from '../services/data-between-add-dr-dr-profile.service';
 import { WeekScheduleForDoctorsDto } from '../Types/WeekScheduleForDoctorsDto';
 import * as moment from 'moment';
+import { shareReplay } from 'rxjs';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -52,7 +53,7 @@ export class DoctorProfileComponent  implements OnInit{
       isDoctorSelected : boolean =false;
       isSpecializationSelected: boolean = false;
       available0? : boolean 
-
+      status? : boolean
       constructor( private route: ActivatedRoute ,
                     private doctorService : DoctorService, 
                     private navigate : NavigateToDoctorProfileAfterOnboardingService,
@@ -96,7 +97,7 @@ export class DoctorProfileComponent  implements OnInit{
       phoneNumber : this.doctor?.phoneNumber,
       salary : this.doctor?.salary,
       dateOfBirth : this.doctor?.dateOfBirth.replace('T00:00:00',' ').trim(),
-      
+      status : this.doctor?.status
    //   photo : this.doctor?.imageUrl
     })
   }
@@ -324,10 +325,18 @@ export class DoctorProfileComponent  implements OnInit{
         this.isUploading = true
         
       }
-
+      doctorStatusChange(e:Event){
+        e.preventDefault();
+       const s= (e.target as HTMLInputElement).value
+         
+      if(s=='true'){
+        this.status = true
+    }
+    if( s=='false')
+    {this.status=false}
+      }
       onSave(e : Event, form : any){
         e.preventDefault();
-        console.log((e.target as HTMLInputElement).value)
         
       //   if(this.form.controls.photo){
       //     console.log(this.form.controls.photo.value?.split('\\')[2])
@@ -341,7 +350,7 @@ export class DoctorProfileComponent  implements OnInit{
       //     }
       //   })
       // }
-      
+     
           this.updateDoctor = {
             id : this.doctorId,
             name: this.form?.value.name,
@@ -350,9 +359,9 @@ export class DoctorProfileComponent  implements OnInit{
             salary : this.form?.value.salary,
             phoneNumber : this.form?.value.phoneNumber,
             dateOfBirth : this.form?.value.dateOfBirth,
+            status :  this.status
           }
           console.log(this.updateDoctor)
-          console.log(this.doctorId)
 
           this.doctorService.UpdateDoctor(this.doctorId,this.updateDoctor).subscribe({
             next:()=>{
