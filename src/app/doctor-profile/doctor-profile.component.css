@@ -2,3 +2,15 @@
     display: flex;
     flex-direction: row;
 }
+.day{
+    border: 1px dashed lightgray;
+    border-radius: 10px;
+}
+.btn-apply{
+    width: 70%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-left: 15%;
+}

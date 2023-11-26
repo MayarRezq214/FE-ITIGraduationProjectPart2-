@@ -213,87 +213,242 @@
                    
                       <!-- Active Table -->
                      <form #weekScheduleForm="ngForm">
-                        <div class="row">
+                        <div class="row day">
                           <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">Sunday</label>
+                            <label class="col-md-4 col-lg-3 label">Sunday</label>
                           </div>
                           <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">start</label>
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
                             <div class="col-md-8 col-lg-9">
-                              <input type="time" class="form-control" name="start" ngModel >
+                              <input type="time" class="form-control" name="start0" ngModel >
                             </div>
                           </div>
                           <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">end</label>
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
                             <div class="col-md-8 col-lg-9">
-                              <input type="time" class="form-control" name="end" ngModel >
+                              <input type="time" class="form-control" name="end0" ngModel >
                             </div>
                           </div>
                           <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">limit</label>
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
                             <div class="col-md-8 col-lg-9">
-                              <input type="text" class="form-control" name="limit" ngModel >
+                              <input type="text" class="form-control" name="limit0" ngModel >
                             </div>
                           </div>
                           <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">available</label>
+                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
                             <div class="col-md-8 col-lg-9">
-                              <input type="text" class="form-control" name="available" ngModel >
+                              <input type="text" class="form-control" name="available0" ngModel >
                             </div>
                           </div>
-                         <button >Apply Changes</button>
+          
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,0)" >Apply Changes</button>
                         </div>
 
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Monday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start1" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end1" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit1" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="available1" ngModel >
+                            </div>
+                          </div>
+          
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,1)" >Apply Changes</button>
+                        </div>
 
-                    <!-- <table class="table table-borderless">
-                        <thead>
-                          <tr>
-                            <th scope="col">Day</th>
-                            <th scope="col">Shift Start</th>
-                            <th scope="col">Shift End</th>
-                            <th scope="col">Limit of Patients</th>
-                            <th scope="col">On Shift</th>
-                            <th scope="col">Edit</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <ng-container *ngFor="let record of doctor?.weekSchadual" >
-                             
-                          <tr >
-                            <th scope="row" >
-                              <span *ngIf="record.dayOfWeek==3" class="divider">Wednesday</span>
-                              <span *ngIf="record.dayOfWeek==4" class="divider" >Thursday</span>
-                              <span *ngIf="record.dayOfWeek==5" class="divider" >Friday</span>
-                              <span *ngIf="record.dayOfWeek==6" class="divider" >Saturday</span>
-                              <span *ngIf="record.dayOfWeek==0" class="divider" >Sunday </span>
-                              <span *ngIf="record.dayOfWeek==1" class="divider" >Monday</span>
-                              <span *ngIf="record.dayOfWeek==2" class="divider" >Tuesday</span>
-                            </th>
-                            <td >
-                              <div *ngIf="isEditing"> 
-                                <input type="text"  name="start" [(ngModel)]="record.startTime">
-                              </div>
-                              <div *ngIf="!isEditing"> 
-                                <span type="time" >{{record.startTime}}</span>
-                              </div>
-                            </td>
-                            <td>
-                              <input type="time" name="end" ngModel >
-                            </td>
-
-                            <td>
-                              <input type="number" name="limit" ngModel >
-                            </td>
-                            <td>
-                              <input type="text" name="available" ngModel>
-                            </td>
-                            <td>
-                              <button class="btn-primary" (click)="onOpenShifts(record)">Edit</button>
-                            </td>
-                          </tr>
-                        </ng-container>
-                        </tbody>
-                    </table> -->
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Tuesday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start2" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end2" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit2" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="available2" ngModel >
+                            </div>
+                          </div>
+          
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,2)" >Apply Changes</button>
+                        </div>
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Wednesday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start3" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end3" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit3" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="available3" ngModel >
+                            </div>
+                          </div>
+          
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,3)" >Apply Changes</button>
+                        </div>
+                        
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Thursday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start4" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end4" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit4" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="available4" ngModel >
+                            </div>
+                          </div>
+          
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,4)" >Apply Changes</button>
+                        </div>
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Friday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start5" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end5" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit5" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="available5" ngModel >
+                            </div>
+                          </div>
+          
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,5)" >Apply Changes</button>
+                        </div>
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Saturday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start6" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end6" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit6" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="available6" ngModel >
+                            </div>
+                          </div>
+          
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,6)" >Apply Changes</button>
+                        </div>
+                        
+                     
                      </form>
 
 

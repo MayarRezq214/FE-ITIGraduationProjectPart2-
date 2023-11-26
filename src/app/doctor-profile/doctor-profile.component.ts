@@ -44,14 +44,15 @@ export class DoctorProfileComponent  implements OnInit{
   
       dId! : string;
       doctorId: string = '0';
-
+      weekScheduleRecord? : WeekScheduleForDoctorsDto
       doctors?: GetAllDoctorsDto[];
       specializations?: GetAllSpecializationsDto[];
       Doctors? : DoctorsForAllSpecializations[];
       doctorById?: GetDoctorByIDDto;
       isDoctorSelected : boolean =false;
       isSpecializationSelected: boolean = false;
-      isEditing : boolean = false;
+      available0? : boolean 
+
       constructor( private route: ActivatedRoute ,
                     private doctorService : DoctorService, 
                     private navigate : NavigateToDoctorProfileAfterOnboardingService,
@@ -100,15 +101,187 @@ export class DoctorProfileComponent  implements OnInit{
     })
   }
       onOpenShifts(){
-
-        this.isEditing = true
+        
           this.weekScheduleForm?.setValue({
-          start : moment(this.doctor?.weekSchadual[0].startTime, 'h:m:s A').format('HH:mm:ss'),
-          end: moment(this.doctor?.weekSchadual[0].endTime, 'h:m:s A').format('HH:mm:ss'),
-          limit : this.doctor?.weekSchadual[0].limitOfPatients,
-          available :this.doctor?.weekSchadual[0].isAvailable
+          start0 : moment(this.doctor?.weekSchadual[0].startTime, 'h:m:s A').format('HH:mm:ss'),
+          end0: moment(this.doctor?.weekSchadual[0].endTime, 'h:m:s A').format('HH:mm:ss'),
+          limit0 : this.doctor?.weekSchadual[0].limitOfPatients,
+          available0 :this.doctor?.weekSchadual[0].isAvailable,
+          start1 : moment(this.doctor?.weekSchadual[1].startTime, 'h:m:s A').format('HH:mm:ss'),
+          end1: moment(this.doctor?.weekSchadual[1].endTime, 'h:m:s A').format('HH:mm:ss'),
+          limit1 : this.doctor?.weekSchadual[1].limitOfPatients,
+          available1 :this.doctor?.weekSchadual[1].isAvailable,
+          start2 : moment(this.doctor?.weekSchadual[2].startTime, 'h:m:s A').format('HH:mm:ss'),
+          end2: moment(this.doctor?.weekSchadual[2].endTime, 'h:m:s A').format('HH:mm:ss'),
+          limit2 : this.doctor?.weekSchadual[2].limitOfPatients,
+          available2 :this.doctor?.weekSchadual[2].isAvailable,
+          start3 : moment(this.doctor?.weekSchadual[3].startTime, 'h:m:s A').format('HH:mm:ss'),
+          end3: moment(this.doctor?.weekSchadual[3].endTime, 'h:m:s A').format('HH:mm:ss'),
+          limit3 : this.doctor?.weekSchadual[3].limitOfPatients,
+          available3 :this.doctor?.weekSchadual[3].isAvailable,
+          start4: moment(this.doctor?.weekSchadual[4].startTime, 'h:m:s A').format('HH:mm:ss'),
+          end4: moment(this.doctor?.weekSchadual[4].endTime, 'h:m:s A').format('HH:mm:ss'),
+          limit4 : this.doctor?.weekSchadual[4].limitOfPatients,
+          available4 :this.doctor?.weekSchadual[4].isAvailable,
+          start5 : moment(this.doctor?.weekSchadual[5].startTime, 'h:m:s A').format('HH:mm:ss'),
+          end5: moment(this.doctor?.weekSchadual[5].endTime, 'h:m:s A').format('HH:mm:ss'),
+          limit5 : this.doctor?.weekSchadual[5].limitOfPatients,
+          available5 :this.doctor?.weekSchadual[5].isAvailable,
+          start6 : moment(this.doctor?.weekSchadual[6].startTime, 'h:m:s A').format('HH:mm:ss'),
+          end6: moment(this.doctor?.weekSchadual[6].endTime, 'h:m:s A').format('HH:mm:ss'),
+          limit6 : this.doctor?.weekSchadual[6].limitOfPatients,
+          available6 :this.doctor?.weekSchadual[6].isAvailable,
         })
-      
+        console.log( this.doctor?.weekSchadual[1].limitOfPatients)
+      }
+      onApply(e : Event , index : number){
+         if(index==0)
+          {
+            let y:boolean = this.weekScheduleForm?.value.available0
+            if(y){y==true}
+        if(!y)
+        {y==false}
+            this.weekScheduleRecord = {
+              id : this.doctor?.weekSchadual[0].id!,
+              startTime : this.weekScheduleForm?.value.start0,
+              endTime : this.weekScheduleForm?.value.end0,
+              limitOfPatients : this.weekScheduleForm?.value.limit0,
+              isAvailable : y,
+              dayOfWeek : index,
+              doctorId : this.doctorId
+            }
+          }
+          if(index==1)
+          {
+            let y:boolean = this.weekScheduleForm?.value.available1
+              if(this.weekScheduleForm?.value.available1=='true')
+               {y=true}
+                 if(this.weekScheduleForm?.value.available1=='false')
+                  {y=false}
+            this.weekScheduleRecord = {
+              id : this.doctor?.weekSchadual[1].id!,
+              startTime : this.weekScheduleForm?.value.start1,
+              endTime : this.weekScheduleForm?.value.end1,
+              limitOfPatients : this.weekScheduleForm?.value.limit1,
+              isAvailable : y,
+              dayOfWeek : index,
+              doctorId : this.doctorId
+            }
+          }
+          if(index==2)
+          {
+            let y:boolean = this.weekScheduleForm?.value.available2
+              if(this.weekScheduleForm?.value.available2=='true')
+               {y=true}
+                 if(this.weekScheduleForm?.value.available2=='false')
+                  {y=false}
+            this.weekScheduleRecord = {
+              id : this.doctor?.weekSchadual[2].id!,
+              startTime : this.weekScheduleForm?.value.start2,
+              endTime : this.weekScheduleForm?.value.end2,
+              limitOfPatients : this.weekScheduleForm?.value.limit2,
+              isAvailable : y,
+              dayOfWeek : index,
+              doctorId : this.doctorId
+            }
+          
+          }
+          if(index==3)
+          {
+            let y:boolean = this.weekScheduleForm?.value.available3
+              if(this.weekScheduleForm?.value.available3=='true')
+               {y=true}
+                 if(this.weekScheduleForm?.value.available3=='false')
+                  {y=false}
+            this.weekScheduleRecord = {
+              id : this.doctor?.weekSchadual[3].id!,
+              startTime : this.weekScheduleForm?.value.start3,
+              endTime : this.weekScheduleForm?.value.end3,
+              limitOfPatients : this.weekScheduleForm?.value.limit3,
+              isAvailable : y,
+              dayOfWeek : index,
+              doctorId : this.doctorId
+            }
+          }
+          if(index==4)
+          {
+            let y:boolean = this.weekScheduleForm?.value.available4
+              if(this.weekScheduleForm?.value.available4=='true')
+               {y=true}
+                 if(this.weekScheduleForm?.value.available4=='false')
+                  {y=false}
+            this.weekScheduleRecord = {
+              id : this.doctor?.weekSchadual[4].id!,
+              startTime : this.weekScheduleForm?.value.start4,
+              endTime : this.weekScheduleForm?.value.end4,
+              limitOfPatients : this.weekScheduleForm?.value.limit4,
+              isAvailable : y,
+              dayOfWeek : index,
+              doctorId : this.doctorId
+            }
+          }
+          if(index==2)
+          {
+            let y:boolean = this.weekScheduleForm?.value.available2
+              if(this.weekScheduleForm?.value.available1=='true')
+               {y=true}
+                 if(this.weekScheduleForm?.value.available1=='false')
+                  {y=false}
+            this.weekScheduleRecord = {
+              id : this.doctor?.weekSchadual[2].id!,
+              startTime : this.weekScheduleForm?.value.start2,
+              endTime : this.weekScheduleForm?.value.end2,
+              limitOfPatients : this.weekScheduleForm?.value.limit2,
+              isAvailable : y,
+              dayOfWeek : index,
+              doctorId : this.doctorId
+            }
+          }
+          if(index==5)
+          {
+            let y:boolean = this.weekScheduleForm?.value.available5
+              if(this.weekScheduleForm?.value.available5=='true')
+               {y=true}
+                 if(this.weekScheduleForm?.value.available5=='false')
+                  {y=false}
+            this.weekScheduleRecord = {
+              id : this.doctor?.weekSchadual[5].id!,
+              startTime : this.weekScheduleForm?.value.start5,
+              endTime : this.weekScheduleForm?.value.end5,
+              limitOfPatients : this.weekScheduleForm?.value.limit5,
+              isAvailable : y,
+              dayOfWeek : index,
+              doctorId : this.doctorId
+            }
+          }
+          if(index==6)
+          {
+            let y:boolean = this.weekScheduleForm?.value.available6
+              if(this.weekScheduleForm?.value.available6=='true')
+               {y=true}
+                 if(this.weekScheduleForm?.value.available6=='false')
+                  {y=false}
+            this.weekScheduleRecord = {
+              id : this.doctor?.weekSchadual[6].id!,
+              startTime : this.weekScheduleForm?.value.start6,
+              endTime : this.weekScheduleForm?.value.end6,
+              limitOfPatients : this.weekScheduleForm?.value.limit6,
+              isAvailable : y,
+              dayOfWeek : index,
+              doctorId : this.doctorId
+            }
+          }
+          
+          
+          
+        this.doctorService.updateWeekScheduleRecord(this.weekScheduleRecord!,this.doctor?.weekSchadual[index].id!).subscribe({
+          next:()=>{
+            console.log(this.weekScheduleRecord)
+          },
+          error:(error)=>{
+            console.log("update week schedule failed ", error)
+          }
+        })
       }
       selected(e: Event):void{
 

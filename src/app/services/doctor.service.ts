@@ -10,6 +10,7 @@ import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
 import { GetDoctorsBySpecializationDto } from '../Types/GetDoctorsBySpecializationDto';
 import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
 import { AddWeekScheduleDto } from '../Types/AddWeekScheduleDto';
+import { WeekScheduleForDoctorsDto } from '../Types/WeekScheduleForDoctorsDto';
 @Injectable({
   providedIn: 'root'
 })
@@ -48,5 +49,8 @@ export class DoctorService {
   }
    public addWeekSchedule(schedule : AddWeekScheduleDto): Observable<object>{
     return this.client.post(`https://localhost:7267/addWeekSchedule`,schedule);
+   }
+   public updateWeekScheduleRecord(schedule : WeekScheduleForDoctorsDto, id:number):Observable<object>{
+    return this.client.put(`https://localhost:7267/api/Admins/admins/updateWeekSchedule/${id}`,schedule);
    }
   }

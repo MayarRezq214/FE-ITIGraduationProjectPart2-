@@ -5,4 +5,5 @@ export interface WeekScheduleForDoctorsDto {
     endTime: string;
     isAvailable: boolean;
     limitOfPatients : number
+    doctorId : string
 }
