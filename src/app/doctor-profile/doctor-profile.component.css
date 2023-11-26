@@ -14,3 +14,10 @@
     border-radius: 10px;
     margin-left: 15%;
 }
+.radio {
+    margin-left: 3%;
+}
+.radio-btns{
+    display: flex;
+    flex-direction: row;
+}
