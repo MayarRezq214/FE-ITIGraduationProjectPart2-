@@ -111,8 +111,6 @@ export class FormsComponent implements OnInit{
     this.doctorService.registerDoctor(this.registerDoctor).subscribe({
       next:()=>
       {
-
-        alert("doctor added successfully")
      
         this.navigate.phoneNumber = this.registerDoctor.phoneNumber
        this.navigate.open()
