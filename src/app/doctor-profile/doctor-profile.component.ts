@@ -62,10 +62,10 @@ export class DoctorProfileComponent  implements OnInit{
   ngOnInit() {
     
      // console.log(this.navigate.doctor)
+     
      this.dataFromRegisterDr.currentDoctorId.subscribe(doctorId=>this.doctorId=doctorId)
       this.doctor = this.navigate.doctor
       //console.log(this.doctor)
-     console.log(this.doctorId)
       this.doctorService.getDoctors().subscribe({
         next:(doctors) => {
           this.doctors = doctors;
@@ -85,7 +85,7 @@ export class DoctorProfileComponent  implements OnInit{
         },
       })
 
-       
+      this.onOpenShifts()
   }
 
   onEdit(){
@@ -132,7 +132,6 @@ export class DoctorProfileComponent  implements OnInit{
           limit6 : this.doctor?.weekSchadual[6].limitOfPatients,
           available6 :this.doctor?.weekSchadual[6].isAvailable,
         })
-        console.log( this.doctor?.weekSchadual[1].limitOfPatients)
       }
       onApply(e : Event , index : number){
          if(index==0)
@@ -277,6 +276,7 @@ export class DoctorProfileComponent  implements OnInit{
         this.doctorService.updateWeekScheduleRecord(this.weekScheduleRecord!,this.doctor?.weekSchadual[index].id!).subscribe({
           next:()=>{
             console.log(this.weekScheduleRecord)
+            
           },
           error:(error)=>{
             console.log("update week schedule failed ", error)

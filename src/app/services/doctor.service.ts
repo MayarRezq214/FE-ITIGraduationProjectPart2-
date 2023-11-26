@@ -53,4 +53,8 @@ export class DoctorService {
    public updateWeekScheduleRecord(schedule : WeekScheduleForDoctorsDto, id:number):Observable<object>{
     return this.client.put(`https://localhost:7267/api/Admins/admins/updateWeekSchedule/${id}`,schedule);
    }
+
+   public addVisitCount(startDate : string, endDate: string):Observable<object>{
+    return this.client.post(`https://localhost:7267/api/Doctor/addVisitCount/${startDate}?EndDate=${endDate}`,endDate)
+   }
   }
