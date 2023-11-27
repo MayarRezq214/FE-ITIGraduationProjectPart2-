@@ -37,7 +37,6 @@ export class NavigateToDoctorProfileAfterOnboardingService implements OnInit{
         console.log(this.doctor)
         
         
-        for (let i = 0; i < 7;i++){
            this.schedule = {
             id : 0,
             isAvailable : true,
@@ -45,7 +44,7 @@ export class NavigateToDoctorProfileAfterOnboardingService implements OnInit{
             startTime : "2000-01-01T00:00:00",
             endTime : "2000-01-01T00:00:00",
             doctorId : this.doctor.id!,
-            dayOfWeek : i
+            dayOfWeek : 0
            }
      this.doctorService.addWeekSchedule(this.schedule).subscribe({
           next:()=>{
@@ -56,7 +55,7 @@ export class NavigateToDoctorProfileAfterOnboardingService implements OnInit{
           error:(error)=>{
             console.log("add week schedule api failed",error);
           } })
-        }
+        
         
        
        },

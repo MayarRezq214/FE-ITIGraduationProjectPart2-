@@ -21,3 +21,12 @@
     display: flex;
     flex-direction: row;
 }
+.search{
+    border: 1px dashed lightgray;
+    border-radius:  10px;
+}
+
+
+.form-select{
+    width: 20%;
+}
