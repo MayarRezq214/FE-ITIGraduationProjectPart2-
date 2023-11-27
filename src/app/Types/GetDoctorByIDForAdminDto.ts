@@ -1,7 +1,8 @@
 import { WeekScheduleForDoctorsDto } from "./WeekScheduleForDoctorsDto";
 
+
 export interface GetDoctorByIDForAdminDto {
-    iD: string | null;
+    id: string | null;
     name: string;
     title: string | null;
     description: string | null;

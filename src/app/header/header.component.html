@@ -171,6 +171,7 @@
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
             <span *ngIf="isLoggedIn" class="d-none d-md-block dropdown-toggle ps-2">{{admin?.name}}</span>
+            <span *ngIf="isDoctorLoggedIn" class="d-none d-md-block dropdown-toggle ps-2">{{doctor?.name}}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -178,12 +179,20 @@
               <h6>{{admin?.name}}</h6>
               <span>Admin</span>
             </li>
+            <li *ngIf="isDoctorLoggedIn" class="dropdown-header">
+              <h6>{{doctor?.name}}</h6>
+              <span>Doctor</span>
+            </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
               <a *ngIf="isLoggedIn" [routerLink]="['/adminProfile']" class="dropdown-item d-flex align-items-center" >
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+              <a *ngIf="isDoctorLoggedIn" [routerLink]="['myDoctorProfile']" class="dropdown-item d-flex align-items-center" >
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>

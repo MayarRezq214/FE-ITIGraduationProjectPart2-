@@ -1,9 +1,9 @@
 import { Injectable, OnInit } from '@angular/core';
-import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
+import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
 import { FormsComponent } from '../forms/forms.component';
 import { DoctorService } from './doctor.service';
 import { Router } from '@angular/router';
-import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
+import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
 import { DataBetweenAddDrDrProfileService } from './data-between-add-dr-dr-profile.service';
 
 @Injectable({
@@ -29,8 +29,7 @@ export class NavigateToDoctorProfileAfterOnboardingService implements OnInit{
     this.doctorService.GetDoctorByPhone(this.phoneNumber!).subscribe({
       next:(doctor) => {
         this.doctor = doctor;
-        
-        this.doctorId = doctor.iD!
+        this.doctorId = doctor.id!
         this.dataFromRegisterDr.changeDoctorId(this.doctorId)
        this.router.navigate(['/doctorProfile'])
        },
