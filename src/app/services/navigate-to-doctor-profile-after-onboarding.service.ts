@@ -1,11 +1,11 @@
 import { Injectable, OnInit } from '@angular/core';
-import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
+import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
 import { FormsComponent } from '../forms/forms.component';
 import { DoctorService } from './doctor.service';
 import { Router } from '@angular/router';
-import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
+import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
 import { DataBetweenAddDrDrProfileService } from './data-between-add-dr-dr-profile.service';
-import { AddWeekScheduleDto } from '../Types/AddWeekScheduleDto';
+import { AddWeekScheduleDto } from '../types/AddWeekScheduleDto';
 
 @Injectable({
   providedIn: 'root'
