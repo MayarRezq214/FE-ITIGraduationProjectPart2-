@@ -222,29 +222,90 @@
                     <li><a class="dropdown-item" href="#">This Year</a></li>
                   </ul>
                 </div>
+                <!--for reception-->
+                <div *ngIf="isReceptionLoggedIn" class="row justify-content-center pt-2">
+                  <select (change)="selected($event)" class="col form-select border-2 py-3 mx-3">
+                    <option selected="" value="0" id="All">All Specialization</option>
+                    <option  *ngFor="let Specialization of this.specializations" [value]="Specialization.id "> {{ Specialization.name }}</option>
+                    </select>
+                  <select  (change)="doctorSelected($event)" class=" col form-select border-2 py-3">
+                  <option value="allDoctors" selected="">All Doctors</option>
+                  <ng-container *ngIf="isSpecializationSelected" >
+                    <option *ngFor="let doctor of Doctors"  [value]="doctor.id"> {{doctor.name}} </option>
+                  </ng-container>
+                  <ng-container *ngIf="!isSpecializationSelected" >
+                    <option *ngFor="let doctor of doctors" [value]="doctor.id"> {{doctor.name}}</option>
+                  </ng-container>
+                 
+                </select>
+                <button class=" col-md-2 btn appointment-btn scrollto btn-lg me-4 text-dark-50 fw-bold mb-0" (click)="onSearch($event)">Search</button>
+                </div>
 
-                <div class="card-body">
-                  <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+                <div *ngIf="isReceptionLoggedIn" class="card-body">
+                  <h5 class="card-title">Schedule <span>| Today</span></h5>
 
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Arrival Time</th>
+                        <th scope="col">Visit Start Time</th>
+                        <th scope="col">Visit End Time</th>
                         <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"><a href="#">#2457</a></th>
-                        <td>Brandon Jacob</td>
-                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                        <td>$64</td>
-                        <td><span class="badge bg-success">Approved</span></td>
+                      <tr *ngFor="let visit of visits">
+                        <th scope="row"><a href="#">{{visit.name}}</a></th>
+                        <td *ngIf="visit.visitStatus">{{visit.arrivalTime}}</td>
+                        <td *ngIf="visit.visitStatus == 'inProgress' || visit.visitStatus == 'done'">{{visit.visitStartTime}}</td>
+                        <td *ngIf="visit.visitStatus == 'done'">{{visit.visitEndTime}}</td>
+
+                        <td *ngIf="!visit.visitStatus">00:00</td>
+                        <td *ngIf="!visit.visitStatus || visit.visitStatus == 'Arrived'">00:00</td>
+                        <td *ngIf="visit.visitStatus != 'done'">00:00</td>
+                       
+                        <td *ngIf="!visit.visitStatus"><span class="badge text-primary">Not Arrived</span></td>
+                        <td *ngIf="!visit.visitStatus || visit.visitStatus == 'Arrived'" ><span class="badge bg-danger"><a (click)="onArrive('Arrived', visit.id)">Arrived</a></span></td>
+                        <td *ngIf="visit.visitStatus != 'done'"><span class="badge bg-warning"><a (click)="onArrive( 'inProgress', visit.id)">In progress</a></span></td>
+                        <td *ngIf="visit.visitStatus != 'done'"><span class="badge bg-success"><a (click)="onArrive( 'done', visit.id)">Done</a></span></td> 
+                        <td *ngIf="visit.visitStatus == 'done'"><span class="badge bg-success">Done</span></td> 
                       </tr>
+       
+                    </tbody>
+                  </table>
+
+                </div>
+              <!--for doctor-->
+                <div *ngIf="isDoctorLoggedIn" class="card-body">
+                  <h5 class="card-title">Schedule <span>| Today</span></h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
                       <tr>
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Arrival Time</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let visit of visits">
+                        <th scope="row"><a href="#">{{visit.name}}</a></th>
+
+                        <td *ngIf="visit.visitStatus">{{visit.arrivalTime}}</td>
+                        <td *ngIf="visit.visitStatus == 'inProgress' || visit.visitStatus == 'done'">{{visit.visitStartTime}}</td>
+                        <td *ngIf="visit.visitStatus == 'done'">{{visit.visitEndTime}}</td>
+
+                        <td *ngIf="!visit.visitStatus">00:00</td>
+                        <td *ngIf="!visit.visitStatus || visit.visitStatus == 'Arrived'">00:00</td>
+                        <td *ngIf="visit.visitStatus != 'done'">00:00</td>
+                       
+                        <td *ngIf="!visit.visitStatus"><span class="badge text-primary">Not Arrived</span></td>
+                        <td *ngIf="visit.visitStatus == 'Arrived'"><span class="badge bg-danger">Arrived</span></td>
+                        <td *ngIf="visit.visitStatus == 'inProgress'"><span class="badge bg-warning">In progress</span></td>
+                        <td *ngIf="visit.visitStatus == 'done'"><span class="badge bg-success">Done</span></td> 
+                      </tr>
+                      <!-- <tr>
                         <th scope="row"><a href="#">#2147</a></th>
                         <td>Bridie Kessler</td>
                         <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
@@ -271,7 +332,7 @@
                         <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
                         <td>$165</td>
                         <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
+                      </tr> -->
                     </tbody>
                   </table>
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DoctorService } from '../services/doctor.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgModule }      from '@angular/core';
+import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import { HttpClientModule } from '@angular/common/http';
 import {RegisterDoctorDto} from '../types/RegisterDoctorDto';

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup , Validators} from '@angular/forms';
 import { LoginDto } from '../../types/LoginDto';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -10,11 +10,16 @@ import { phoneNumberLengthValidator } from 'src/app/services/loginPhonNumber.ser
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   credentials: LoginDto = {phoneNumber : '', password: ''};
   rememberMe!: boolean;
   selctedOption?: string;
+  errorrString?: string;
+
   constructor(private authenticationService: AuthenticationService){}
+  ngOnInit(): void {
+    localStorage.removeItem('DoctorId');
+  }
   form = new FormGroup({
     username: new FormControl<string>('' , [Validators.required ,  phoneNumberLengthValidator , this.onlyNumbersValidator]),
     password: new FormControl<string>('' , [Validators.required]),
@@ -39,17 +44,35 @@ export class LoginComponent {
     this.credentials!.password = this.form.controls.password.value ?? '';
 
     if(this.selctedOption == 'Admin'){
-      this.authenticationService.login(this.credentials! , this.rememberMe).subscribe((token) => {
+      this.authenticationService.login(this.credentials! , this.rememberMe).subscribe({
+        next:(token) => {
+        
         this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
-      });
+      },error:(error) => {
+        console.log('calling admin login api faild', error.error)
+        this.errorrString = error.error
+      }
+    });
     }else if(this.selctedOption == 'Doctor'){
-      this.authenticationService.Doctorlogin(this.credentials! , this.rememberMe).subscribe((token) => {
+      this.authenticationService.Doctorlogin(this.credentials! , this.rememberMe).subscribe({
+        next:(token) => {
         this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
-      });
+      }, error:(error) => {
+        console.log('calling Doctor login api faild', error.error)
+        this.errorrString = error.error
+      }
+    });
     }else if(this.selctedOption == 'Reception'){
-      this.authenticationService.receptionLogin(this.credentials! , this.rememberMe).subscribe((token) => {
+      this.authenticationService.receptionLogin(this.credentials! , this.rememberMe).subscribe({
+        next:(token) => {
         this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
-      });
+      }, error:(error) => {
+        console.log('calling Reception login api faild', error.error)
+        this.errorrString = error.error
+      }
+    });
+    }else{
+      this.errorrString = 'Please Chose your Role'
     }
     
   }
@@ -63,4 +86,5 @@ export class LoginComponent {
   get formVal() {
     return this.form.controls;
   }
+  
 }

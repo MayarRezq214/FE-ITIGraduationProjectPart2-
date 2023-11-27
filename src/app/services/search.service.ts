@@ -1,6 +1,10 @@
 import { Injectable, OnInit } from '@angular/core';
 import { DoctorService } from './doctor.service';
 import { SpecializationService } from './specialization.service';
+import { GetAllDoctorsDto } from '../types/GetAllDoctorsDto';
+import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
+import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
+
 import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import { GetAllDoctorsDto } from '../types/GetAllDoctorsDto';

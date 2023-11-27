@@ -17,6 +17,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { NgToastModule } from 'ng-angular-popup';
+import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { NgToastModule } from 'ng-angular-popup';
     DoctorProfileComponent,
     LoginComponent,
     AdminProfileComponent,
-    PatientProfileComponent
+    PatientProfileComponent,
+    MyDoctorProfileComponent
   ],
 
   imports: [
