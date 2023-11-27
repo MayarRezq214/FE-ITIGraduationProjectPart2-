@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
+import { NgToastModule } from 'ng-angular-popup';
 import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
 
 @NgModule({
@@ -41,7 +42,8 @@ import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]
