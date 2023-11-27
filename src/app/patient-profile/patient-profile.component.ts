@@ -6,7 +6,6 @@ import { MedicalHistoryDto } from '../Types/MedicalHistoryDto';
 import { MedicalHistoryService } from '../services/MedicalHistroy.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
-
 import { MutualVisitsService } from '../services/getMutualVisits.service';
 import { GetPatientVisitsChildDTO } from '../types/GetPatientVisitChildDto';
 import { UpdatePatientVisitService } from '../services/updatePatientVisit.service';
@@ -19,31 +18,28 @@ import { UpdatePatientVisitDto } from '../types/UpdatePatientVisitDto';
 })
 export class PatientProfileComponent implements OnInit {
   patientDto?: GetPatientByPhoneDTO;
-  name:string = '';
-  phoneNumber : string = '';
-  gender:string = '';
-  dateOfBirth :any;
-  visits?: GetPatientVisitsChildDTO[]=[];
-  id : number = 0
-  dateOfVisit:any;
-  comments:string='';
-  symptoms:string='';
-  prescription:string='';
-  udpateDto : any;
-  buttonEnabled = false;
-  formSubmitted: boolean[] = [];
-  cardButtonEnabled: boolean[] = [];
-
-  constructor(private patientService: PatientService ,
-     private mutualVisits : MutualVisitsService ,
-     private updateParientVisitService:UpdatePatientVisitService) {}
   name: string = '';
   phoneNumber: string = '';
   gender: string = '';
   dateOfBirth: any;
-  id: number = 0;
+  visits?: GetPatientVisitsChildDTO[] = [];
+  id: number = 0
+  dateOfVisit: any;
+  comments: string = '';
+  symptoms: string = '';
+  prescription: string = '';
+  udpateDto: any;
+  buttonEnabled = false;
+  formSubmitted: boolean[] = [];
+  cardButtonEnabled: boolean[] = [];
   patientId: string | null = null;
- 
+
+  constructor(private patientService: PatientService,
+    private mutualVisits: MutualVisitsService,
+    private updateParientVisitService: UpdatePatientVisitService,
+    private medicalHistoryService: MedicalHistoryService, private toast: NgToastService) { }
+
+
 
   form = new FormGroup({
     previousSurgeries: new FormControl<string>(''),
@@ -62,10 +58,11 @@ export class PatientProfileComponent implements OnInit {
     highBloodPressure: new FormControl<boolean>(false),
     lowBloodPressure: new FormControl<boolean>(false),
     asthma: new FormControl<boolean>(false),
+    symptoms: new FormControl<string>(''),
+    comments: new FormControl<string>(''),
+    prescription: new FormControl<string>('')
   });
 
-  constructor(private patientService: PatientService, 
-    private medicalHistoryService: MedicalHistoryService, private toast:NgToastService ) {}
 
   ngOnInit(): void {
     this.patientService.getPatientByPhoneNumber("400200200200").subscribe({
@@ -86,7 +83,7 @@ export class PatientProfileComponent implements OnInit {
         this.id = medicalHistoryData.id;
         this.patientId = medicalHistoryData.patientId;
 
-        // Update the form with the fetched medical history data
+        // Update the form with the medical history data
         this.updateMedicalHistoryForm(medicalHistoryData);
 
         console.log(medicalHistoryData);
@@ -95,9 +92,36 @@ export class PatientProfileComponent implements OnInit {
         console.error('Error fetching medical history data:', error);
       },
     });
+
+    this.mutualVisits.getMutualVisits("01289603610", "string").subscribe({
+      next: (mutualVisit: GetPatientVisitsChildDTO) => {
+        console.log(typeof (mutualVisit))
+        this.visits = Object.values(mutualVisit);
+        this.id = mutualVisit.id;
+        this.dateOfVisit = mutualVisit.dateOfVisit;
+        if (mutualVisit.prescription != null) {
+          this.prescription = mutualVisit.prescription;
+        }
+        if (mutualVisit.symptoms != null) {
+          this.symptoms = mutualVisit.symptoms!;
+        }
+        if (mutualVisit.comments != null) {
+          this.comments = mutualVisit.comments!;
+        }
+
+        console.log("visits:" + this.visits);
+        this.visits = this.visits.sort((a, b) => new Date(b.dateOfVisit).getTime() - new Date(a.dateOfVisit).getTime());
+
+      },
+      error: (error) => {
+        console.error('Error fetching visits:', error);
+      },
+    });
+    this.cardButtonEnabled = new Array(this.visits?.length).fill(true);
   }
 
-  // New method to update the form with medical history data
+
+  // to update the form with medical history data
   private updateMedicalHistoryForm(data: MedicalHistoryDto | null): void {
     if (data) {
       this.form.patchValue({
@@ -121,11 +145,9 @@ export class PatientProfileComponent implements OnInit {
     }
   }
 
-  // New method to handle form submission
-  onSubmit() {
-    // Check if the form is valid
+
+  onSubmitt() {
     if (this.form.valid) {
-      // Replace 'Id' with the actual value or control from your form
       const formData: MedicalHistoryDto = {
         id: this.id,
         patientId: this.patientId!,
@@ -151,7 +173,7 @@ export class PatientProfileComponent implements OnInit {
       this.medicalHistoryService.updateMedicalHistory(formData).subscribe({
         next: (response) => {
           console.log('Medical history updated successfully:', response);
-          this.showSuccess(); 
+          this.showSuccess();
 
         },
         error: (error) => {
@@ -161,49 +183,13 @@ export class PatientProfileComponent implements OnInit {
     } else {
       console.error('Form is not valid. Please check your inputs.');
     }
-    
+
   }
   private showSuccess() {
-      this.toast.success({ detail: "SUCCESS", summary: 'Patient medical history updated', duration: 9000 });
-  }
-  
-}
-    });
-
-    this.mutualVisits.getMutualVisits("01289603610","string").subscribe({
-      next: (mutualVisit:GetPatientVisitsChildDTO) => {
-        console.log(typeof(mutualVisit))
-        this.visits = Object.values(mutualVisit);
-        this.id = mutualVisit.id;
-        this.dateOfVisit = mutualVisit.dateOfVisit;
-        if(mutualVisit.prescription != null){
-          this.prescription = mutualVisit.prescription;
-        }
-        if(mutualVisit.symptoms != null){
-          this.symptoms = mutualVisit.symptoms!;
-        }
-        if(mutualVisit.comments != null){
-          this.comments = mutualVisit.comments!;
-        }
-
-        console.log("visits:"+ this.visits);
-        this.visits = this.visits.sort((a, b) => new Date(b.dateOfVisit).getTime() - new Date(a.dateOfVisit).getTime());
-
-      },
-      error: (error) => {
-        console.error('Error fetching visits:', error);
-      },
-    });
-    this.cardButtonEnabled = new Array(this.visits?.length).fill(true);
+    this.toast.success({ detail: "SUCCESS", summary: 'Patient medical history updated', duration: 9000 });
   }
 
-  form = new FormGroup({
-    symptoms: new FormControl<string>(''),
-    comments: new FormControl<string>(''),
-    prescription: new FormControl<string>('')
-  })
-
-onSubmit(e: Event , Id:number , i:number) {
+  onSubmit(e: Event, Id: number, i: number) {
     this.udpateDto = {
       id: Id,
       symptoms: this.form.controls['symptoms'].value,
@@ -237,5 +223,6 @@ onSubmit(e: Event , Id:number , i:number) {
     this.cardButtonEnabled[index] = true;
   }
 }
+
 
 
