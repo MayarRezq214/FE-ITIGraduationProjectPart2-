@@ -70,9 +70,6 @@
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings" (click)="onOpenShifts()">Shifts</button>
                 </li>
 
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                </li>
 
               </ul>
               <div class="tab-content pt-2">
@@ -519,175 +516,14 @@
                      </form>
 
 
-                      <!-- <table class="table table-borderless">
-                        <thead>
-                          <tr>
-                             <th scope="col">#</th> 
-                            <th scope="col">Day</th>
-                            <th scope="col">Shift Start</th>
-                            <th scope="col">Shift End</th>
-                            <th scope="col">Limit of Patients</th>
-                            <th scope="col">On Shift</th>
-                            <th scope="col">Add/Edit</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <ng-container *ngFor="let record of doctor?.weekSchadual" >
-                                                          <input type="time" name="end" ngModel >
-
-                            <ng-container>
-                              
-                          <tr >
-                            <th scope="row" >
-                              <span *ngIf="record.dayOfWeek==3" class="divider">Wednesday</span>
-                              <span *ngIf="record.dayOfWeek==4" class="divider" >Thursday</span>
-                              <span *ngIf="record.dayOfWeek==5" class="divider" >Friday</span>
-                              <span *ngIf="record.dayOfWeek==6" class="divider" >Saturday</span>
-                              <span *ngIf="record.dayOfWeek==0" class="divider" >Sunday </span>
-                              <span *ngIf="record.dayOfWeek==1" class="divider" >Monday</span>
-                              <span *ngIf="record.dayOfWeek==2" class="divider" >Tuesday</span>
-                            </th>
-                            <td >
-                              <input type="time" name="start" ngModel > {{record.id}}
-                            </td>
-                            <td>
-                              <input type="time" name="end" ngModel >
-                            </td>
-
-                            <td>
-                              <input type="number" name="limit" ngModel >
-                            </td>
-                            <td>
-                              <input type="text" name="available" ngModel>
-                            </td>
-                          </tr>
-                        </ng-container>
-                          <ng-container *ngIf="record.startTime=='2000-01-01T00:00:00'">
-                          <tr>
-                            <th scope="row">
-                              <span *ngIf="record.dayOfWeek==3" class="divider">Wednesday</span>
-                              <span *ngIf="record.dayOfWeek==4" class="divider">Thursday</span>
-                              <span *ngIf="record.dayOfWeek==5" class="divider">Friday</span>
-                              <span *ngIf="record.dayOfWeek==6" class="divider">Saturday</span>
-                              <span *ngIf="record.dayOfWeek==0" class="divider">Sunday </span>
-                              <span *ngIf="record.dayOfWeek==1" class="divider">Monday</span>
-                              <span *ngIf="record.dayOfWeek==2" class="divider">Tuesday</span>
-                            </th>
-                            <td>
-                              <span  class="divider">--</span>
-                            </td>
-                            <td>
-                              <span  class="divider">--</span>
-                            </td>
-                            <td>
-                              <span  class="divider">--</span>
-                            </td>
-                            <td>
-                              <span  class="divider">--</span>
-                            </td>
-                            <td>
-                              <span  class="divider">Edit</span>
-                            </td>
-                          </tr>
-                        
-                          </ng-container> 
-                        </ng-container>
-                          < <tr>
-                            <th scope="row">2</th>
-                            <td>Bridie Kessler</td>
-                            <td>Developer</td>
-                            <td>35</td>
-                            <td>2014-12-05</td>
-                          </tr> -->
-                          <!-- <tr>
-                            <th scope="row">3</th>
-                            <td>Ashleigh Langosh</td>
-                            <td>Finance</td>
-                            <td>45</td>
-                            <td>2011-08-12</td>
-                          </tr> -->
-                          <!-- <tr>
-                            <th scope="row">4</th>
-                            <td>Angus Grady</td>
-                            <td>HR</td>
-                            <td>34</td>
-                            <td>2012-06-11</td>
-                          </tr> -->
-                          <!-- <tr>
-                            <th scope="row">5</th>
-                            <td>Raheem Lehner</td>
-                            <td>Dynamic Division Officer</td>
-                            <td>47</td>
-                            <td>2011-04-19</td>
-                          </tr> -->
-                        <!-- </tbody>
-                      </table> --> 
-                      <!-- End Tables without borders -->
+                    
                      
                     </div>
-                    <!-- <div class="row">
-                      <div class="col-lg-3 col-md-4 label ">Saturday</div>
-                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-3 col-md-4 label ">Sunday</div>
-                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-3 col-md-4 label ">Monday</div>
-                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-3 col-md-4 label ">Tuesday</div>
-                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-3 col-md-4 label ">Wednesday</div>
-                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-3 col-md-4 label ">Thursday</div>
-                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-3 col-md-4 label ">Friday</div>
-                      <div class="col-lg-9 col-md-8">{{doctor?.name}}</div>
-                    </div>End settings Form -->
+                   
 
                 </div> </div>
                
-                <div class="tab-pane fade pt-3" id="profile-change-password">
-                  <!-- Change Password Form -->
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
-                    </div>
-                  </form><!-- End Change Password Form -->
-
-                </div>
-
+               
               </div><!-- End Bordered Tabs -->
 
             </div>

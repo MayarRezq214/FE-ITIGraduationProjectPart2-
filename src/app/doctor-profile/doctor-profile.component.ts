@@ -1,19 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
+import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
-import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorStatusDto';
+import { UpdateDoctorStatusDto } from '../types/UpdateDoctorStatusDto';
 import { NgModule }  from '@angular/core';
 import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navigate-to-doctor-profile-after-onboarding.service';
 import { SearchService } from '../services/search.service';
-import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
-import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
-import { DoctorsForAllSpecializations } from '../Types/DoctorsForAllSpecializations';
-import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
-import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
+import { GetAllDoctorsDto } from '../types/GetAllDoctorsDto';
+import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
+import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
+import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
+import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
 import { DataBetweenAddDrDrProfileService } from '../services/data-between-add-dr-dr-profile.service';
-import { WeekScheduleForDoctorsDto } from '../Types/WeekScheduleForDoctorsDto';
+import { WeekScheduleForDoctorsDto } from '../types/WeekScheduleForDoctorsDto';
 import * as moment from 'moment';
 import { shareReplay } from 'rxjs';
 
@@ -71,7 +71,19 @@ export class DoctorProfileComponent  implements OnInit{
      // console.log(this.navigate.doctor)
      
      this.dataFromRegisterDr.currentDoctorId.subscribe(doctorId=>this.doctorId=doctorId)
-      this.doctor = this.navigate.doctor
+     
+      if(this.navigate.doctor)
+      { this.doctor = this.navigate.doctor
+        this.doctorService.getDoctorByIdForAdmin(this.doctor.id).subscribe({
+          next:(doctor) => {
+            this.doctor = doctor;
+
+          },
+          error: (error) => {
+            console.log('calling dr by id api failed', error);
+          },
+        })
+      }
       //console.log(this.doctor)
       this.doctorService.getDoctors().subscribe({
         next:(doctors) => {
@@ -92,7 +104,6 @@ export class DoctorProfileComponent  implements OnInit{
         },
       })
 
-      this.onOpenShifts()
   }
 
   onEdit(){
@@ -108,6 +119,9 @@ export class DoctorProfileComponent  implements OnInit{
     })
   }
       onOpenShifts(){
+        this.weekScheduleForm?.reset()
+       
+
         this.available0 = this.doctor?.weekSchadual[0].isAvailable
         this.available1 = this.doctor?.weekSchadual[1].isAvailable
         this.available2 = this.doctor?.weekSchadual[2].isAvailable
@@ -243,7 +257,17 @@ export class DoctorProfileComponent  implements OnInit{
           
         this.doctorService.updateWeekScheduleRecord(this.weekScheduleRecord!,this.doctor?.weekSchadual[index].id!).subscribe({
           next:()=>{
-            console.log(this.weekScheduleRecord)
+           
+            this.doctorService.getDoctorByIdForAdmin(this.doctorId).subscribe({
+              next:(doctor) => {
+                this.doctor = doctor;
+                console.log(this.doctor)
+                
+              },
+              error: (error) => {
+                console.log('calling dr by id api failed', error);
+              },
+            })
             
           },
           error:(error)=>{
@@ -273,6 +297,7 @@ export class DoctorProfileComponent  implements OnInit{
         if(this.doctorId == "allDoctors"){
           this.isDoctorSelected = false;
         }
+
 
       }
 

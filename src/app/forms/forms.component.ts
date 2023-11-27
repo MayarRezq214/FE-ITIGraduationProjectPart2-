@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { DoctorService } from '../services/doctor.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgModule }      from '@angular/core';
-import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
-import { DoctorsForAllSpecializations } from '../Types/DoctorsForAllSpecializations';
+import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import { HttpClientModule } from '@angular/common/http';
-import {RegisterDoctorDto} from '../Types/RegisterDoctorDto';
-
+import {RegisterDoctorDto} from '../types/RegisterDoctorDto';
+import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { Router } from '@angular/router';
 import { phoneNumberLengthValidator } from '../services/registerPhoneNumber';
 import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navigate-to-doctor-profile-after-onboarding.service';
 import { passwordValidators } from '../services/password.service';
-import { AddWeekScheduleDto } from '../Types/AddWeekScheduleDto';
+import { AddWeekScheduleDto } from '../types/AddWeekScheduleDto';
+
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',

@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { RegisterDoctorDto } from '../Types/RegisterDoctorDto';
+import { RegisterDoctorDto } from '../types/RegisterDoctorDto';
 import { Observable } from 'rxjs';
-import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
-import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
-import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
-import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorStatusDto';
-import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
-import { GetDoctorsBySpecializationDto } from '../Types/GetDoctorsBySpecializationDto';
-import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
-import { AddWeekScheduleDto } from '../Types/AddWeekScheduleDto';
-import { WeekScheduleForDoctorsDto } from '../Types/WeekScheduleForDoctorsDto';
+import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
+import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
+import { UpdateDoctorStatusDto } from '../types/UpdateDoctorStatusDto';
+import { GetAllDoctorsDto } from '../types/GetAllDoctorsDto';
+import { GetDoctorsBySpecializationDto } from '../types/GetDoctorsBySpecializationDto';
+import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
+import { AddWeekScheduleDto } from '../types/AddWeekScheduleDto';
+import { WeekScheduleForDoctorsDto } from '../types/WeekScheduleForDoctorsDto';
+import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 @Injectable({
   providedIn: 'root'
 })
