@@ -142,7 +142,6 @@ constructor(private doctorService: DoctorService,
     this.receptionService.UpdatePatientVisitStatus(this.patientVisit!).subscribe({
       next:(patientVisit) => {
         console.log(patientVisit as GetAllPatientsWithDateDto)
-        
         const index = this.visits?.findIndex(v => v.id === (patientVisit as GetAllPatientsWithDateDto).id)
         this.visits![index!] = patientVisit as GetAllPatientsWithDateDto;
         console.log();
