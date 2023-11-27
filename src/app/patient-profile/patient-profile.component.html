@@ -32,9 +32,10 @@
               <!-- Bordered Tabs -->
               <ul class="nav nav-tabs nav-tabs-bordered">
 
-                <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
-                </li>
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab"
+                  data-bs-target="#profile-overview">Overview</button>
+              </li>
 
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Medical History</button>
@@ -76,109 +77,261 @@
 
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
-                  <!-- Medical history Form -->
-                  <form>
-                    <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                <!-- medical history Form -->
+
+                <!-- <div *ngIf="patientDto">
+                  <h3 class="card-title">{{ patientDto.name }}'s Profile</h3> -->
+
+                  <form [formGroup]="form" (ngSubmit)="onSubmitt()">
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">Martial Status</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="martialStatus" [value]="true"
+                              [checked]="form.get('martialStatus')?.value === true"> Married
+                          </label>
+                        </div>
+                
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="martialStatus" [value]="false"
+                              [checked]="form.get('martialStatus')?.value === false"> Single
+                          </label>
                         </div>
                       </div>
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">Pregnancy</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="pregnancy" [value]="true"
+                              [checked]="form.get('pregnancy')?.value === true"> Yes
+                          </label>
+                        </div>
+                
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="pregnancy" [value]="false"
+                              [checked]="form.get('pregnancy')?.value === false"> No 
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">Heart Disease</label>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="heartDisease" [value]="true"
+                              [checked]="form.get('heartDisease')?.value === true"> Yes
+                          </label>
+                        </div>
+                    
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="heartDisease" [value]="false"
+                              [checked]="form.get('heartDisease')?.value === false"> No 
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">Asthma</label>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="asthma" [value]="true"
+                              [checked]="form.get('asthma')?.value === true"> Yes
+                          </label>
+                        </div>
+                    
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="asthma" [value]="false"
+                              [checked]="form.get('asthma')?.value === false"> No 
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">Low Blood Pressure:</label>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="lowBloodPressure" [value]="true"
+                              [checked]="form.get('lowBloodPressure')?.value === true"> Yes
+                          </label>
+                        </div>
+                    
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="lowBloodPressure" [value]="false"
+                              [checked]="form.get('lowBloodPressure')?.value === false"> No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">High Blood Pressure:</label>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="highBloodPressure" [value]="true"
+                              [checked]="form.get('highBloodPressure')?.value === true"> Yes
+                          </label>
+                        </div>
+                    
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="highBloodPressure" [value]="false"
+                              [checked]="form.get('highBloodPressure')?.value === false"> No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">Diabetes:</label>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="diabetes" [value]="true"
+                              [checked]="form.get('diabetes')?.value === true"> Yes
+                          </label>
+                        </div>
+                    
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="diabetes" [value]="false"
+                              [checked]="form.get('diabetes')?.value === false"> No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">Smoker:</label>
+                      <div class="col-md-8 col-lg-9">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input"formControlName="smoker" [value]="true"
+                              [checked]="form.get('smoker')?.value === true"> Yes
+                          </label>
+                        </div>
+                    
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="smoker" [value]="false"
+                              [checked]="form.get('smoker')?.value === false"> No
+                          </label>
+                        </div>
                       </div>
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">Allergies:</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="allergies" [value]="true"
+                              [checked]="form.get('allergies')?.value === true"> Yes
+                          </label>
+                        </div>
+                    
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input"  formControlName="allergies" [value]="false"
+                              [checked]="form.get('allergies')?.value === false"> No
+                          </label>
+                        </div>
                       </div>
                     </div>
-
-                    <div class="row mb-3">
-                      <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
+                    
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">Anxiety or Panic Disorder:</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio"class="form-check-input" formControlName="anxityOrPanicDisorder" [value]="true"
+                              [checked]="form.get('anxityOrPanicDisorder')?.value === true"> Yes
+                          </label>
+                        </div>
+                    
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio"class="form-check-input" formControlName="anxityOrPanicDisorder" [value]="false"
+                              [checked]="form.get('anxityOrPanicDisorder')?.value === false"> No
+                          </label>
+                        </div>
                       </div>
                     </div>
-
-                    <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                    
+                    <div class="form-group row mb-2">
+                      <label class="col-md-4 col-lg-3 col-form-label">Depression:</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="depression" [value]="true"
+                              [checked]="form.get('depression')?.value === true"> Yes
+                          </label>
+                        </div>
+                    
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input type="radio" class="form-check-input" formControlName="depression" [value]="false"
+                              [checked]="form.get('depression')?.value === false"> No
+                          </label>
+                        </div>
                       </div>
                     </div>
+                    
 
-                    <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="USA">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End Profile Edit Form -->
-
+                <div class="row mb-3">
+                  <label for="company" class="col-md-4 col-lg-3 col-form-label"for="bloodGroup">Blood Group:</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input type="text" id="bloodGroup" formControlName="bloodGroup" class="form-control"  value="">
+                  </div>
                 </div>
+
+                <div class="row mb-3">
+                  <label for="company" class="col-md-4 col-lg-3 col-form-label"for="hepatitis">Hepatitis:</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input type="text" id="hepatitis" formControlName="hepatitis" class="form-control" value="">
+                  </div>
+                </div>
+
+                  <div class="row mb-3">
+                    <label for="company" class="col-md-4 col-lg-3 col-form-label"for="medication">Medication:</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input type="text" id="medication" formControlName="medication" class="form-control" id="company" value="">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label  class="col-md-4 col-lg-3 col-form-label"for="previousSurgeries">Previous Surgeries:</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input type="text" id="previousSurgeries" formControlName="previousSurgeries" class="form-control"  value="">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="about" class="col-md-4 col-lg-3 col-form-label"> Other: </label>
+                    <div class="col-md-8 col-lg-9">
+                      <textarea name="about" class="form-control" type="text" id="other" formControlName="other" style="height: 100px"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary" (click)="onSubmitt()">Save Changes</button>
+                  </div>
+                </form>
+              </div>
+                <!-- end medical history Form -->
+              <!-- </div> -->
 
                 <div class="tab-pane fade pt-3" id="profile-settings">
 
@@ -334,4 +487,4 @@
       </div>
     </section>
 
-  </main><!-- End #main -->
+</main><!-- End #main -->
