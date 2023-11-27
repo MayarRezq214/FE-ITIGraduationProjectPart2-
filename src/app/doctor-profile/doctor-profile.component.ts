@@ -1,17 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
+import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
-import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorstatusDto';
+import { UpdateDoctorStatusDto } from '../types/UpdateDoctorStatusDto';
 import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navigate-to-doctor-profile-after-onboarding.service';
 import { SearchService } from '../services/search.service';
-import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
-import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
-import { DoctorsForAllSpecializations } from '../Types/DoctorsForAllSpecializations';
-import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
-import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
+import { GetAllDoctorsDto } from '../types/GetAllDoctorsDto';
+import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
+import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
+import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
 import { DataBetweenAddDrDrProfileService } from '../services/data-between-add-dr-dr-profile.service';
+import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
+
 
 @Component({
   selector: 'app-doctor-profile',

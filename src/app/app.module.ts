@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
+import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
     DoctorProfileComponent,
     LoginComponent,
     AdminProfileComponent,
-    PatientProfileComponent
+    PatientProfileComponent,
+    MyDoctorProfileComponent
   ],
 
   imports: [

@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { RegisterDoctorDto } from '../Types/RegisterDoctorDto';
+import { RegisterDoctorDto } from '../types/RegisterDoctorDto';
 import { Observable } from 'rxjs';
-import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
-import { GetDoctorByPhoneDto } from '../Types/GetDoctorByPhoneDto';
-import { GetDoctorByIDDto } from '../Types/GetDoctorrByIDDto';
-import { UpdateDoctorStatusDto } from '../Types/UpdateDoctorstatusDto';
-import { GetAllDoctorsDto } from '../Types/GetAllDoctorsDto';
-import { GetDoctorsBySpecializationDto } from '../Types/GetDoctorsBySpecializationDto';
-import { GetDoctorByIDForAdminDto } from '../Types/GetDoctorByIDForAdminDto';
+import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
+import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
+import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
+
+import { GetAllDoctorsDto } from '../types/GetAllDoctorsDto';
+import { GetDoctorsBySpecializationDto } from '../types/GetDoctorsBySpecializationDto';
+import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
+import { UpdateDoctorStatusDto } from '../types/UpdateDoctorStatusDto';
+import { GetAllPatientsWithDateDto } from '../types/GetAllPatientsWithDateDto';
 @Injectable({
   providedIn: 'root'
 })
@@ -44,6 +46,9 @@ export class DoctorService {
 
    public getDoctorByIdForAdmin(id:string): Observable<GetDoctorByIDForAdminDto>{
     return this.client.get<GetDoctorByIDForAdminDto>(`https://localhost:7267/api/Admins/admin/getDoctorForAdmin/${id}`);
+  }
+  public getAllPatientsWithDates(date : string , DoctorId : string): Observable<GetAllPatientsWithDateDto[]>{
+    return this.client.get<GetAllPatientsWithDateDto[]>(`https://localhost:7267/api/Doctor/dailySchedule/${date}?DoctorId=${DoctorId}`)
   }
    
   }

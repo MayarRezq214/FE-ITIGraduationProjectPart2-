@@ -1,5 +1,6 @@
 import { WeekScheduleForDoctorsDto } from "./WeekScheduleForDoctorsDto";
 
+
 export interface GetDoctorByPhoneDto {
     id?: string;
     name?: string;

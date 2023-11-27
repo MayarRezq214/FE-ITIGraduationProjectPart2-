@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
+import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 

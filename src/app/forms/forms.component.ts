@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { DoctorService } from '../services/doctor.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgModule }      from '@angular/core';
-import { GetAllSpecializationsDto } from '../Types/GetAllSpecializationsDto';
-import { DoctorsForAllSpecializations } from '../Types/DoctorsForAllSpecializations';
+import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
+import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import { HttpClientModule } from '@angular/common/http';
-import {RegisterDoctorDto} from '../Types/RegisterDoctorDto';
+import {RegisterDoctorDto} from '../types/RegisterDoctorDto';
 
 import { Router } from '@angular/router';
 import { phoneNumberLengthValidator } from '../services/registerPhoneNumber';
