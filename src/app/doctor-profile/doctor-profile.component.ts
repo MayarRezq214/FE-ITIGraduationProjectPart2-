@@ -97,7 +97,7 @@ export class DoctorProfileComponent  implements OnInit{
       phoneNumber : this.doctor?.phoneNumber,
       salary : this.doctor?.salary,
       dateOfBirth : this.doctor?.dateOfBirth.replace('T00:00:00',' ').trim(),
-      status : this.doctor?.status
+    //  status : this.doctor?.status
    //   photo : this.doctor?.imageUrl
     })
   }
@@ -138,9 +138,10 @@ export class DoctorProfileComponent  implements OnInit{
          if(index==0)
           {
             let y:boolean = this.weekScheduleForm?.value.available0
-            if(y){y==true}
-        if(!y)
-        {y==false}
+            if(this.weekScheduleForm?.value.available0=='true')
+             {y=true}
+               if(this.weekScheduleForm?.value.available0=='false')
+                {y=false}
             this.weekScheduleRecord = {
               id : this.doctor?.weekSchadual[0].id!,
               startTime : this.weekScheduleForm?.value.start0,
