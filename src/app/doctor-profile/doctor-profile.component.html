@@ -245,13 +245,22 @@
                               <input type="text" class="form-control" name="limit0" ngModel >
                             </div>
                           </div>
-                          <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
-                            <div class="col-md-8 col-lg-9">
-                              <input type="text" class="form-control" name="available0" ngModel >
-                            </div>
-                          </div>
           
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available0"  value="true" [checked]="available0" (change)="availableChange($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available0"  value="false" [checked]="!available0" (change)="availableChange($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
                         
                           
                          <button class=" btn-apply" (click)="onApply($event,0)" >Apply Changes</button>
@@ -279,14 +288,22 @@
                               <input type="text" class="form-control" name="limit1" ngModel >
                             </div>
                           </div>
-                          <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
-                            <div class="col-md-8 col-lg-9">
-                              <input type="text" class="form-control" name="available1" ngModel >
-                            </div>
-                          </div>
-          
-                        
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available1"  value="true" [checked]="available1" (change)="availableChange1($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available1"  value="false" [checked]="!available1" (change)="availableChange1($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
+                      
                           
                          <button class=" btn-apply" (click)="onApply($event,1)" >Apply Changes</button>
                         </div>
@@ -313,14 +330,21 @@
                               <input type="text" class="form-control" name="limit2" ngModel >
                             </div>
                           </div>
-                          <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
-                            <div class="col-md-8 col-lg-9">
-                              <input type="text" class="form-control" name="available2" ngModel >
-                            </div>
-                          </div>
-          
-                        
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available2"  value="true" [checked]="available2" (change)="availableChange2($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available2"  value="false" [checked]="!available2" (change)="availableChange2($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
                           
                          <button class=" btn-apply" (click)="onApply($event,2)" >Apply Changes</button>
                         </div>
@@ -346,12 +370,21 @@
                               <input type="text" class="form-control" name="limit3" ngModel >
                             </div>
                           </div>
-                          <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
-                            <div class="col-md-8 col-lg-9">
-                              <input type="text" class="form-control" name="available3" ngModel >
-                            </div>
-                          </div>
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available3"  value="true" [checked]="available3" (change)="availableChange3($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available3"  value="false" [checked]="!available3" (change)="availableChange3($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
           
                         
                           
@@ -380,14 +413,21 @@
                               <input type="text" class="form-control" name="limit4" ngModel >
                             </div>
                           </div>
-                          <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
-                            <div class="col-md-8 col-lg-9">
-                              <input type="text" class="form-control" name="available4" ngModel >
-                            </div>
-                          </div>
-          
-                        
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available4"  value="true" [checked]="available4" (change)="availableChange4($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available4"  value="false" [checked]="!available4" (change)="availableChange4($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
                           
                          <button class=" btn-apply" (click)="onApply($event,4)" >Apply Changes</button>
                         </div>
@@ -413,13 +453,21 @@
                               <input type="text" class="form-control" name="limit5" ngModel >
                             </div>
                           </div>
-                          <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
-                            <div class="col-md-8 col-lg-9">
-                              <input type="text" class="form-control" name="available5" ngModel >
-                            </div>
-                          </div>
-          
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available5"  value="true" [checked]="available5" (change)="availableChange5($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available5"  value="false" [checked]="!available5" (change)="availableChange5($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
                         
                           
                          <button class=" btn-apply" (click)="onApply($event,5)" >Apply Changes</button>
@@ -446,12 +494,21 @@
                               <input type="text" class="form-control" name="limit6" ngModel >
                             </div>
                           </div>
-                          <div class="row mb-3">
-                            <label class="col-md-4 col-lg-3 col-form-label">Available/Day-Off</label>
-                            <div class="col-md-8 col-lg-9">
-                              <input type="text" class="form-control" name="available6" ngModel >
-                            </div>
-                          </div>
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available6"  value="true" [checked]="available6" (change)="availableChange6($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available6"  value="false" [checked]="!available6" (change)="availableChange6($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
           
                         
                           
