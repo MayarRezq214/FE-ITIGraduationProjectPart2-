@@ -11,6 +11,7 @@ import { GetPatientVisitsChildDTO } from '../types/GetPatientVisitChildDto';
 import { UpdatePatientVisitService } from '../services/updatePatientVisit.service';
 import { UpdatePatientVisitDto } from '../types/UpdatePatientVisitDto';
 import { PhoneNumberBetweenDashboardAndPatientProfileService } from '../services/phone-number-between-dashboard-and-patient-profile.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-patient-profile',
@@ -42,7 +43,8 @@ export class PatientProfileComponent implements OnInit {
     private updateParientVisitService: UpdatePatientVisitService,
     private medicalHistoryService: MedicalHistoryService, 
     private toast: NgToastService ,
-    private phoneNumberService: PhoneNumberBetweenDashboardAndPatientProfileService) { }
+    private phoneNumberService: PhoneNumberBetweenDashboardAndPatientProfileService,
+    private authenticationService: AuthenticationService) { }
 
 
 
@@ -106,6 +108,9 @@ export class PatientProfileComponent implements OnInit {
     });
 
 this.doctorPhoneNumber = localStorage.getItem("phoneNumber")!;
+if(!this.doctorPhoneNumber){
+   this.doctorPhoneNumber = this.authenticationService.PhoneNumber!;
+}
 
     this.mutualVisits.getMutualVisits(this.patientPhoneNumber, this.doctorPhoneNumber).subscribe({
       next: (mutualVisit: GetPatientVisitsChildDTO) => {

@@ -18,6 +18,8 @@ import { adminAuthGuard } from './gurds/admin-auth.guard';
 import { SpecializtionComponent } from './specializtion/specializtion.component';
 import { AdminRegisterComponent } from './admin-register/admin-register.component';
 import { ReceptionRegisterComponent } from './reception-register/reception-register.component';
+import { receptionAuthGuard } from './gurds/reception-auth.guard';
+import { ReceptionProfileComponent } from './reception-profile/reception-profile.component';
 
 const routes: Routes = [
   {path: '' , component:DashboardComponent},
@@ -31,11 +33,12 @@ const routes: Routes = [
   {path : 'dataTables' ,canActivate: [adminAuthGuard], component : DataTablesComponent},
   {path : 'doctorProfile' ,canActivate: [adminAuthGuard], component : DoctorProfileComponent},
   {path : 'adminProfile' ,canActivate: [adminAuthGuard], component : AdminProfileComponent},
-  {path : 'patientProfile' , component : PatientProfileComponent},
+  {path : 'patientProfile', canActivate: [doctorAuthGuard] , component : PatientProfileComponent},
   {path: 'myDoctorProfile' , canActivate: [doctorAuthGuard], component : MyDoctorProfileComponent},
   {path : 'specialization' ,canActivate: [adminAuthGuard], component : SpecializtionComponent},
-  {path: 'adminRegister', component:AdminRegisterComponent},
-  {path: 'receptionRegister', component:ReceptionRegisterComponent}
+  {path: 'adminRegister', canActivate: [adminAuthGuard], component:AdminRegisterComponent},
+  {path: 'receptionRegister',canActivate: [adminAuthGuard], component:ReceptionRegisterComponent},
+  {path: 'receptionProfile', canActivate: [receptionAuthGuard], component: ReceptionProfileComponent }
 ];
 
 @NgModule({

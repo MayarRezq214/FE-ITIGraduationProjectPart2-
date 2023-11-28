@@ -6,6 +6,8 @@ import { GetAdminByPhoneNumberDto } from '../types/GetAdminByPhoneNumberDto';
 import { DoctorService } from '../services/doctor.service';
 import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
 import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
+import { ReceptionService } from '../services/reception.service';
+import { GetReceptionByPhoneNumberDto } from '../types/GetReceptionByPhoneNumberDto';
 
 @Component({
   selector: 'app-header',
@@ -15,13 +17,16 @@ import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
 export class HeaderComponent implements OnInit{
   admin? : GetAdminByPhoneNumberDto;
   doctor? : GetDoctorByIDForAdminDto;
+  reception? : GetReceptionByPhoneNumberDto;
   phoneNumber?: string;
   isLoggedIn:boolean = false;
   isDoctorLoggedIn:boolean = false;
   isReceptionLoggedIn:boolean = false;
+
 constructor(private authenticationService: AuthenticationService,
   private adminService: AdminService,
-  private doctorService: DoctorService){}
+  private doctorService: DoctorService, 
+  private receptionService: ReceptionService){}
   ngOnInit(): void {
     
     this.authenticationService.isLoggedIn$.subscribe((isLoggedIn) => {
@@ -63,6 +68,15 @@ constructor(private authenticationService: AuthenticationService,
         
       }
     })
+  } else if(this.isReceptionLoggedIn){
+    this.receptionService.GetReceptionByPhoneNumber(this.phoneNumber!).subscribe({
+      next:(reception) => {
+        this.reception = reception;
+      },
+      error: (error) => {
+        console.log('calling get reception by phone number faild');
+      }
+    });
   }
   }
   signOut(e:Event){

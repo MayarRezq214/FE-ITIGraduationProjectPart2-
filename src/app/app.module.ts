@@ -21,6 +21,7 @@ import { NgToastModule } from 'ng-angular-popup';
 import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
 import { ReceptionRegisterComponent } from './reception-register/reception-register.component';
 import { AdminRegisterComponent } from './admin-register/admin-register.component';
+import { ReceptionProfileComponent } from './reception-profile/reception-profile.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AdminRegisterComponent } from './admin-register/admin-register.componen
     MyDoctorProfileComponent,
     SpecializtionComponent,
     ReceptionRegisterComponent,
-    AdminRegisterComponent
+    AdminRegisterComponent,
+    ReceptionProfileComponent
   ],
 
   imports: [
