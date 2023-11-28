@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { RegisterDoctorDto } from '../types/RegisterDoctorDto';
-import { RegisterDoctorDto } from '../types/RegisterDoctorDto';
 import { Observable } from 'rxjs';
 import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
 import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
@@ -12,6 +11,7 @@ import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
 import { AddWeekScheduleDto } from '../types/AddWeekScheduleDto';
 import { WeekScheduleForDoctorsDto } from '../types/WeekScheduleForDoctorsDto';
 import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
+import { GetAllPatientsWithDateDto } from '../types/GetAllPatientsWithDateDto';
 @Injectable({
   providedIn: 'root'
 })
