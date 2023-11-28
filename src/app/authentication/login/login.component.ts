@@ -46,12 +46,13 @@ export class LoginComponent implements OnInit{
       }
     }
     const I = e.target as HTMLElement
-    if(I.style.color === "rgb(63, 187, 192)"){
+    if(I.style.color === "rgb(13, 110, 253)"){
       I.style.color = "black"
     }else{
       I.style.color = "#0d6efd"
     }
   }
+  
 
   handleLogin(e: Event){
     e.preventDefault();
