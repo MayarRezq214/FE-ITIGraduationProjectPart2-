@@ -12,6 +12,9 @@ import { DoctorProfileComponent } from './doctor-profile/doctor-profile.componen
 import { LoginComponent } from './authentication/login/login.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
+import { doctorAuthGuard } from './gurds/doctor-auth.guard';
+import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
+import { adminAuthGuard } from './gurds/admin-auth.guard';
 import { SpecializtionComponent } from './specializtion/specializtion.component';
 
 
@@ -24,10 +27,11 @@ const routes: Routes = [
   {path : 'forms' , component : FormsComponent},
   {path : 'formsLayout' , component : FormLayoutComponent},
   {path : 'genralTables' , component : GenralTablesComponent},
-  {path : 'dataTables' , component : DataTablesComponent},
-  {path : 'doctorProfile' , component : DoctorProfileComponent},
-  {path : 'adminProfile' , component : AdminProfileComponent},
+  {path : 'dataTables' ,canActivate: [adminAuthGuard], component : DataTablesComponent},
+  {path : 'doctorProfile' ,canActivate: [adminAuthGuard], component : DoctorProfileComponent},
+  {path : 'adminProfile' ,canActivate: [adminAuthGuard], component : AdminProfileComponent},
   {path : 'patientProfile' , component : PatientProfileComponent},
+  {path: 'myDoctorProfile' , canActivate: [doctorAuthGuard], component : MyDoctorProfileComponent},
   {path : 'specialization' , component : SpecializtionComponent}
 ];
 

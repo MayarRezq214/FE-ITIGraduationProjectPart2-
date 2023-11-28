@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup , Validators} from '@angular/forms';
 import { LoginDto } from '../../types/LoginDto';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -10,8 +10,16 @@ import { phoneNumberLengthValidator } from 'src/app/services/loginPhonNumber.ser
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
+  credentials: LoginDto = {phoneNumber : '', password: ''};
+  rememberMe!: boolean;
+  selctedOption?: string;
+  errorrString?: string;
+
   constructor(private authenticationService: AuthenticationService){}
+  ngOnInit(): void {
+    localStorage.removeItem('DoctorId');
+  }
   form = new FormGroup({
     username: new FormControl<string>('' , [Validators.required ,  phoneNumberLengthValidator , this.onlyNumbersValidator]),
     password: new FormControl<string>('' , [Validators.required]),
@@ -24,19 +32,53 @@ export class LoginComponent {
 
     return isValid ? null : { 'invalidNumber': true };
   }
-  credentials: LoginDto = {phoneNumber : '', password: ''};
-  rememberMe!: boolean;
+
+
   handleLogin(e: Event){
     e.preventDefault();
-    console.log(this.form.controls.isRememberable.value)
+    // console.log(this.form.controls.isRememberable.value)
     this.rememberMe = this.form.controls.isRememberable.value!;
+    // console.log(this.form.controls..value)
    // var credentials = new LoginDto();
     this.credentials!.phoneNumber = this.form.controls.username.value?? '';
     this.credentials!.password = this.form.controls.password.value ?? '';
-    this.authenticationService.login(this.credentials! , this.rememberMe).subscribe((token) => {
-      this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+
+    if(this.selctedOption == 'Admin'){
+      this.authenticationService.login(this.credentials! , this.rememberMe).subscribe({
+        next:(token) => {
+        
+        this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+      },error:(error) => {
+        console.log('calling admin login api faild', error.error)
+        this.errorrString = error.error
+      }
     });
+    }else if(this.selctedOption == 'Doctor'){
+      this.authenticationService.Doctorlogin(this.credentials! , this.rememberMe).subscribe({
+        next:(token) => {
+        this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+      }, error:(error) => {
+        console.log('calling Doctor login api faild', error.error)
+        this.errorrString = error.error
+      }
+    });
+    }else if(this.selctedOption == 'Reception'){
+      this.authenticationService.receptionLogin(this.credentials! , this.rememberMe).subscribe({
+        next:(token) => {
+        this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+      }, error:(error) => {
+        console.log('calling Reception login api faild', error.error)
+        this.errorrString = error.error
+      }
+    });
+    }else{
+      this.errorrString = 'Please Chose your Role'
+    }
     
+  }
+
+  onSelect(e: Event){
+    this.selctedOption = (e.target as HTMLInputElement).value
   }
 
 
@@ -44,4 +86,5 @@ export class LoginComponent {
   get formVal() {
     return this.form.controls;
   }
+  
 }

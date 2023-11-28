@@ -10,4 +10,5 @@ export interface GetAllDoctorsForAdminDto {
     assistantPhoneNumber: string | null;
     assistantDateOfBirth: string | null;
     status: string | null;
+    
 }

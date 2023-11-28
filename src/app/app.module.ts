@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -12,15 +11,14 @@ import { FormLayoutComponent } from './form-layout/form-layout.component';
 import { GenralTablesComponent } from './genral-tables/genral-tables.component';
 import { DataTablesComponent } from './data-tables/data-tables.component';
 import { DoctorProfileComponent } from './doctor-profile/doctor-profile.component';
-import {HttpClientModule} from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './authentication/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { SpecializtionComponent } from './specializtion/specializtion.component';
-
-
-
+import { NgToastModule } from 'ng-angular-popup';
+import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
 
 @NgModule({
   declarations: [
@@ -37,14 +35,17 @@ import { SpecializtionComponent } from './specializtion/specializtion.component'
     LoginComponent,
     AdminProfileComponent,
     PatientProfileComponent,
+    MyDoctorProfileComponent,
     SpecializtionComponent
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]
