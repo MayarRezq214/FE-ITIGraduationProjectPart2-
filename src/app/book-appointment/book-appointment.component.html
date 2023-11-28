@@ -18,8 +18,9 @@
           </div>
 
               <ng-container *ngFor="let record of Visits">
-              <span *ngIf="doctor.id==record.drId" class="appointments" >
-             <span  *ngFor="let c of record.visitrecord" class="box">
+             
+                  <span *ngIf="doctor.id==record.drId" class="appointments" >
+                  <span  *ngFor="let c of record.visitrecord" class="box">
               <ng-container *ngIf="c"  >
                 <span *ngIf="c.day==3" class="divider"> Wednesday {{c.date}}</span>
                 <span *ngIf="c.day==4" class="divider"> Thursday {{c.date}}</span>
@@ -51,6 +52,7 @@
           </span>
 
             </ng-container>
+        
 
 
      </div>

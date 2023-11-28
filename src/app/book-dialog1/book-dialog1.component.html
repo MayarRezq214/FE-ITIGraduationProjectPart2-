@@ -1,0 +1,43 @@
+<div>
+    <div class="modal-content rounded-4 shadow"  *ngIf="patientRegistered">
+        <div class="modal-body p-5">
+          <table class="table">
+            <body>
+              <tr>
+                <th scope="row"> Name </th>
+                <td>{{this.PatientByPhoneNumber?.name}}</td>
+              </tr>
+              <tr>
+                <th scope="row"> phone Number </th>
+                <td>{{this.PatientByPhoneNumber?.phoneNumber}}</td>
+              </tr>
+              <tr>
+                <th scope="row"> Doctor Name </th>
+                <td>{{this.data.data.name}}</td>
+              </tr>
+              <tr>
+                <th scope="row"> Date </th>
+                <td>{{this.data.date}}</td>
+              </tr>
+            </body>
+          </table>
+          <mat-dialog-actions>
+            <button  mat-button mat-dialog-close>Close</button>
+            <button class="appointment-btn" mat-button mat-dialog-actions (click)="bookVisit(this.data.data, this.PatientByPhoneNumber!,this.data.date)">Book</button>
+          </mat-dialog-actions>
+        </div>
+      </div>
+    <form [formGroup]="Form">
+      <input id="formInput" (change)="getPhoneNumber($event)" formControlName="phoneNumber" type="text" placeholder="Phone number">
+      <ng-container mat-dialog-content *ngIf="patientAlreadyBooked">
+       <span>Patient already has an appointment with Dr {{this.data.data.name}} on {{bookedDate}}</span></ng-container>
+      <!-- <button mat-button mat-dialog-actions *ngIf="!patientAlreadyBooked && token" (click)="onContinue(this.data.data,this.data.date,PatientByPhoneNumber)">Continue</button> -->
+    </form>
+    <!-- <a *ngIf="!patientAlreadyBooked && token " (click)="onContinue(this.data.data,this.data.date,PatientByPhoneNumber)">Continue</a> -->
+    <!-- <a *ngIf="patientRegistered" [routerLink]="(['/login'])" (click)="loginAndRegister(data)">Login</a>
+    <a *ngIf="!patientRegistered " [routerLink]="(['/register'])" (click)="loginAndRegister(data)">Register</a> -->
+    
+    <mat-dialog-actions>
+      <button mat-button mat-dialog-close>Close</button>
+    
+    </mat-dialog-actions></div>

@@ -6,6 +6,9 @@ import { GetPatientByPhoneDTO } from '../types/GetPatientByPhoneNumberDto';
 import { VisitCountDto } from '../types/VisitCountDto';
 import { DoctorService } from '../services/doctor.service';
 import { DataForBookVisitService } from '../services/data-for-book-visit.service';
+import { BookDialog1Component } from '../book-dialog1/book-dialog1.component';
+import { BookVisitComponent } from '../book-visit/book-visit.component';
+import { DoctorDialogService } from '../services/doctor-dialog.service';
 
 @Component({
   selector: 'app-book-appointment',
@@ -29,7 +32,8 @@ export class BookAppointmentComponent implements OnInit{
   bookDoctorVisitCount : boolean = false;
   i : number = 0
   constructor(private doctorService : DoctorService,
-    private data : DataForBookVisitService){}
+    private data : DataForBookVisitService,
+    private _dialog : DoctorDialogService){}
 visitCountsDrById : any
 Visits : {drId? : string , visitrecord?: VisitCountDto[]}[]=[];
 ngOnInit():void
@@ -110,7 +114,7 @@ book(bookDoctor:any, date:string){
   //   // console.log(localStorage.getItem('userData'))
   //   var refr = this.confirmationDialog.open(bookDoctor , date ,this.patient );
   // }else{
-    //var ref = this._dialog.open(bookDoctor,date);
+    var ref = this._dialog.open(bookDoctor,date);
   // }
 }
 
