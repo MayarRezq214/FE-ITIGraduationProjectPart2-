@@ -1,0 +1,171 @@
+<ng-container *ngIf="sId==0 && !doctorById ">
+    <div *ngFor="let doctor of doctors">
+    <div class="row"  *ngIf="doctor.status && doctor.weekSchadual?.length==7">
+      <div   class="cardDoctor card d-flex align-items-stretch">
+        <div class="member" data-aos="fade-up" data-aos-delay="100">
+          <div class="doctorinfo">
+          <!-- <div class="member-img" >
+            <img *ngIf="doctor.imageStoredFileName" src="{{doctor.imageUrl}}" class="img-fluid" alt="">
+            <img *ngIf="!doctor.imageStoredFileName" src="assets/img/userB.png" class="img-fluid" alt="">
+
+          </div>
+           -->
+          <div class="member-info" *ngIf="doctor.status==true">
+            <h3 class="doctorName">{{doctor.name}}</h3>
+            <h4 class="doctorTitle">{{doctor.title}}</h4>
+            <span class="doctorDes">{{doctor.description}}</span>
+          </div>
+          </div>
+
+              <ng-container *ngFor="let record of Visits">
+              <span *ngIf="doctor.id==record.drId" class="appointments" >
+             <span  *ngFor="let c of record.visitrecord" class="box">
+              <ng-container *ngIf="c"  >
+                <span *ngIf="c.day==3" class="divider"> Wednesday {{c.date}}</span>
+                <span *ngIf="c.day==4" class="divider"> Thursday {{c.date}}</span>
+                <span *ngIf="c.day==5" class="divider"> Friday {{c.date}}</span>
+                <span *ngIf="c.day==6" class="divider"> Saturday {{c.date}}</span>
+                <span *ngIf="c.day==0" class="divider"> Sunday {{c.date}}</span>
+                <span *ngIf="c.day==1" class="divider"> Monday {{c.date}}</span>
+                <span *ngIf="c.day==2" class="divider"> Tuesday {{c.date}}</span>
+              </ng-container>
+
+            <div *ngFor="let schedule of doctor.weekSchadual">
+              <span *ngIf="schedule.id== c.weekScheduleId">
+                   <span *ngIf="schedule.isAvailable ">
+                   <div>{{schedule.startTime}}</div>
+                   <div>{{schedule.endTime}}</div>
+                   <span *ngIf="c.limitOfPatients==c.actualNoOfPatients" >No Available Appointments
+                    <button [disabled]="true" class="book-disabled">Book</button></span>
+                    <button *ngIf="c.limitOfPatients>c.actualNoOfPatients"(click)="book(doctor,c.date)" class="book-btn">Book</button>
+                 </span>
+                 </span>
+                 <span *ngIf="!schedule.isAvailable && c.weekScheduleId==schedule.id" class="disable-btn">
+                   <span>Day off</span>
+                   <button [disabled]="true" class="book-disabled">Book</button>
+                 </span>
+               </div>
+          </span>
+
+
+          </span>
+
+            </ng-container>
+
+
+     </div>
+        </div>
+      </div>
+</div>
+
+  </ng-container>
+
+  <ng-container *ngIf="sId != 0 && !doctorById"> <div *ngFor="let spec of doctorsBySpecialization" >
+       <div *ngFor="let doctor of spec.childDoctorOfSpecializations"  >
+         
+    <div class="row" *ngIf="doctor.status && doctor.weekSchadual?.length==7">
+      <div class="cardDoctor card d-flex align-items-stretch">
+        <div class="member-info">
+             <div class="member" data-aos="fade-up" data-aos-delay="100">
+              <div class="doctorinfo">
+               <!-- <div class="member-img">
+                 <img src="{{doctor.imageUrl}}" class="img-fluid" alt="">
+                 <img *ngIf="!doctor.imageStoredFileName" src="assets/img/userB.png" class="img-fluid" alt="">
+               </div> -->
+               <div class="member-info">
+                <h3 class="doctorName">{{doctor.name}}</h3>
+                <h4 class="doctorTitle">{{doctor.title}}</h4>
+                <span class="doctorDes">{{doctor.description}}</span>
+              </div>
+            </div>
+             <ng-container *ngFor="let record of Visits">
+              <span *ngIf="doctor.id==record.drId" class="appointments">
+             <span *ngFor="let c of record.visitrecord"  class="box">
+                <ng-container *ngIf="c">
+                <span *ngIf="c.day==3" class="divider"> Wednesday {{c.date}}</span>
+                <span *ngIf="c.day==4" class="divider"> Thursday {{c.date}}</span>
+                <span *ngIf="c.day==5" class="divider"> Friday {{c.date}}</span>
+                <span *ngIf="c.day==6" class="divider"> Saturday {{c.date}}</span>
+                <span *ngIf="c.day==0" class="divider"> Sunday {{c.date}}</span>
+                <span *ngIf="c.day==1" class="divider"> Monday {{c.date}}</span>
+                <span *ngIf="c.day==2" class="divider"> Tuesday {{c.date}}</span>
+              </ng-container>
+            <div *ngFor="let schedule of doctor.weekSchadual">
+              <span *ngIf="schedule.id== c.weekScheduleId">
+                   <span *ngIf="schedule.isAvailable " class="time">
+                   <div *ngIf="c.limitOfPatients!=c.actualNoOfPatients">{{schedule.startTime}}</div>
+                   <div *ngIf="c.limitOfPatients!=c.actualNoOfPatients">{{schedule.endTime}}</div>
+                   <span *ngIf="c.limitOfPatients==c.actualNoOfPatients" >No Available Appointments
+                    <button [disabled]="true"  class="book-disabled">Book</button></span>
+                    <button *ngIf="c.limitOfPatients>c.actualNoOfPatients"(click)="book(doctor,c.date)" class="book-btn">Book</button>
+
+                 </span> </span>
+                 <span *ngIf="!schedule.isAvailable && c.weekScheduleId==schedule.id"  class="disable-btn">
+                   <span>Day off</span>
+                   <button [disabled]="true" class="book-disabled">Book</button>
+                 </span>
+               </div>
+          </span>
+
+
+          </span>
+
+            </ng-container>
+             
+             
+      </div>
+         </div>
+      </div>
+        </div>
+       </div>
+    </div>
+   </ng-container> 
+
+  <ng-container *ngIf="sId==0 && doctorById">
+    <div class="row">
+      <div class="cardDoctor card d-flex align-items-stretch">
+        <div class="member" data-aos="fade-up" data-aos-delay="100">
+          <div class="doctorinfo">
+          <!-- <div class="member-img">
+            <img  src="{{doctorById.imageUrl}}" class="img-fluid" alt="">
+            <img *ngIf="!doctorById?.imageStoredFileName" src="assets/img/userB.png" class="img-fluid" alt="">
+
+          </div> -->
+
+          <div class="member-info">
+            <h3 class="doctorName">{{doctorById.name}}</h3>
+            <h4 class="doctorTitle">{{doctorById.title}}</h4>
+            <span class="doctorDes">{{doctorById.description}}</span>
+          </div></div>
+          <span  class="appointments" >
+            <div *ngFor="let record of visitCount" class="box">
+                <span *ngIf="record.day==3" class="divider">Wednesday {{record.date}}</span>
+                <span *ngIf="record.day==4" class="divider">Thursday {{record.date}}</span>
+                <span *ngIf="record.day==5" class="divider">Friday {{record.date}}</span>
+                <span *ngIf="record.day==6" class="divider">Saturday {{record.date}}</span>
+                <span *ngIf="record.day==0" class="divider">Sunday {{record.date}}</span>
+                <span *ngIf="record.day==1" class="divider">Monday {{record.date}}</span>
+                <span *ngIf="record.day==2" class="divider">Tuesday {{record.date}}</span>
+          <div *ngFor="let schedule of doctorById?.weekSchadual">
+           <span *ngIf="schedule.id==record.weekScheduleId"> 
+                <span *ngIf="schedule.isAvailable " class="time">
+                <div *ngIf="record.limitOfPatients!=record.actualNoOfPatients">{{schedule.startTime}}</div>
+                <div *ngIf="record.limitOfPatients!=record.actualNoOfPatients">{{schedule.endTime}}</div>
+                <span *ngIf="record.limitOfPatients==record.actualNoOfPatients" >No Available Appointments
+                <button (click)="book(doctorById,record.date)" [disabled]="true" class="book-disabled">Book</button></span>
+                <button *ngIf="record.limitOfPatients>record.actualNoOfPatients"(click)="book(doctorById,record.date)" class="book-btn">Book</button>
+
+              </span>
+              </span>
+              <span *ngIf="!schedule.isAvailable && record.weekScheduleId==schedule.id" class="disable-btn">
+                <span>Day Off</span>
+                <button [disabled]="true" class="book-disabled">Book</button>
+              </span>
+
+            </div>
+           </div>
+     </span>
+        </div>
+      </div>
+    </div>
+  </ng-container>

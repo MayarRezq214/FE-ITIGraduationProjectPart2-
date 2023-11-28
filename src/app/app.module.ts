@@ -19,6 +19,8 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
 import { SpecializtionComponent } from './specializtion/specializtion.component';
 import { NgToastModule } from 'ng-angular-popup';
 import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
+import { BookVisitComponent } from './book-visit/book-visit.component';
+import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.
     AdminProfileComponent,
     PatientProfileComponent,
     MyDoctorProfileComponent,
-    SpecializtionComponent
+    SpecializtionComponent,
+    BookVisitComponent,
+    BookAppointmentComponent
   ],
 
   imports: [

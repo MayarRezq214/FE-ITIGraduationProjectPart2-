@@ -16,6 +16,8 @@ import { doctorAuthGuard } from './gurds/doctor-auth.guard';
 import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
 import { adminAuthGuard } from './gurds/admin-auth.guard';
 import { SpecializtionComponent } from './specializtion/specializtion.component';
+import { BookVisitComponent } from './book-visit/book-visit.component';
+import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 
 
 const routes: Routes = [
@@ -32,7 +34,10 @@ const routes: Routes = [
   {path : 'adminProfile' ,canActivate: [adminAuthGuard], component : AdminProfileComponent},
   {path : 'patientProfile' , component : PatientProfileComponent},
   {path: 'myDoctorProfile' , canActivate: [doctorAuthGuard], component : MyDoctorProfileComponent},
-  {path : 'specialization' ,canActivate: [adminAuthGuard], component : SpecializtionComponent}
+  {path : 'specialization' ,canActivate: [adminAuthGuard], component : SpecializtionComponent},
+  {path : 'bookVisit' , component : BookVisitComponent},
+  {path : 'bookAppointment' , component : BookAppointmentComponent}
+
 ];
 
 @NgModule({
