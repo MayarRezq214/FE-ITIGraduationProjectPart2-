@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
+import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';

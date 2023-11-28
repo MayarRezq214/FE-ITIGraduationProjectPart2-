@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { RegisterDoctorDto } from '../types/RegisterDoctorDto';
+import { RegisterDoctorDto } from '../types/RegisterDoctorDto';
 import { Observable } from 'rxjs';
 import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
 import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
@@ -47,6 +48,10 @@ export class DoctorService {
    public getDoctorByIdForAdmin(id:string): Observable<GetDoctorByIDForAdminDto>{
     return this.client.get<GetDoctorByIDForAdminDto>(`https://localhost:7267/api/Admins/admin/getDoctorForAdmin/${id}`);
   }
+  public getAllPatientsWithDates(date : string , DoctorId : string): Observable<GetAllPatientsWithDateDto[]>{
+    return this.client.get<GetAllPatientsWithDateDto[]>(`https://localhost:7267/api/Doctor/dailySchedule/${date}?DoctorId=${DoctorId}`)
+  }
+   
    public addWeekSchedule(schedule : AddWeekScheduleDto): Observable<object>{
     return this.client.post(`https://localhost:7267/addWeekSchedule`,schedule);
    }
