@@ -33,6 +33,27 @@ export class LoginComponent implements OnInit{
     return isValid ? null : { 'invalidNumber': true };
   }
 
+ 
+
+  togglePasswordType(e:any) {
+    const passwordControl = this.form.get('password');
+    if (passwordControl instanceof FormControl) {
+      const inputElement = document.getElementById('yourPassword') as HTMLInputElement;
+      console.log('Input Element:', inputElement);
+
+      if (inputElement) {
+        const currentType =inputElement.type;
+        const newType = currentType === 'password' ? 'text' : 'password';
+        inputElement.type = newType;
+      }
+    }
+    const I = e.target as HTMLElement
+    if(I.style.color === "rgb(63, 187, 192)"){
+      I.style.color = "black"
+    }else{
+      I.style.color = "#012970"
+    }
+  }
 
   handleLogin(e: Event){
     e.preventDefault();

@@ -1,0 +1,16 @@
+.Ipos{
+    position: relative;
+  }
+
+  .EyePw{
+    position: absolute;
+  right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: black
+  }
+
+  .EyePw:hover{
+    color: #012970;
+    cursor: pointer;
+  }

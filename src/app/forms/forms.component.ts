@@ -6,12 +6,12 @@ import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import { HttpClientModule } from '@angular/common/http';
 import {RegisterDoctorDto} from '../types/RegisterDoctorDto';
-
 import { Router } from '@angular/router';
 import { phoneNumberLengthValidator } from '../services/registerPhoneNumber';
 import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navigate-to-doctor-profile-after-onboarding.service';
 import { passwordValidators } from '../services/password.service';
 import { AddWeekScheduleDto } from '../types/AddWeekScheduleDto';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-forms',
@@ -21,7 +21,7 @@ import { AddWeekScheduleDto } from '../types/AddWeekScheduleDto';
 export class FormsComponent implements OnInit{
 
   currentDate? : Date
- 
+  errorMessage:string ='';
   specializations?: GetAllSpecializationsDto[];
   Doctors? : DoctorsForAllSpecializations[];
   doctorSpecialization : number = 0
@@ -67,6 +67,7 @@ export class FormsComponent implements OnInit{
   constructor(private doctorService : DoctorService, 
     private router : Router,
     private navigate : NavigateToDoctorProfileAfterOnboardingService,
+    private toast: NgToastService
    ) {}
 
    onlyNumbersValidator(control:any) {
@@ -75,6 +76,28 @@ export class FormsComponent implements OnInit{
 
     return isValid ? null : { 'invalidNumber': true };
   }
+  
+
+  togglePasswordType(e:any) {
+    const passwordControl = this.form.get('password');
+    if (passwordControl instanceof FormControl) {
+      const inputElement = document.getElementById('password') as HTMLInputElement;
+      //console.log('Input Element:', inputElement);
+
+      if (inputElement) {
+        const currentType =inputElement.type;
+        const newType = currentType === 'password' ? 'text' : 'password';
+        inputElement.type = newType;
+      }
+    }
+    const I = e.target as HTMLElement
+    if(I.style.color === "rgb(63, 187, 192)"){
+      I.style.color = "black"
+    }else{
+      I.style.color = "#012970"
+    }
+  }
+
   ngOnInit(): void {
     this.doctorService.GetAllSpecializations().subscribe({
       next:(specializations) => {
@@ -85,7 +108,6 @@ export class FormsComponent implements OnInit{
       },
     })
   }
-
 
   onSubmit(e : Event)
   {
@@ -112,17 +134,24 @@ export class FormsComponent implements OnInit{
     this.doctorService.registerDoctor(this.registerDoctor).subscribe({
       next:()=>
       {
-     
+       this.showSuccess();
         this.navigate.phoneNumber = this.registerDoctor.phoneNumber
        this.navigate.open()
 
       },
-      error:(error)=>
-      {
-        console.log("api failed",error)
+      error: (error) => {
+
+        if (error.status === 400) {
+          this.errorMessage = '*The phone number you entered is already associated with a doctor.';
+        } else {
+          console.log('Some other error occurred:', error);
+        }
       }
     })
    
+  }
+  private showSuccess() {
+    this.toast.success({ detail: "SUCCESS", summary: 'Receptionist added successfully', duration: 4000 });
   }
   onSelect(e:Event)
   {
