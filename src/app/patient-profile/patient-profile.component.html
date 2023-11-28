@@ -336,38 +336,6 @@
                 <div class="tab-pane fade pt-3" id="profile-settings">
 
                   <!-- Visits Form -->
-                  <!-- <form [formGroup]="form">
-                    <div class="row mb-3">
-                      <div class="col-md-8 col-lg-9">
-
-                        <div *ngIf="visits && visits.length > 0">
-                          <div *ngFor="let visit of visits ; let  i = index" class="card">
-                            <h3>Visit - {{ visits.length - i }}</h3>
-                              <p>Date of Visit: {{ visit.dateOfVisit | date }}</p>
-                              <p *ngIf="visit.symptoms">Symptoms: {{ visit.symptoms }}</p>
-                              <p *ngIf="visit.prescription">Prescription: {{ visit.prescription }}</p>
-                              <p *ngIf="visit.comments">Comments: {{ visit.comments }}</p>
-                              <div *ngIf="!visit.comments && !visit.prescription && !visit.symptoms">
-                                <p for="symptoms">Symptoms:</p>
-                                <textarea type="text" id="symptoms" formControlName="symptoms"></textarea>
-                                <p for="prescription">Prescription:</p>
-                                <textarea type="text" id="prescription" formControlName="prescription"></textarea>
-                                <p for="comments">Comments:</p>
-                                <textarea type="text" id="comments" formControlName="comments"></textarea>
-                                <div class="text-center submitButton">
-                                  <button type="submit" class="btn btn-primary" (click)="onSubmit($event, visit.id , i)">Save Changes</button>
-                                </div>
-                              </div>
-
-                          </div>
-                        </div>
-
-
-                      </div>
-                    </div>
-
-
-                  </form>End visits Form -->
 
                   <form [formGroup]="form">
                     <div class="row mb-3">
@@ -387,7 +355,7 @@
                             <p *ngIf="visit.symptoms"><span class="clr2">Symptoms: </span>{{ visit.symptoms }}</p>
                             <p *ngIf="visit.prescription"><span class="clr2">Prescription: </span>{{ visit.prescription }}</p>
                             <p *ngIf="visit.comments"><span class="clr2">Comments: </span>{{ visit.comments }}</p>
-                            <div *ngIf="!visit.comments && !visit.prescription && !visit.symptoms && visit.visitStatus == 'True' ">
+                            <div *ngIf="!visit.comments && !visit.prescription && !visit.symptoms && visit.visitStatus == 'done' ">
 
                               <div class="d-md-flex d-block textareaDiv">
                                 <p for="symptoms"><span class="clr2">Symptoms:</span></p>
