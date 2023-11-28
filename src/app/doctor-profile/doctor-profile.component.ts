@@ -9,11 +9,11 @@ import { NavigateToDoctorProfileAfterOnboardingService } from '../services/navig
 import { SearchService } from '../services/search.service';
 import { GetAllDoctorsDto } from '../types/GetAllDoctorsDto';
 import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
-import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
 import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
 import { DataBetweenAddDrDrProfileService } from '../services/data-between-add-dr-dr-profile.service';
 import { WeekScheduleForDoctorsDto } from '../types/WeekScheduleForDoctorsDto';
+import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import * as moment from 'moment';
 import { shareReplay } from 'rxjs';
 
@@ -107,28 +107,33 @@ export class DoctorProfileComponent  implements OnInit{
   }
 
   onEdit(){
+    let date = new Date(this.doctor?.dateOfBirth!)
+    console.log(date)
+    const offset = date.getTimezoneOffset()
+    date = new Date(date.getTime() - (offset*60*1000))
+
+    console.log(date.toISOString().split('T')[0])
     this.form?.setValue({
       name : this.doctor?.name,
       title : this.doctor?.title,
       description : this.doctor?.description,
       phoneNumber : this.doctor?.phoneNumber,
       salary : this.doctor?.salary,
-      dateOfBirth : this.doctor?.dateOfBirth.replace('T00:00:00',' ').trim(),
-    //  status : this.doctor?.status
-   //   photo : this.doctor?.imageUrl
+      dateOfBirth : date.toISOString().split('T')[0],
+   
     })
   }
       onOpenShifts(){
         this.weekScheduleForm?.reset()
        
 
-        this.available0 = this.doctor?.weekSchadual[0].isAvailable
-        this.available1 = this.doctor?.weekSchadual[1].isAvailable
-        this.available2 = this.doctor?.weekSchadual[2].isAvailable
-        this.available3 = this.doctor?.weekSchadual[3].isAvailable
-        this.available4 = this.doctor?.weekSchadual[4].isAvailable
-        this.available5 = this.doctor?.weekSchadual[5].isAvailable
-        this.available6 = this.doctor?.weekSchadual[6].isAvailable
+        this.available0 = this.doctor?.weekSchadual[0]?.isAvailable
+        this.available1 = this.doctor?.weekSchadual[1]?.isAvailable
+        this.available2 = this.doctor?.weekSchadual[2]?.isAvailable
+        this.available3 = this.doctor?.weekSchadual[3]?.isAvailable
+        this.available4 = this.doctor?.weekSchadual[4]?.isAvailable
+        this.available5 = this.doctor?.weekSchadual[5]?.isAvailable
+        this.available6 = this.doctor?.weekSchadual[6]?.isAvailable
 
           this.weekScheduleForm?.setValue({
           start0 : moment(this.doctor?.weekSchadual[0].startTime, 'h:m:s A').format('HH:mm:ss'),
@@ -431,7 +436,16 @@ export class DoctorProfileComponent  implements OnInit{
 
           this.doctorService.UpdateDoctor(this.doctorId,this.updateDoctor).subscribe({
             next:()=>{
-
+              this.doctorService.getDoctorByIdForAdmin(this.doctorId).subscribe({
+                next:(doctor) => {
+                  this.doctor = doctor;
+                  console.log(this.doctor)
+                  
+                },
+                error: (error) => {
+                  console.log('calling dr by id api failed', error);
+                },
+              })
             },
             error:(error)=>{
               console.log("update api failed",error)

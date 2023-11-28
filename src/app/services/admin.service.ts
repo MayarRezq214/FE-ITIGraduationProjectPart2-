@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GetAdminByPhoneNumberDto } from '../types/GetAdminByPhoneNumberDto';
 import { GetAllSpecializationForAdminDto } from '../types/GetAllSpecializationForAdminDto';
+import { UpdateAdminByPhoneDto } from '../types/UpdateAdminByPhoneDto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,4 +19,7 @@ export class AdminService {
     return this.client.get<GetAllSpecializationForAdminDto[]>(`https://localhost:7267/api/Admins/Specializations`)
   }
 
+  public updateAdminProfile(phoneNumber : string, admin : UpdateAdminByPhoneDto): Observable<object>{
+    return this.client.put(`https://localhost:7267/api/Admins/admins/updateAdmin/${phoneNumber}`,admin);
+  }
 }
