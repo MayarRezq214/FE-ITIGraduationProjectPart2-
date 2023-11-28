@@ -94,7 +94,7 @@ export class FormsComponent implements OnInit{
     if(I.style.color === "rgb(63, 187, 192)"){
       I.style.color = "black"
     }else{
-      I.style.color = "#012970"
+      I.style.color = "#0d6efd"
     }
   }
 
