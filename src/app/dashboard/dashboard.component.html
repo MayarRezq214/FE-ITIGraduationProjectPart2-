@@ -248,6 +248,7 @@
                     <thead>
                       <tr>
                         <th scope="col">Patient Name</th>
+                        <th scope="col">Patient Phone Number</th>
                         <th scope="col">Arrival Time</th>
                         <th scope="col">Visit Start Time</th>
                         <th scope="col">Visit End Time</th>
@@ -257,6 +258,7 @@
                     <tbody>
                       <tr *ngFor="let visit of visits">
                         <th scope="row"><a href="#">{{visit.name}}</a></th>
+                        <th dcope="row">{{visit.patientPhoneNumber}}</th>
                         <td *ngIf="visit.visitStatus">{{visit.arrivalTime}}</td>
                         <td *ngIf="visit.visitStatus == 'inProgress' || visit.visitStatus == 'done'">{{visit.visitStartTime}}</td>
                         <td *ngIf="visit.visitStatus == 'done'">{{visit.visitEndTime}}</td>
@@ -285,12 +287,14 @@
                       <tr>
                         <th scope="col">Patient Name</th>
                         <th scope="col">Arrival Time</th>
+                        <th scope="col">Visit Start Time</th>
+                        <th scope="col">Visit End Time</th>
                         <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let visit of visits">
-                        <th scope="row"><a href="#">{{visit.name}}</a></th>
+                        <th scope="row"><a [routerLink]="['/patientProfile']" (click)="goToProfile(visit.patientPhoneNumber!)">{{visit.name}}</a></th>
 
                         <td *ngIf="visit.visitStatus">{{visit.arrivalTime}}</td>
                         <td *ngIf="visit.visitStatus == 'inProgress' || visit.visitStatus == 'done'">{{visit.visitStartTime}}</td>
@@ -305,34 +309,6 @@
                         <td *ngIf="visit.visitStatus == 'inProgress'"><span class="badge bg-warning">In progress</span></td>
                         <td *ngIf="visit.visitStatus == 'done'"><span class="badge bg-success">Done</span></td> 
                       </tr>
-                      <!-- <tr>
-                        <th scope="row"><a href="#">#2147</a></th>
-                        <td>Bridie Kessler</td>
-                        <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                        <td>$47</td>
-                        <td><span class="badge bg-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2049</a></th>
-                        <td>Ashleigh Langosh</td>
-                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                        <td>$147</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Angus Grady</td>
-                        <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                        <td>$67</td>
-                        <td><span class="badge bg-danger">Rejected</span></td>
-                      </tr>
-                      <tr>
-                        <th scope="row"><a href="#">#2644</a></th>
-                        <td>Raheem Lehner</td>
-                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                        <td>$165</td>
-                        <td><span class="badge bg-success">Approved</span></td>
-                      </tr> -->
                     </tbody>
                   </table>
 

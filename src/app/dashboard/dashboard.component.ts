@@ -10,6 +10,8 @@ import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import { UpdateArrivalPatientStatusDto } from '../types/UpdateArrivalPatientStatusDto';
 import { ReceptionService } from '../services/reception.service';
+import { BehaviorSubject } from 'rxjs';
+import { PhoneNumberBetweenDashboardAndPatientProfileService } from '../services/phone-number-between-dashboard-and-patient-profile.service';
 
 
 
@@ -28,9 +30,12 @@ isReceptionLoggedIn?: boolean;
 doctorId: string = '0';
 done: boolean = false;
 
+
 constructor(private doctorService: DoctorService,
   private authenticationService : AuthenticationService,
-  private receptionService: ReceptionService){}
+  private receptionService: ReceptionService,
+  private patientPhoneNumberService : PhoneNumberBetweenDashboardAndPatientProfileService){}
+
   currentDate? = new Date();
   doctors?: GetAllDoctorsDto[];
   specializations?: GetAllSpecializationsDto[];
@@ -127,7 +132,10 @@ constructor(private doctorService: DoctorService,
     this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
     console.log(this.Doctors)
   }
-
+  
+  goToProfile(PhoneNumber: string){
+    this.patientPhoneNumberService.ChangePatientPhoneNumber(PhoneNumber);
+  }
 
   doctorSelected(event: Event):void{
 
