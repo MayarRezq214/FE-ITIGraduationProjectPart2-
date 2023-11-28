@@ -16,7 +16,8 @@ import { doctorAuthGuard } from './gurds/doctor-auth.guard';
 import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
 import { adminAuthGuard } from './gurds/admin-auth.guard';
 import { SpecializtionComponent } from './specializtion/specializtion.component';
-
+import { AdminRegisterComponent } from './admin-register/admin-register.component';
+import { ReceptionRegisterComponent } from './reception-register/reception-register.component';
 
 const routes: Routes = [
   {path: '' , component:DashboardComponent},
@@ -32,7 +33,9 @@ const routes: Routes = [
   {path : 'adminProfile' ,canActivate: [adminAuthGuard], component : AdminProfileComponent},
   {path : 'patientProfile' , component : PatientProfileComponent},
   {path: 'myDoctorProfile' , canActivate: [doctorAuthGuard], component : MyDoctorProfileComponent},
-  {path : 'specialization' ,canActivate: [adminAuthGuard], component : SpecializtionComponent}
+  {path : 'specialization' ,canActivate: [adminAuthGuard], component : SpecializtionComponent},
+  {path: 'adminRegister', component:AdminRegisterComponent},
+  {path: 'receptionRegister', component:ReceptionRegisterComponent}
 ];
 
 @NgModule({

@@ -41,8 +41,10 @@
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" formControlName="password" class="form-control" id="yourPassword" >
-                      
+                      <div class="Ipos">
+                        <input type="password" id="yourPassword" class="form-control" formControlName="password">
+                        <i class="bi bi-eye-fill EyePw" (click)="togglePasswordType($event)"></i>
+                      </div> 
                       <div *ngIf="formVal.password.touched && formVal.password.errors?.['required']" class="text-danger text-start ErrorFont">*Password is required</div>
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
