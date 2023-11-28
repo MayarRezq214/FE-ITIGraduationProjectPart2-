@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { RegisterDoctorDto } from '../types/RegisterDoctorDto';
 import { Observable } from 'rxjs';
-import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
 import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
-
+import { UpdateDoctorStatusDto } from '../types/UpdateDoctorStatusDto';
 import { GetAllDoctorsDto } from '../types/GetAllDoctorsDto';
 import { GetDoctorsBySpecializationDto } from '../types/GetDoctorsBySpecializationDto';
 import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
-import { UpdateDoctorStatusDto } from '../types/UpdateDoctorStatusDto';
+import { AddWeekScheduleDto } from '../types/AddWeekScheduleDto';
+import { WeekScheduleForDoctorsDto } from '../types/WeekScheduleForDoctorsDto';
+import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { GetAllPatientsWithDateDto } from '../types/GetAllPatientsWithDateDto';
 @Injectable({
   providedIn: 'root'
@@ -51,4 +52,14 @@ export class DoctorService {
     return this.client.get<GetAllPatientsWithDateDto[]>(`https://localhost:7267/api/Doctor/dailySchedule/${date}?DoctorId=${DoctorId}`)
   }
    
+   public addWeekSchedule(schedule : AddWeekScheduleDto): Observable<object>{
+    return this.client.post(`https://localhost:7267/addWeekSchedule`,schedule);
+   }
+   public updateWeekScheduleRecord(schedule : WeekScheduleForDoctorsDto, id:number):Observable<object>{
+    return this.client.put(`https://localhost:7267/api/Admins/admins/updateWeekSchedule/${id}`,schedule);
+   }
+
+   public addVisitCount(startDate : string, endDate: string):Observable<object>{
+    return this.client.post(`https://localhost:7267/api/Doctor/addVisitCount/${startDate}?EndDate=${endDate}`,endDate)
+   }
   }

@@ -4,15 +4,16 @@ import { WeekScheduleForDoctorsDto } from "./WeekScheduleForDoctorsDto";
 export interface GetDoctorByIDForAdminDto {
     id: string | null;
     name: string;
-    title: string | null;
-    description: string | null;
-    phoneNumber: string | null;
+    title: string ;
+    description: string ;
+    phoneNumber: string ;
     salary: number;
     dateOfBirth: string;
     specializationName: string;
-    weekSchadual: WeekScheduleForDoctorsDto[] | null;
-    imageFileName: string | null;
-    imageStoredFileName: string | null;
-    imageContentType: string | null;
-    imageUrl: string | null;
+    weekSchadual: WeekScheduleForDoctorsDto[] ;
+    imageFileName: string ;
+    imageStoredFileName: string ;
+    imageContentType: string ;
+    imageUrl: string ;
+    status : boolean
 }

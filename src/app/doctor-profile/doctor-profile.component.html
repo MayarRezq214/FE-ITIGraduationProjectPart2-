@@ -1,7 +1,7 @@
 <main id="main" class="main">
 
-  <div class="row justify-content-center pt-2">
-    <select (change)="selected($event)" class="col form-select border-2 py-3 mx-3">
+  <div class="row justify-content-center pt-2 search ">
+    <select (change)="selected($event)" class="col form-select border-2 py-3 mx-3 ">
       <option selected="" value="0" id="All">All Specialization</option>
       <option  *ngFor="let Specialization of this.specializations" [value]="Specialization.id "> {{ Specialization.name }}</option>
       </select>
@@ -15,7 +15,7 @@
     </ng-container>
    
   </select>
-  <button class=" col-md-2 btn appointment-btn scrollto btn-lg me-4 text-dark-50 fw-bold mb-0" (click)="onSearch($event)">Search</button>
+  <button class=" col-md-2 btn appointment-btn scrollto btn-lg me-4 text-dark-50 fw-bold mb-0 search-btn" (click)="onSearch($event)">Search</button>
   </div>
     <div class="pagetitle">
       <h1>Profile</h1>
@@ -67,20 +67,14 @@
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Shifts</button>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings" (click)="onOpenShifts()">Shifts</button>
                 </li>
 
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                </li>
 
               </ul>
               <div class="tab-content pt-2">
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
-
                   <h5 class="card-title">Profile Details</h5>
 
                   <div class="row">
@@ -152,7 +146,7 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName"  name="name" ngModel  >
+                        <input type="text" class="form-control" id="fullName"  name="name" ngModel  >
                       </div>
                     </div>
 
@@ -160,125 +154,376 @@
                     <div class="row mb-3">
                       <label for="company" class="col-md-4 col-lg-3 col-form-label">Title</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="company" type="text" class="form-control" id="company"   name="title" ngModel>
+                        <input type="text" class="form-control" id="company" name="title" ngModel>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">Description</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about"  class="form-control" name="description" ngModel id="about" style="height: 100px"></textarea>
+                        <textarea  class="form-control" name="description" ngModel id="about" style="height: 100px"></textarea>
                       </div>
                     </div>
                     
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Phone Number</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" name="phoneNumber" ngModel id="Job" >
+                        <input  type="text" class="form-control" name="phoneNumber" ngModel id="Job" >
                       </div>
                     </div> 
 
                      <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Salary</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" name="salary" ngModel id="Country">
+                        <input type="text" class="form-control" name="salary" ngModel >
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="Address" class="col-md-4 col-lg-3 col-form-label">Date Of Birth</label>
+                      <label class="col-md-4 col-lg-3 col-form-label">Date Of Birth</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="date" class="form-control" name="dateOfBirth" ngModel   >
+                        <input type="date" class="form-control" name="dateOfBirth" ngModel >
                       </div>
                     </div> 
 
-                    <!-- <div class="row mb-3">
-                      <label for="Country" class="col-md-4 col-lg-3 col-form-label">Status</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" name="status" ngModel >
-                      </div>
-                    </div> -->
+
+                    <div class="row mb-3  ">
+                      <fieldset data-role="controlgroup ">
+                        <div class="radio-btns">
+                          <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                          <div  class="form-check radio">
+                          <input  class="form-check-input" type="radio" name="status"  id="true" value="true" [checked]="doctor?.status==true" (change)="doctorStatusChange($event)">
+                          <label class="form-check-label">Active</label>
+                        </div>
+                        <div class="form-check radio">
+                          <input class="form-check-input" type="radio" name="status"  id="false" value="false" [checked]="doctor?.status==false" (change)="doctorStatusChange($event)">
+                          <label class="form-check-label">InActive</label>
+                        </div></div>
+                        </fieldset>
+                        
+                  </div>
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary" (click)="onSave($event,form.value)">Save Changes</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
                 </div>
-
-                <div class="tab-pane fade pt-3" id="profile-settings">
+                
+                <div class="tab-pane fade pt-3 profile-overview" id="profile-settings">
 
                   <!-- Settings Form -->
-                  <form>
+                  
+                  <div class="tab-content pt-3">
+                    <h5 class="card-title">Schedule Details</h5>
 
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                      <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                          <label class="form-check-label" for="changesMade">
-                            Changes made to your account
-                          </label>
+                    <div class="card-body">
+                   
+                      <!-- Active Table -->
+                     <form #weekScheduleForm="ngForm">
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Sunday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start0" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end0" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit0" ngModel >
+                            </div>
+                          </div>
+          
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available0"  value="true" [checked]="available0" (change)="availableChange($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available0"  value="false" [checked]="!available0" (change)="availableChange($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
                         </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                          <label class="form-check-label" for="newProducts">
-                            Information on new products and services
-                          </label>
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,0)" >Apply Changes</button>
                         </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="proOffers">
-                          <label class="form-check-label" for="proOffers">
-                            Marketing and promo offers
-                          </label>
+
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Monday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start1" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end1" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit1" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available1"  value="true" [checked]="available1" (change)="availableChange1($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available1"  value="false" [checked]="!available1" (change)="availableChange1($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
                         </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                          <label class="form-check-label" for="securityNotify">
-                            Security alerts
-                          </label>
+                      
+                          
+                         <button class=" btn-apply" (click)="onApply($event,1)" >Apply Changes</button>
                         </div>
-                      </div>
+
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Tuesday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start2" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end2" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit2" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available2"  value="true" [checked]="available2" (change)="availableChange2($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available2"  value="false" [checked]="!available2" (change)="availableChange2($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
+                          
+                         <button class=" btn-apply" (click)="onApply($event,2)" >Apply Changes</button>
+                        </div>
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Wednesday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start3" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end3" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit3" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available3"  value="true" [checked]="available3" (change)="availableChange3($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available3"  value="false" [checked]="!available3" (change)="availableChange3($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
+          
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,3)" >Apply Changes</button>
+                        </div>
+                        
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Thursday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start4" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end4" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit4" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available4"  value="true" [checked]="available4" (change)="availableChange4($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available4"  value="false" [checked]="!available4" (change)="availableChange4($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
+                          
+                         <button class=" btn-apply" (click)="onApply($event,4)" >Apply Changes</button>
+                        </div>
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Friday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start5" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end5" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit5" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available5"  value="true" [checked]="available5" (change)="availableChange5($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available5"  value="false" [checked]="!available5" (change)="availableChange5($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,5)" >Apply Changes</button>
+                        </div>
+                        <div class="row day">
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 label">Saturday</label>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift Start Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="start6" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Shift End Time</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="time" class="form-control" name="end6" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-md-4 col-lg-3 col-form-label">Limit of Patients</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input type="text" class="form-control" name="limit6" ngModel >
+                            </div>
+                          </div>
+                          <div class="row mb-3  ">
+                            <fieldset data-role="controlgroup ">
+                              <div class="radio-btns">
+                                <label class="col-md-4 col-lg-3 col-form-label">Status </label>
+                                <div  class="form-check radio">
+                                <input  class="form-check-input" type="radio" name="available6"  value="true" [checked]="available6" (change)="availableChange6($event)">
+                                <label class="form-check-label">Available</label>
+                              </div>
+                              <div class="form-check radio">
+                                <input class="form-check-input" type="radio" name="available6"  value="false" [checked]="!available6" (change)="availableChange6($event)">
+                                <label class="form-check-label">Day Off</label>
+                              </div></div>
+                              </fieldset>
+                              
+                        </div>
+          
+                        
+                          
+                         <button class=" btn-apply" (click)="onApply($event,6)" >Apply Changes</button>
+                        </div>
+                        
+                     
+                     </form>
+
+
+                    
+                     
                     </div>
+                   
 
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End settings Form -->
-
-                </div>
-
-                <div class="tab-pane fade pt-3" id="profile-change-password">
-                  <!-- Change Password Form -->
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
-                    </div>
-                  </form><!-- End Change Password Form -->
-
-                </div>
-
+                </div> </div>
+               
+               
               </div><!-- End Bordered Tabs -->
 
             </div>

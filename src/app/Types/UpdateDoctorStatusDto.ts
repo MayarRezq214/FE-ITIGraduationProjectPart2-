@@ -11,5 +11,5 @@ export interface UpdateDoctorStatusDto {
     // assistantName?: string | null;
     // assistantPhoneNumber?: string | null;
     // assistantDateOfBirth?: string;
-    status?: string | null;
+    status?: boolean;
 }
