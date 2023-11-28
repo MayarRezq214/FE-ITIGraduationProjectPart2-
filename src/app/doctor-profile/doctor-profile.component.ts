@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
-import { GetDoctorByPhoneDto } from '../types/GetDoctorByPhoneDto';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from '../services/doctor.service';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
@@ -75,7 +74,7 @@ export class DoctorProfileComponent  implements OnInit{
      
       if(this.navigate.doctor)
       { this.doctor = this.navigate.doctor
-        this.doctorService.getDoctorByIdForAdmin(this.doctor.id).subscribe({
+        this.doctorService.getDoctorByIdForAdmin(this.doctor.id!).subscribe({
           next:(doctor) => {
             this.doctor = doctor;
 
