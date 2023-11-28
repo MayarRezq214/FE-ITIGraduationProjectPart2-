@@ -33,7 +33,7 @@ const routes: Routes = [
   {path : 'adminProfile' ,canActivate: [adminAuthGuard], component : AdminProfileComponent},
   {path : 'patientProfile' , component : PatientProfileComponent},
   {path: 'myDoctorProfile' , canActivate: [doctorAuthGuard], component : MyDoctorProfileComponent},
-  {path : 'specialization' , component : SpecializtionComponent},
+  {path : 'specialization' ,canActivate: [adminAuthGuard], component : SpecializtionComponent},
   {path: 'adminRegister', component:AdminRegisterComponent},
   {path: 'receptionRegister', component:ReceptionRegisterComponent}
 ];
