@@ -1,22 +1,24 @@
-
-   <div class="modal-content rounded-4 shadow container">
-    <div class="modal-body p-5">
+<div class="container">
+   <div modal-dialog modal-dialog-centered  modal-dialog-shadow>
+    
     <form [formGroup]="Form">
-      <div [hidden]="patientRegistered">Patient Phone Number</div>
-      <input class="input" id="formInput" (change)="getPhoneNumber($event)" formControlName="phoneNumber" type="text" placeholder="Phone number" [hidden]="patientRegistered">
+      <div [hidden]="patientRegistered" class="form-label ">Patient Phone Number</div>
+      <input class="form-control" id="formInput" (change)="getPhoneNumber($event)" formControlName="phoneNumber" type="text" placeholder="Phone number" [hidden]="patientRegistered">
       <ng-container mat-dialog-content *ngIf="patientAlreadyBooked">
-       <span>Patient already has an appointment with Dr {{this.data.data.name}} on {{bookedDate}}</span></ng-container>
+       <span class="text">Patient already has an appointment with Dr {{this.data.data.name}} on {{bookedDate}}</span></ng-container>
+       <button  mat-button mat-dialog-close class="close-btn1" *ngIf="patientAlreadyBooked || !patientRegistered"><span >Close</span></button>
+
       </form>
-       <div  *ngIf="patientRegistered" >
+       <div  *ngIf="patientRegistered && !patientAlreadyBooked" >
         
-          <table class="table">
+          <table class="table table-borderless datatable tableb">
             <body>
               <tr>
-                <th scope="row"> Name </th>
+                <th scope="row" > Name </th>
                 <td>{{this.PatientByPhoneNumber?.name}}</td>
               </tr>
               <tr>
-                <th scope="row"> phone Number </th>
+                <th scope="row"> Phone Number </th>
                 <td>{{this.PatientByPhoneNumber?.phoneNumber}}</td>
               </tr>
               <tr>
@@ -29,9 +31,9 @@
               </tr>
             </body>
           </table>
-          <mat-dialog-actions>
-            <button  mat-button mat-dialog-close class="appointment-btn">Close</button>
-            <button class="appointment-btn" mat-button mat-dialog-actions (click)="bookVisit(this.data.data, this.PatientByPhoneNumber!,this.data.date)">Book</button>
+          <mat-dialog-actions class="btns"> 
+            <button  mat-button mat-dialog-close class="close-btn">Close</button>
+            <button class="book-btn" mat-button mat-dialog-close (click)="bookVisit(this.data.data, this.PatientByPhoneNumber!,this.data.date)">Book</button>
           </mat-dialog-actions>
         </div>
       

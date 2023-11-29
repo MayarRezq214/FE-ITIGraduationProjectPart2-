@@ -58,7 +58,7 @@ constructor(private adminservice: AdminService ,
 
       this.adminservice.updateAdminProfile(this.admin?.phoneNumber!,this.updateAdmin).subscribe({
         next:()=>{
-          this.adminservice.getAdminByPhoneNumber(this.admin?.phoneNumber!).subscribe({
+          this.adminservice.getAdminByPhoneNumber(this.updateAdmin?.phoneNumber!).subscribe({
             next:(Admin) => {
               this.admin = Admin
               console.log(Admin)

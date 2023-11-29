@@ -56,50 +56,46 @@ constructor(private doctorService : DoctorService ,
     })
   }
 
+      selected(e: Event):void{
 
+          this.isSpecializationSelected = true;
+          this.id = (e.target as any).value;
 
+          if(this.id === "All"){
+            this.isSpecializationSelected = false;
+          }
+          this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
+          console.log(this.Doctors)
+        }
 
-  selected(e: Event):void{
+      doctorSelected(event: Event):void{
 
-      this.isSpecializationSelected = true;
-      this.id = (e.target as any).value;
-
-      if(this.id === "All"){
-        this.isSpecializationSelected = false;
-      }
-      this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
-      console.log(this.Doctors)
-    }
-
-  doctorSelected(event: Event):void{
-
-    this.doctorId = (event.target as HTMLSelectElement).value;
-    this.isDoctorSelected = true;
-    if(this.doctorId == "allDoctors"){
-      this.isDoctorSelected = false;
-    }
-
-  }
-  onSearch(event : Event): void {
-
-      if(this.isSpecializationSelected)
-      {
-        this.data.changeSpecializationId(this.id)
+        this.doctorId = (event.target as HTMLSelectElement).value;
+        this.isDoctorSelected = true;
+        if(this.doctorId == "allDoctors"){
+          this.isDoctorSelected = false;
+        }
 
       }
+      onSearch(event : Event): void {
 
-      if(this.isDoctorSelected){
-        this.data.changeDoctorId(this.doctorId)
-      }
-      if(!this.isDoctorSelected){
-        this.data.changeDoctorId('0')
+          if(this.isSpecializationSelected)
+          {
+            this.data.changeSpecializationId(this.id)
+          }
 
-      }
-      if(!this.isSpecializationSelected){
-        this.data.changeSpecializationId(0)
-      }
-         this.router.navigate(['//bookAppointment'])
-    }
+          if(this.isDoctorSelected){
+            this.data.changeDoctorId(this.doctorId)
+          }
+          if(!this.isDoctorSelected){
+            this.data.changeDoctorId('0')
+
+          }
+          if(!this.isSpecializationSelected){
+            this.data.changeSpecializationId(0)
+          }
+            this.router.navigate(['//bookAppointment'])
+        }
 
     
     }
