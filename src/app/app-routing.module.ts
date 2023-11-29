@@ -36,14 +36,13 @@ const routes: Routes = [
   {path : 'dataTables' ,canActivate: [adminAuthGuard], component : DataTablesComponent},
   {path : 'doctorProfile' ,canActivate: [adminAuthGuard], component : DoctorProfileComponent},
   {path : 'adminProfile' ,canActivate: [adminAuthGuard], component : AdminProfileComponent},
-  {path : 'patientProfile', canActivate: [doctorAuthGuard] , component : PatientProfileComponent},
+  {path : 'patientProfile', canActivate: [doctorAuthGuard,receptionAuthGuard] , component : PatientProfileComponent},
   {path: 'myDoctorProfile' , canActivate: [doctorAuthGuard], component : MyDoctorProfileComponent},
   {path : 'specialization' ,canActivate: [adminAuthGuard], component : SpecializtionComponent},
   {path: 'adminRegister', canActivate: [adminAuthGuard], component:AdminRegisterComponent},
   {path: 'receptionRegister',canActivate: [adminAuthGuard], component:ReceptionRegisterComponent},
   {path: 'receptionProfile', canActivate: [receptionAuthGuard], component: ReceptionProfileComponent },
-  // {path : 'bookVisit' , component : BookVisitComponent},
-  {path : 'bookAppointment' , component : BookAppointmentComponent}
+  {path : 'bookAppointment' , canActivate: [receptionAuthGuard], component : BookAppointmentComponent}
 
 ];
 

@@ -18,12 +18,11 @@ export class PatientService2 {
     return this.client.get<GetPatientByPhoneDTO>(`https://localhost:7267/api/Patient/patient/${PhoneNumber}`);
   }
 
-
   public addPatientVisit(patientVisit? : AddPatientVisitDto): Observable<object>{
     return this.client.post(`https://localhost:7267/addpatientVisit`, patientVisit);
   }
 
-  public GetAllPatientWithVisitDate(date : string, drId : string ):Observable<GetAllPatientsWithDateDto[]>{
+  public GetAllPatientWithVisitDate (date : string, drId : string ):Observable<GetAllPatientsWithDateDto[]>{
     return this.client.get<GetAllPatientsWithDateDto[]>(`https://localhost:7267/api/Doctor/dailySchedule/${date}?DoctorId=${drId}`);
   }
   

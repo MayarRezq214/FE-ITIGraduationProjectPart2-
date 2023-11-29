@@ -10,6 +10,8 @@ import { DoctorService } from '../services/doctor.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PatientService2 } from '../services/patient.service';
 import { AddPatientVisitDto } from '../types/AddPatientVisitDto';
+import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-book-dialog1',
@@ -26,7 +28,7 @@ export class BookDialog1Component {
   patientAlreadyBooked : boolean = false;
   patient? : GetAllPatientsWithDateDto;
   patientRegistered? : boolean = false;
-
+  addPatientVisit? : AddPatientVisitDto
     
       visitCountsModal : 
       {id: number;
@@ -50,7 +52,9 @@ export class BookDialog1Component {
     bookedDate : string = ' '
   constructor(private dialog : DoctorDialogService, 
     @Inject(MAT_DIALOG_DATA) public data : any , 
-    private PatientService : PatientService2){}
+    private PatientService : PatientService2,
+    private router: Router,
+   ){}
 
   Form = new FormGroup({
     phoneNumber : new FormControl<string>('')
@@ -116,37 +120,30 @@ export class BookDialog1Component {
 
    
   }
-  onContinue(doctor:any,date : string , patient? : GetPatientByPhoneDTO){
-    // var ref = this.ContinueBookingService.open(doctor,date,patient)
-    console.log(date)
-  }
+ 
 
-  loginAndRegister(data:any){
-    this.dialog.sendDataToLoginOrRegister(data,true)
-    this.dialog.close()
-  }
-  bookVisit(doctor: GetDoctorByIDDto, patient:GetPatientByPhoneDTO, date : string){
-    let day  = date.split('/')[1]
-    let month = date.split('/')[0]
-    let year = date.split('/')[2]
-    let formattedDate  = `${year}-${month}-${day}`
-    const addPatientVisit : AddPatientVisitDto={
-      doctorId : doctor.id,
-      patientId : patient.id,
-      dateOfVisit : formattedDate,
-    }
-    console.log(addPatientVisit.dateOfVisit)
-    this.PatientService.addPatientVisit(addPatientVisit).subscribe({
-      next :  ()=>{
-        console.log("done")
-       
-      },
+      bookVisit(doctor: GetDoctorByIDDto, patient:GetPatientByPhoneDTO, date : string){
+        let day  = date.split('/')[1]
+        let month = date.split('/')[0]
+        let year = date.split('/')[2]
+        let formattedDate  = `${year}-${month}-${day}`
+         this.addPatientVisit ={
+          doctorId : doctor.id,
+          patientId : patient.id,
+          dateOfVisit : formattedDate,
+        }
+        console.log(this.addPatientVisit)
+        this.PatientService.addPatientVisit(this.addPatientVisit).subscribe({
+          next :  ()=>{
+            
+            console.log("done")         
+          },
 
-      error:(error)=>{
-        console.error("calling addVisit api failed",error);
-      }
-        
-      });
-      
-    }
+          error:(error)=>{
+            console.error("calling addVisit api failed",error);
+          }
+            
+          });
+          
+        }
 }
