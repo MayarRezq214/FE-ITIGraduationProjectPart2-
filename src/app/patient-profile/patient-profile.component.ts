@@ -2,7 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../services/patientByPhoneNumber.service';
 import { GetPatientByPhoneDTO } from '../types/GetPatientByPhoneNumberDto';
-import { MedicalHistoryDto } from '../types/MedicalHistoryDto';
+import { MedicalHistoryDto } from '../Types/MedicalHistoryDto';
+import {AddMedicalHistoryDto} from '../Types/AddMedicalHistoryDto';
 import { MedicalHistoryService } from '../services/MedicalHistroy.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
@@ -36,6 +37,10 @@ export class PatientProfileComponent implements OnInit {
   patientId: string | null = null;
   patientPhoneNumber!: string;
   doctorPhoneNumber!: string;
+  hasMedicalHistory: boolean = false;
+  showMedicalHistoryForm: boolean = false; 
+  medicalHistoryData!: MedicalHistoryDto;
+
 
   constructor(private patientService: PatientService,
     private mutualVisits: MutualVisitsService,
@@ -70,9 +75,9 @@ export class PatientProfileComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+
    this.phoneNumberService.currentPhoneNumber.subscribe(
-    (phoneNumber) => {
+    phoneNumber => {
       this.patientPhoneNumber = phoneNumber;
       console.log(this.patientPhoneNumber)
     }
@@ -90,22 +95,9 @@ export class PatientProfileComponent implements OnInit {
       },
     });
 
-    this.medicalHistoryService.getMedicalHistory(this.patientPhoneNumber).subscribe({
-      next: (medicalHistoryData: MedicalHistoryDto) => {
-        this.id = medicalHistoryData.id;
-        this.patientId = medicalHistoryData.patientId;
-
-        // Update the form with the medical history data
-        this.updateMedicalHistoryForm(medicalHistoryData);
-
-        console.log(medicalHistoryData);
-      },
-      error: (error) => {
-        console.error('Error fetching medical history data:', error);
-      },
-    });
-
-this.doctorPhoneNumber = localStorage.getItem("phoneNumber")!;
+    this.getMedicalHistory();
+   
+   this.doctorPhoneNumber = localStorage.getItem("phoneNumber")!;
 
     this.mutualVisits.getMutualVisits(this.patientPhoneNumber, this.doctorPhoneNumber).subscribe({
       next: (mutualVisit: GetPatientVisitsChildDTO) => {
@@ -134,8 +126,22 @@ this.doctorPhoneNumber = localStorage.getItem("phoneNumber")!;
     this.cardButtonEnabled = new Array(this.visits?.length).fill(true);
   }
 
-
-  // to update the form with medical history data
+ private getMedicalHistory(){
+  
+  this.medicalHistoryService.getMedicalHistory(this.patientPhoneNumber).subscribe({
+    next: (medicalHistoryData: MedicalHistoryDto) => {
+        this.id = medicalHistoryData.id;
+        this.patientId = medicalHistoryData.patientId;
+        this.updateMedicalHistoryForm(medicalHistoryData);
+        this.hasMedicalHistory=true;
+        this.medicalHistoryData = medicalHistoryData
+    },
+    error: (error) => {
+      console.error('Error fetching medical history data:', error);
+      this.hasMedicalHistory = false;
+    },
+  });
+ }
   private updateMedicalHistoryForm(data: MedicalHistoryDto | null): void {
     if (data) {
       this.form.patchValue({
@@ -160,10 +166,54 @@ this.doctorPhoneNumber = localStorage.getItem("phoneNumber")!;
   }
 
 
-  onSubmitt() {
+public addMedicalHistory() {
+  this.showMedicalHistoryForm = true;
+}
+
+public addRecord(e:Event){
+ e.preventDefault();
+  console.log('ADD')
+  const formData: AddMedicalHistoryDto = {
+    patientId: this.patientDto?.id!,
+    martialStatus: this.form.controls['martialStatus'].value ?? false,
+    pregnancy: this.form.controls['pregnancy'].value ?? false,
+    bloodGroup: this.form.controls['bloodGroup'].value,
+    previousSurgeries: this.form.controls['previousSurgeries'].value,
+    medication: this.form.controls['medication'].value,
+    smoker: this.form.controls['smoker'].value ?? false,
+    diabetes: this.form.controls['diabetes'].value ?? false,
+    highBloodPressure: this.form.controls['highBloodPressure'].value ?? false,
+    lowBloodPressure: this.form.controls['lowBloodPressure'].value ?? false,
+    asthma: this.form.controls['asthma'].value ?? false,
+    hepatitis: this.form.controls['hepatitis'].value,
+    heartDisease: this.form.controls['heartDisease'].value ?? false,
+    anxityOrPanicDisorder: this.form.controls['anxityOrPanicDisorder'].value ?? false,
+    depression: this.form.controls['depression'].value ?? false,
+    allergies: this.form.controls['allergies'].value ?? false,
+    other: this.form.controls['other'].value,
+  };
+
+  this.medicalHistoryService.addMedicalHistory(formData).subscribe({
+    next: (response) => {
+      console.log('Medical history added successfully:', response);
+      this.addSuccess(); 
+      this.showMedicalHistoryForm=false;
+      this.hasMedicalHistory=true;
+      this.getMedicalHistory();
+    },
+    error: (error) => {
+      console.error('Error adding medical history:', error);
+    },
+  });
+}
+
+
+  onSubmitt(e:Event) {
+    e.preventDefault();
+    
     if (this.form.valid) {
       const formData: MedicalHistoryDto = {
-        id: this.id,
+        id: this.medicalHistoryData.id,
         patientId: this.patientId!,
         martialStatus: this.form.controls['martialStatus'].value ?? false,
         pregnancy: this.form.controls['pregnancy'].value ?? false,
@@ -183,15 +233,20 @@ this.doctorPhoneNumber = localStorage.getItem("phoneNumber")!;
         other: this.form.controls['other'].value,
       };
 
-      // Update the medical history with user-entered data
+      console.log(this.form.controls.other);
+      console.log(this.id);
+
+
       this.medicalHistoryService.updateMedicalHistory(formData).subscribe({
         next: (response) => {
           console.log('Medical history updated successfully:', response);
-          this.showSuccess();
+          this.updateSuccess();
+          console.log(this.id)
 
         },
         error: (error) => {
           console.error('Error updating medical history:', error);
+          console.log(this.id)
         },
       });
     } else {
@@ -199,8 +254,11 @@ this.doctorPhoneNumber = localStorage.getItem("phoneNumber")!;
     }
 
   }
-  private showSuccess() {
+  private updateSuccess() {
     this.toast.success({ detail: "SUCCESS", summary: 'Patient medical history updated', duration: 9000 });
+  }
+    private addSuccess() {
+    this.toast.success({ detail: "SUCCESS", summary: 'Patient medical history added', duration: 9000 });
   }
 
   onSubmit(e: Event, Id: number, i: number) {
