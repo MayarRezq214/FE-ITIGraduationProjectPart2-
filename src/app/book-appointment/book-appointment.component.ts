@@ -12,6 +12,7 @@ import { DoctorDialogService } from '../services/doctor-dialog.service';
 import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import { th } from 'date-fns/locale';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-appointment',
@@ -47,7 +48,8 @@ export class BookAppointmentComponent implements OnInit{
     isSpecializationSelected: boolean = false;
     constructor(private doctorService : DoctorService,
     private data : DataForBookVisitService,
-    private _dialog : DoctorDialogService){}
+    private _dialog : DoctorDialogService,
+    private router : Router){}
     visitCountsDrById : any
     Visits : {drId? : string , visitrecord?: VisitCountDto[]}[]=[];
   
@@ -108,7 +110,7 @@ export class BookAppointmentComponent implements OnInit{
       
       this.doctorService.GetVisitCountForWeek(startDate,endDate1,doctorById?.id).subscribe({
           next:(visitCount) => {
-            this.visitCount = visitCount;
+          this.visitCount = visitCount;
            console.log(this.dId) 
            console.log(this.sId)
            this.Visits.push({drId: doctorById.id,visitrecord:this.visitCount})
@@ -121,16 +123,23 @@ export class BookAppointmentComponent implements OnInit{
           
         });   
     }
-    reload(e:Event){
+
+    reload(e:Event)
+    {
       this.isSearching = true
       window.location.reload()
-    }
+      // this.router.navigate(['/bookAppointment'])
+
+        }
     selected(e: Event):void{
       
       this.data.currentId.subscribe(sId => this.sId = sId)
       this.data.currentDoctorId.subscribe(dId => this.dId = dId)
       this.Doctors = []
       this.isSpecializationSelected = true;
+      this.dId = '0'
+      this.isDoctorSelected = false
+      this.doctorId = '0'
   
       this.id = (e.target as any).value;
 
@@ -146,6 +155,7 @@ export class BookAppointmentComponent implements OnInit{
 
       this.data.currentId.subscribe(sId => this.sId = sId)
       this.data.currentDoctorId.subscribe(dId => this.dId = dId)
+
       this.doctorId = (event.target as HTMLSelectElement).value;
       this.isDoctorSelected = true;
       if(this.doctorId == "allDoctors"){
@@ -228,7 +238,6 @@ export class BookAppointmentComponent implements OnInit{
             //#endregion
             //#region doctor by id
             if(this.dId!='0'){
-              
               this.doctorService.getDoctorById(this.dId).subscribe({
               next:(doctorById) => {
                 this.isSearching = true
