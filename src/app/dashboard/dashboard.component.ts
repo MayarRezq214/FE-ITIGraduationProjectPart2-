@@ -10,8 +10,10 @@ import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import { UpdateArrivalPatientStatusDto } from '../types/UpdateArrivalPatientStatusDto';
 import { ReceptionService } from '../services/reception.service';
-
-
+import { GetAllPatientForADayService } from '../services/GetNumberOfPatientForADay.service';
+import { GetDoctorForADayService } from '../services/GetDoctorsForADay.service';
+import { ChildActivationStart } from '@angular/router';
+import { GetTopRatedDoctorsService } from '../services/TopRatedDoctors.service';
 
 
 @Component({
@@ -25,12 +27,17 @@ visits?: GetAllPatientsWithDateDto[];
 formattedDate?: string;
 isDoctorLoggedIn?: boolean;
 isReceptionLoggedIn?: boolean;
+isLoggedIn? : boolean;
 doctorId: string = '0';
 done: boolean = false;
 
 constructor(private doctorService: DoctorService,
   private authenticationService : AuthenticationService,
-  private receptionService: ReceptionService){}
+  private receptionService: ReceptionService ,
+  private getNumberOfPatientForADay: GetAllPatientForADayService,
+  private getDoctorsforADay:GetDoctorForADayService,
+  private getTopRatedDoctorsService: GetTopRatedDoctorsService){}
+
   currentDate? = new Date();
   doctors?: GetAllDoctorsDto[];
   specializations?: GetAllSpecializationsDto[];
@@ -40,11 +47,29 @@ constructor(private doctorService: DoctorService,
   isDoctorSelected : boolean =false;
   doctor? : GetDoctorByIDForAdminDto;
   patientVisit?: UpdateArrivalPatientStatusDto;
-
+  today : any;
+  yesterday: any;
+  todayPatients: number = 0;
+  yesterdayPatients:number = 0;
+  todayDoctors : number = 0;
+  yesterdayDoctors : number = 0;
+  numberOfAllDoctors : number = 0;
+  datePicker: string = '';
+  numberOfPatients: number = 0;
+  numberOfDoctors: number = 0;
+  topRatedArray: any;
+  lowestRatedArray: any;
+  ratedArray: any;
   ngOnInit(): void {
     const date = new Date()
 
-    
+    this.today = new Date();
+    const todayFormatted = this.formatDate(this.today);
+
+    this.yesterday = new Date();
+    this.yesterday.setDate(this.yesterday.getDate() - 1);
+    const yesterdayFormatted = this.formatDate(this.yesterday);
+
     const year : number = date.getFullYear()
     const month : number = date.getMonth()+1
     const day : number = date.getDate()+0
@@ -55,25 +80,29 @@ constructor(private doctorService: DoctorService,
     const endyear : number = endDate.getFullYear()
     const endmonth : number = endDate.getMonth()+1
     const endDay : number = endDate.getDate()+0
-  
+
    let endDate1 = `${endyear}-${endmonth.toString().padStart(2,'0')}-${endDay.toString().padStart(2,'0')}`
 
         if(day==26){
         this.doctorService.addVisitCount(startDate,endDate1).subscribe({
           next:()=>{
-              
+
           },
           error:(error)=>{
             console.log("add visit count api failed",error)
           }
         })
       }
-    
+
     this.authenticationService.isDoctorLoggedIn$.subscribe((isDoctorLoggedIn) => {
       this.isDoctorLoggedIn = isDoctorLoggedIn;
     });
     this.authenticationService.isReceptionLoggedIn$.subscribe((isReceptionLoggedIn) => {
       this.isReceptionLoggedIn = isReceptionLoggedIn;
+    })
+
+    this.authenticationService.isLoggedIn$.subscribe((isLoggedIn) =>{
+      this.isLoggedIn = isLoggedIn;
     })
 
       this.formattedDate = format(this.currentDate!, 'yyyy-MM-dd');
@@ -101,26 +130,84 @@ constructor(private doctorService: DoctorService,
             console.log('calling All doctors api failed', error);
           },
         });
-      
+
         this.doctorService.GetAllSpecializations().subscribe({
           next:(specializations) => {
             this.specializations = specializations;
-            
+
           },
           error: (error) => {
             console.log('calling All specializations api failed', error);
           },
         })
+      }else if(this.isLoggedIn){
+        // Number of Patients Today
+        this.getNumberOfPatientForADay.getAllPatientsForADay(todayFormatted).subscribe({
+          next:(counter) => {
+            this.todayPatients = counter;
+          },
+          error: (error) =>{
+            console.log('calling All specializations api failed', error);
+          }
+        })
+        this.getNumberOfPatientForADay.getAllPatientsForADay(yesterdayFormatted).subscribe({
+          next:(yesterdayCounter) => {
+            this.yesterdayPatients = yesterdayCounter;
+          },
+          error: (error) =>{
+            console.log('calling All specializations api failed', error);
+          }
+        })
+
+        // Number of Doctors Today
+        this.getDoctorsforADay.getDoctorForADay(todayFormatted).subscribe({
+          next:(DoctorTodayCounter) => {
+            this.todayDoctors = DoctorTodayCounter;
+          },
+          error: (error) =>{
+            console.log('calling All specializations api failed', error);
+          }
+        })
+        this.getDoctorsforADay.getDoctorForADay(yesterdayFormatted).subscribe({
+          next:(DoctorYesterdayCounter) => {
+            this.yesterdayDoctors = DoctorYesterdayCounter;
+          },
+          error: (error) =>{
+            console.log('calling All specializations api failed', error);
+          }
+        })
+
+         // Capacity of Doctorss Today
+        this.doctorService.getDoctors().subscribe({
+          next : (drs) =>{
+            this.numberOfAllDoctors = drs.length;
+            console.log(this.numberOfAllDoctors)
+          }
+        })
+
+        // Get top Rated Doctors
+        this.getTopRatedDoctorsService.getTopRatedDoctors().subscribe({
+          next: (topRated) => {
+            this.topRatedArray = Object.values(topRated);
+            this.topRatedArray.sort((a:any, b:any) => b.averageRate - a.averageRate);
+            this.topRatedArray = this.topRatedArray.slice(0, 3);
+            this.lowestRatedArray = Object.values(topRated);
+            this.lowestRatedArray.sort((a:any, b:any) => b.averageRate - a.averageRate);
+            this.lowestRatedArray = this.lowestRatedArray.slice(-3);
+            this.ratedArray = Object.values(topRated);
+            this.ratedArray.sort((a:any, b:any) => b.averageRate - a.averageRate);
+          }
+        })
       }
-     
+
   }
 
   selected(e: Event):void{
 
     this.isSpecializationSelected = true;
     this.id = (e.target as any).value;
-    
-    
+
+
     if(this.id == 0){
       this.isSpecializationSelected = false;
     }
@@ -132,7 +219,7 @@ constructor(private doctorService: DoctorService,
   doctorSelected(event: Event):void{
 
     this.doctorId = (event.target as HTMLSelectElement).value;
-    
+
     this.isDoctorSelected = true;
     if(this.doctorId == "allDoctors"){
       this.isDoctorSelected = false;
@@ -157,7 +244,7 @@ constructor(private doctorService: DoctorService,
         console.log('calling dr by id api failed', error);
       },
     })
-        
+
   }
   onArrive( status : string, id: number){
     console.log(id)
@@ -182,4 +269,30 @@ constructor(private doctorService: DoctorService,
     }
   }
 
+  formatDate(date:Date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Add 1 because months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  updateDatePicker(event: any) {
+    this.datePicker = event.target.value;
+    this.getNumberOfPatientForADay.getAllPatientsForADay(this.datePicker).subscribe({
+      next : (patientsNumber) => {
+        this.numberOfPatients = patientsNumber;
+      },
+      error : (error) => {
+        console.error(error);
+      },
+    });
+    this.getDoctorsforADay.getDoctorForADay(this.datePicker).subscribe({
+      next : (DoctorNumber) => {
+        this.numberOfDoctors = DoctorNumber;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
 }

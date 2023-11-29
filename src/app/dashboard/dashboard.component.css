@@ -1,0 +1,27 @@
+.progress{
+  width: 90%;
+  margin-left: 15px;
+}
+.markDiv{
+  position: relative;
+}
+.firstMark{
+  position: absolute;
+  top: 0;
+}
+
+.bullets{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  /* background-color: black; */
+  margin-right: 5px;
+}
+
+.clr{
+  background-color: lightgreen;
+}
+
+.clr2{
+  background-color: lightcoral;
+}
