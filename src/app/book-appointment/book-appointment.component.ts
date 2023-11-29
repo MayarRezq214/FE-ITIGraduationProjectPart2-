@@ -39,7 +39,7 @@ export class BookAppointmentComponent implements OnInit{
   specializations?: GetAllSpecializationsDto[];
   Doctors? : DoctorsForAllSpecializations[];
   ActiveDoctors?:DoctorsForAllSpecializations[];
-
+  
   id: any;
 
     doctorId: string = '0';
@@ -122,6 +122,7 @@ export class BookAppointmentComponent implements OnInit{
         });   
     }
     reload(e:Event){
+      this.isSearching = true
       window.location.reload()
     }
     selected(e: Event):void{

@@ -46,9 +46,11 @@
 .appointments{
     display: flex;
     flex-direction: row;
-
+    flex-flow: row wrap;
+    text-align: center;
 }
 .box{
+
     border: 2px solid;
     margin: 10px;
     border-color: lightgray;
@@ -57,21 +59,20 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
 }
 .book-btn{
     width: 100%;
     border-radius: 10px;
-    color: black;
-    background-color:#0078D7;
-    opacity: 0.5;
+    color: white;
+    background-color:#007bff;
     border: 1px ;
 }
 .book-btn:hover{
-    opacity: 1.0;
-    color: white;
-    background-color: #0078D7;
-    filter: alpha(opacity=100);
+    /* opacity: 1.0; */
+    color: black;
+    background-color: #007bff;
+    opacity: 0.5;
+    /* filter: alpha(opacity=100); */
     
 }
 .appointments:hover{
@@ -112,8 +113,21 @@ hr{
   }
 
   .search{
-    margin-left: 30%;
+    margin-left: 13%;
     margin-top:  5%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
     /* margin-bottom: 5%; */
   }
   
+  /* .btns{
+    display: inline;
+        margin-top: 1%;
+  } */
+  .btn{
+    margin-top: 0.2%;
+    width: 85px;
+    height: 52px;
+  }
