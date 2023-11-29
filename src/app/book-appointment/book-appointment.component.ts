@@ -11,6 +11,7 @@ import { BookVisitComponent } from '../book-visit/book-visit.component';
 import { DoctorDialogService } from '../services/doctor-dialog.service';
 import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
+import { th } from 'date-fns/locale';
 
 @Component({
   selector: 'app-book-appointment',
@@ -34,6 +35,7 @@ export class BookAppointmentComponent implements OnInit{
   bookDoctorVisitCount : boolean = false;
   i : number = 0
 
+  isSearching? : boolean  = false
   specializations?: GetAllSpecializationsDto[];
   Doctors? : DoctorsForAllSpecializations[];
   ActiveDoctors?:DoctorsForAllSpecializations[];
@@ -49,11 +51,31 @@ export class BookAppointmentComponent implements OnInit{
     private _dialog : DoctorDialogService){}
     visitCountsDrById : any
     Visits : {drId? : string , visitrecord?: VisitCountDto[]}[]=[];
+  
+  
     ngOnInit():void
     { 
       
       this.data.currentId.subscribe(sId => this.sId = sId)
       this.data.currentDoctorId.subscribe(dId => this.dId = dId)
+
+      this.doctorService.getDoctors().subscribe({
+        next:(doctors) => {
+          this.doctors = doctors;
+          
+        },
+        error: (error) => {
+          console.log('calling All doctors api failed', error);
+        },
+      });
+      this.doctorService.GetAllSpecializations().subscribe({
+        next:(specializations) => {
+          this.specializations = specializations;
+        },
+        error: (error) => {
+          console.log('calling All specializations api failed', error);
+        },
+      })
       console.log(this.sId)
       console.log(this.dId)
       this.doctorService.getDoctors().subscribe({
@@ -73,64 +95,6 @@ export class BookAppointmentComponent implements OnInit{
         },
       })
 
-    
-      //#region get all doctors
-      if(this.dId == '0' && this.sId==0){
-      this.doctorService.getDoctors().subscribe({
-        next:(doctors) => {
-          this.doctors = doctors;
-          this.doctors.forEach((doctor)=>{
-            this.getDate(doctor)
-          })
-        },
-        error: (error) => {
-          console.log('calling  all doctors api failed', error);
-        },
-      });
-      }
-      //#endregion
-      //#region doctors by specialization
-
-      if(this.sId !=0 && this.dId=='0'){
-      this.doctorService.getDoctorsBySpecialization(this.sId).subscribe({
-
-        next:(doctorsBySpecialization) => {
-          this.doctorsBySpecialization = doctorsBySpecialization;
-          this.doctorsBySpecialization.forEach((doctor)=>{
-            doctor.childDoctorOfSpecializations?.forEach((item)=>{
-              this.doctorBySpecialization= {
-                id :item.id,
-                name:item.name,
-                specializationName : doctor.name,
-                description:item.description,
-                title:item.title,
-                status : item.status,
-                weekSchadual:item.weekSchadual}
-                this.getDate(this.doctorBySpecialization)
-
-            })
-          
-          })
-        },
-        error: (error) => {
-          console.log('calling get drs by specialization api failed', error);
-        },
-      });
-      }
-      //#endregion
-      //#region doctor by id
-      if(this.dId!='0'){
-        this.doctorService.getDoctorById(this.dId).subscribe({
-        next:(doctorById) => {
-          this.doctorById = doctorById;
-        
-          this.getDate(this.doctorById)
-        },
-        error: (error) => {
-          console.log('calling dr by id api failed', error);
-        },
-      });}
-      //#endregion
 
     }
 
@@ -171,9 +135,10 @@ export class BookAppointmentComponent implements OnInit{
       this.doctorService.GetVisitCountForWeek(startDate,endDate1,doctorById?.id).subscribe({
           next:(visitCount) => {
             this.visitCount = visitCount;
-
-            this.Visits.push({drId: doctorById.id,visitrecord:this.visitCount})
             
+            if(this.visitCount[0]!=null && this.visitCount[1]!=null){
+             this.Visits.push({drId: doctorById.id,visitrecord:this.visitCount})}
+              console.log(this.Visits)
           },
           error: (error) => {
             console.log('calling visitCount api failed', error);
@@ -182,5 +147,109 @@ export class BookAppointmentComponent implements OnInit{
         });   
     }
 
+    selected(e: Event):void{
 
+      this.isSpecializationSelected = true;
+      this.id = (e.target as any).value;
+
+      if(this.id === "All"){
+        this.isSpecializationSelected = false;
+      }
+      this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
+      console.log(this.Doctors)
+    }
+
+  doctorSelected(event: Event):void{
+
+    this.doctorId = (event.target as HTMLSelectElement).value;
+    this.isDoctorSelected = true;
+    if(this.doctorId == "allDoctors"){
+      this.isDoctorSelected = false;
+    }
+
+  }
+  onSearch(event : Event): void {
+      
+    
+      this.isSearching = true
+      if(this.isSpecializationSelected)
+      {
+        this.data.changeSpecializationId(this.id)
+      }
+
+      if(this.isDoctorSelected){
+        this.data.changeDoctorId(this.doctorId)
+      }
+      if(!this.isDoctorSelected){
+        this.data.changeDoctorId('0')
+
+      }
+      if(!this.isSpecializationSelected){
+        this.data.changeSpecializationId(0)
+      }
+       // this.router.navigate(['//bookAppointment'])
+       
+      //#region get all doctors
+      if(this.dId == '0' && this.sId==0){
+        this.doctorService.getDoctors().subscribe({
+          next:(doctors) => {
+            this.doctors = doctors;
+            this.doctors.forEach((doctor)=>{
+              this.getDate(doctor)
+            })
+          },
+          error: (error) => {
+            console.log('calling  all doctors api failed', error);
+          },
+        });
+        }
+        //#endregion
+        //#region doctors by specialization
+  
+        if(this.sId !=0 && this.dId=='0'){
+        this.doctorService.getDoctorsBySpecialization(this.sId).subscribe({
+  
+          next:(doctorsBySpecialization) => {
+            this.doctorsBySpecialization = doctorsBySpecialization;
+            this.doctorsBySpecialization.forEach((doctor)=>{
+              doctor.childDoctorOfSpecializations?.forEach((item)=>{
+                this.doctorBySpecialization= {
+                  id :item.id,
+                  name:item.name,
+                  specializationName : doctor.name,
+                  description:item.description,
+                  title:item.title,
+                  status : item.status,
+                  weekSchadual:item.weekSchadual}
+                  this.getDate(this.doctorBySpecialization)
+  
+              })
+            
+            })
+          },
+          error: (error) => {
+            console.log('calling get drs by specialization api failed', error);
+          },
+        });
+        }
+        //#endregion
+        //#region doctor by id
+        if(this.dId!='0'){
+          
+          this.doctorService.getDoctorById(this.dId).subscribe({
+          next:(doctorById) => {
+            this.doctorById = doctorById;
+          
+            this.getDate(this.doctorById)
+          },
+          error: (error) => {
+            console.log('calling dr by id api failed', error);
+          },
+        });}
+        //#endregion
+    }
+    clear(){
+      
+      document.getElementById('docs')!.innerHTML = ' '
+      }
 }

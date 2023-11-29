@@ -4,8 +4,9 @@
      /* margin-top: 2%;  */
 }
 .container{
-    margin-top: 10%;
+    margin-top: 5%;
 }
+
 /* .cardDoctor{
   
     width: 90%;
@@ -22,9 +23,11 @@
 .cardDoctor .member-img img{
     width: 100%;
 }
-.doctorinfo{
+/* .doctorinfo{
     display: flex;
-}
+    flex-direction: row;
+    
+} */
 .member-info{
     margin-top: 3%;
     text-align: left;
@@ -102,11 +105,12 @@ hr{
 }
 .custom-container {
     width: 75%;
+    
   }
 
   .search{
     margin-left: 30%;
     margin-top:  5%;
-    margin-bottom: 5%;
+    /* margin-bottom: 5%; */
   }
   

@@ -19,4 +19,5 @@ export class DataForBookVisitService {
   changeDoctorId(dId : string){
     this.doctorId.next(dId)
   }
+
 }

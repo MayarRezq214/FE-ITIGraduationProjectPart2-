@@ -7,6 +7,7 @@ import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializati
 import { Router, RouterModule, Routes } from '@angular/router';
 import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
 import { DataForBookVisitService } from '../services/data-for-book-visit.service';
+import { BookAppointmentComponent } from '../book-appointment/book-appointment.component';
 
 @Component({
   selector: 'app-book-visit',
@@ -33,6 +34,7 @@ constructor(private doctorService : DoctorService ,
   private specializationService: SpecializationService,
    private router:Router,
     private data : DataForBookVisitService,
+    private app : BookAppointmentComponent
    ){}
   ngOnInit():void{
     this.data.currentId.subscribe(sId => this.sId = sId)
@@ -94,7 +96,8 @@ constructor(private doctorService : DoctorService ,
           if(!this.isSpecializationSelected){
             this.data.changeSpecializationId(0)
           }
-            this.router.navigate(['//bookAppointment'])
+           // this.router.navigate(['//bookAppointment'])
+           this.app.ngOnInit()
         }
 
     
