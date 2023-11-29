@@ -136,7 +136,7 @@ constructor(private doctorService: DoctorService,
       this.isSpecializationSelected = false;
     }
     this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
-    console.log(this.Doctors)
+    // console.log(this.Doctors)
   }
   
   goToProfile(PhoneNumber: string){
@@ -174,18 +174,18 @@ constructor(private doctorService: DoctorService,
         
   }
   onArrive( status : string, id: number){
-    console.log(id)
+    // console.log(id)
     this.patientVisit = ({
       id : id,
       visitStatus : status,
     });
-    console.log(this.patientVisit!.id)
+    // console.log(this.patientVisit!.id)
     this.receptionService.UpdatePatientVisitStatus(this.patientVisit!).subscribe({
       next:(patientVisit) => {
-        console.log(patientVisit as GetAllPatientsWithDateDto)
+        // console.log(patientVisit as GetAllPatientsWithDateDto)
         const index = this.visits?.findIndex(v => v.id === (patientVisit as GetAllPatientsWithDateDto).id)
         this.visits![index!] = patientVisit as GetAllPatientsWithDateDto;
-        console.log();
+        console.log(patientVisit as GetAllPatientsWithDateDto)
       },
       error:(error) => {
         console.log('calling update patient visit status failed', error)

@@ -24,6 +24,9 @@ import { BookAppointmentComponent } from './book-appointment/book-appointment.co
 import { BookDialog1Component } from './book-dialog1/book-dialog1.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ReceptionRegisterComponent } from './reception-register/reception-register.component';
+import { AdminRegisterComponent } from './admin-register/admin-register.component';
+import { ReceptionProfileComponent } from './reception-profile/reception-profile.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     SpecializtionComponent,
     BookVisitComponent,
     BookAppointmentComponent,
-    BookDialog1Component
+    BookDialog1Component,
+    ReceptionRegisterComponent,
+    AdminRegisterComponent,
+    ReceptionProfileComponent
   ],
 
   imports: [
