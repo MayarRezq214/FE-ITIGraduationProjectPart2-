@@ -35,7 +35,7 @@ const routes: Routes = [
   {path : 'patientProfile' , component : PatientProfileComponent},
   {path: 'myDoctorProfile' , canActivate: [doctorAuthGuard], component : MyDoctorProfileComponent},
   {path : 'specialization' ,canActivate: [adminAuthGuard], component : SpecializtionComponent},
-  {path : 'bookVisit' , component : BookVisitComponent},
+  // {path : 'bookVisit' , component : BookVisitComponent},
   {path : 'bookAppointment' , component : BookAppointmentComponent}
 
 ];

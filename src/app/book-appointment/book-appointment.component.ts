@@ -76,26 +76,7 @@ export class BookAppointmentComponent implements OnInit{
           console.log('calling All specializations api failed', error);
         },
       })
-      console.log(this.sId)
-      console.log(this.dId)
-      this.doctorService.getDoctors().subscribe({
-        next:(doctors) => {
-          this.doctors = doctors;
-        },
-        error: (error) => {
-          console.log('calling All doctors api failed', error);
-        },
-      });
-      this.doctorService.GetAllSpecializations().subscribe({
-        next:(specializations) => {
-          this.specializations = specializations;
-        },
-        error: (error) => {
-          console.log('calling All specializations api failed', error);
-        },
-      })
-
-
+      
     }
 
     book(bookDoctor:any, date:string){
@@ -116,7 +97,7 @@ export class BookAppointmentComponent implements OnInit{
     }
 
     getDate(doctorById : GetDoctorByIDDto){
-    
+      this.Visits = []
         let currentDate = new Date();
         
         const year : number = currentDate.getFullYear()
@@ -136,8 +117,7 @@ export class BookAppointmentComponent implements OnInit{
           next:(visitCount) => {
             this.visitCount = visitCount;
             
-            if(this.visitCount[0]!=null && this.visitCount[1]!=null){
-             this.Visits.push({drId: doctorById.id,visitrecord:this.visitCount})}
+             this.Visits.push({drId: doctorById.id,visitrecord:this.visitCount})
               console.log(this.Visits)
           },
           error: (error) => {
@@ -148,15 +128,20 @@ export class BookAppointmentComponent implements OnInit{
     }
 
     selected(e: Event):void{
-
+        console.log("asdas")
+  
+      this.Doctors = []
       this.isSpecializationSelected = true;
+      this.data.changeDoctorId('0')
+ 
       this.id = (e.target as any).value;
 
       if(this.id === "All"){
         this.isSpecializationSelected = false;
       }
-      this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
-      console.log(this.Doctors)
+         this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
+         
+        
     }
 
   doctorSelected(event: Event):void{
@@ -167,11 +152,13 @@ export class BookAppointmentComponent implements OnInit{
       this.isDoctorSelected = false;
     }
 
-  }
+       }
   onSearch(event : Event): void {
       
-    
-      this.isSearching = true
+      this.isSearching = false
+      this.data.currentId.subscribe(sId => this.sId = sId)
+      this.data.currentDoctorId.subscribe(dId => this.dId = dId)
+
       if(this.isSpecializationSelected)
       {
         this.data.changeSpecializationId(this.id)
@@ -191,9 +178,14 @@ export class BookAppointmentComponent implements OnInit{
        
       //#region get all doctors
       if(this.dId == '0' && this.sId==0){
+        
         this.doctorService.getDoctors().subscribe({
           next:(doctors) => {
             this.doctors = doctors;
+            this.isSearching = true
+            if(document.getElementById("select")?.ontouchmove)
+           { this.isDoctorSelected = false;
+            this.isSpecializationSelected = false;}
             this.doctors.forEach((doctor)=>{
               this.getDate(doctor)
             })
@@ -211,6 +203,10 @@ export class BookAppointmentComponent implements OnInit{
   
           next:(doctorsBySpecialization) => {
             this.doctorsBySpecialization = doctorsBySpecialization;
+            this.isSearching = true
+            if(document.getElementById("select")?.ontouchmove)
+            { this.isDoctorSelected = false;
+             this.isSpecializationSelected = false;}
             this.doctorsBySpecialization.forEach((doctor)=>{
               doctor.childDoctorOfSpecializations?.forEach((item)=>{
                 this.doctorBySpecialization= {
@@ -221,6 +217,7 @@ export class BookAppointmentComponent implements OnInit{
                   title:item.title,
                   status : item.status,
                   weekSchadual:item.weekSchadual}
+                  console.log(this.doctorBySpecialization)
                   this.getDate(this.doctorBySpecialization)
   
               })
@@ -238,6 +235,10 @@ export class BookAppointmentComponent implements OnInit{
           
           this.doctorService.getDoctorById(this.dId).subscribe({
           next:(doctorById) => {
+            this.isSearching = true
+            if(document.getElementById("select")?.ontouchmove)
+            { this.isDoctorSelected = false;
+             this.isSpecializationSelected = false;}
             this.doctorById = doctorById;
           
             this.getDate(this.doctorById)
@@ -248,8 +249,8 @@ export class BookAppointmentComponent implements OnInit{
         });}
         //#endregion
     }
-    clear(){
+    // clear(){
       
-      document.getElementById('docs')!.innerHTML = ' '
-      }
+    //   document.getElementById('docs')!.innerHTML = ' '
+    //   }
 }
