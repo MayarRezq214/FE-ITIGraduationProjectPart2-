@@ -1,15 +1,12 @@
-
- 
-    
       <!-- ======= Search Section ======= -->
       <div class="row justify-content-center pt-5  ">
         <div class="custom-container ">
           <div class="row justify-content-center pt-2 search ">
-        <select (change)="selected($event)" id="select  " class="col form-select border-2 py-3 mx-3 ">
+        <select (change)="selected($event)"  id="select" class="col  form-select border-2 py-3 mx-3 ">
           <option selected="" value="All" id="All">All Specialization</option>
           <option  *ngFor="let Specialization of specializations" [value]="Specialization.id"> {{ Specialization.name }}</option>
           </select>
-        <select  (change)="doctorSelected($event)"  class="col form-select border-2 py-3 mx-3 ">
+        <select  (change)="doctorSelected($event)"  class="col   form-select border-2 py-3 mx-3 ">
         <option value="allDoctors" selected="">All Doctors</option>   
         <ng-container *ngIf="isSpecializationSelected" >
           <ng-container *ngFor="let doctor of Doctors"> <option *ngIf="doctor.status && doctor.weekSchadual?.length==7" [value]="doctor.id">{{doctor.name}}</option></ng-container>
@@ -21,6 +18,8 @@
 
       </select>
       <button class="col-lg-2 btn appointment-btn scrollto btn-lg text-dark-50 fw-bold mx-sm-auto mx-md-auto mx-lg-1 mx-0 " (click)="onSearch($event)">Search</button>
+      <button class="col-lg-2 btn appointment-btn scrollto btn-lg text-dark-50 fw-bold mx-sm-auto mx-md-auto mx-lg-1 mx-0 " (click)="reload($event)">Refresh</button>
+
       </div>
       </div>
     </div>
@@ -171,34 +170,40 @@
             <h4 class="doctorTitle">{{doctorById.title}}</h4>
             <span class="doctorDes">{{doctorById.description}}</span>
           </div></div>
-          <span  class="appointments" >
-            <div *ngFor="let record of visitCount" class="box">
-                <span *ngIf="record.day==3" class="divider">Wednesday {{record.date}}</span>
-                <span *ngIf="record.day==4" class="divider">Thursday {{record.date}}</span>
-                <span *ngIf="record.day==5" class="divider">Friday {{record.date}}</span>
-                <span *ngIf="record.day==6" class="divider">Saturday {{record.date}}</span>
-                <span *ngIf="record.day==0" class="divider">Sunday {{record.date}}</span>
-                <span *ngIf="record.day==1" class="divider">Monday {{record.date}}</span>
-                <span *ngIf="record.day==2" class="divider">Tuesday {{record.date}}</span>
-          <div *ngFor="let schedule of doctorById?.weekSchadual">
-           <span *ngIf="schedule.id==record.weekScheduleId"> 
-                <span *ngIf="schedule.isAvailable " class="time">
-                <div *ngIf="record.limitOfPatients!=record.actualNoOfPatients">{{schedule.startTime}}</div>
-                <div *ngIf="record.limitOfPatients!=record.actualNoOfPatients">{{schedule.endTime}}</div>
-                <span *ngIf="record.limitOfPatients==record.actualNoOfPatients" >No Available Appointments
-                <button (click)="book(doctorById,record.date)" [disabled]="true" class="book-disabled">Book</button></span>
-                <button *ngIf="record.limitOfPatients>record.actualNoOfPatients"(click)="book(doctorById,record.date)" class="book-btn">Book</button>
+          <ng-container *ngFor="let record of Visits">
+            <span *ngIf="doctorById.id==record.drId" class="appointments" >
+           <span  *ngFor="let c of record.visitrecord" class="box">
+            <ng-container *ngIf="c"  >
+              <span *ngIf="c.day==3" class="divider"> Wednesday {{c.date}}</span>
+              <span *ngIf="c.day==4" class="divider"> Thursday {{c.date}}</span>
+              <span *ngIf="c.day==5" class="divider"> Friday {{c.date}}</span>
+              <span *ngIf="c.day==6" class="divider"> Saturday {{c.date}}</span>
+              <span *ngIf="c.day==0" class="divider"> Sunday {{c.date}}</span>
+              <span *ngIf="c.day==1" class="divider"> Monday {{c.date}}</span>
+              <span *ngIf="c.day==2" class="divider"> Tuesday {{c.date}}</span>
+            </ng-container>
 
-              </span>
-              </span>
-              <span *ngIf="!schedule.isAvailable && record.weekScheduleId==schedule.id" class="disable-btn">
-                <span>Day Off</span>
-                <button [disabled]="true" class="book-disabled">Book</button>
-              </span>
+          <div *ngFor="let schedule of doctorById.weekSchadual" class="time">
+            <span *ngIf="schedule.id== c.weekScheduleId">
+                 <span *ngIf="schedule.isAvailable ">
+                 <div *ngIf="c.limitOfPatients>c.actualNoOfPatients">{{schedule.startTime}}</div>
+                 <div *ngIf="c.limitOfPatients>c.actualNoOfPatients">{{schedule.endTime}}</div>
+                 <span *ngIf="c.limitOfPatients==c.actualNoOfPatients" >No Available Appointments
+                  <button [disabled]="true" class="book-disabled">Book</button></span>
+                  <button *ngIf="c.limitOfPatients>c.actualNoOfPatients"(click)="book(doctorById,c.date)" class="book-btn">Book</button>
+               </span>
+               </span>
+               <span *ngIf="!schedule.isAvailable && c.weekScheduleId==schedule.id" class="disable-btn">
+                 <span>Day off</span>
+                 <button [disabled]="true" class="book-disabled">Book</button>
+               </span>
+             </div>
+        </span>
 
-            </div>
-           </div>
-     </span>
+
+        </span>
+
+          </ng-container>
         </div>
       </div>
     </div>
