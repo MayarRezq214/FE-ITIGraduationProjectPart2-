@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { registrationService } from '../services/registration.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RegisterAdminDto } from '../types/RegisterAdminDto';
+import { RegisterAdminDto } from '../Types/RegisterAdminDto';
 import { NgModule }      from '@angular/core';
 import { Router } from '@angular/router';
 import { phoneNumberLengthValidator } from '../services/registerPhoneNumber';
@@ -71,7 +71,7 @@ export class AdminRegisterComponent implements OnInit {
       }
     }
     const I = e.target as HTMLElement
-    if(I.style.color === "rgb(63, 187, 192)"){
+    if(I.style.color === "rgb(13, 110, 253)"){
       I.style.color = "black"
     }else{
       I.style.color = "#0d6efd"

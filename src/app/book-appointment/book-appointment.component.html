@@ -18,8 +18,6 @@
 
       </select>
       <button class="col-lg-2 btn btn-primary mx-sm-auto mx-md-auto mx-lg-1 mx-0 btn"  (click)="onSearch($event)">Search</button>
-      <button class="col-lg-2 btn btn-secondary mx-sm-auto mx-md-auto mx-lg-1 mx-0 btn" >Refresh</button>
-
       </div>
       </div>
     </div>
@@ -28,7 +26,7 @@
 <section id="doctors" class="doctors section-bg">
   <div class="container" data-aos="fade-up">
     
-  <ng-container *ngIf="sId==0 && !doctorById && isSearching">
+  <ng-container *ngIf="sId==0 && dId == '0' && isSearching">
     <div *ngFor="let doctor of doctors" id="docs">
     <div class="row"  *ngIf="doctor.status && doctor.weekSchadual?.length==7">
       <div   class="cardDoctor card d-flex align-items-stretch">
@@ -92,7 +90,7 @@
 
   </ng-container>
 
-  <ng-container *ngIf=" sId != 0 && !doctorById && isSearching">
+  <ng-container *ngIf=" sId != 0 && dId == '0' && isSearching">
      <div *ngFor="let spec of doctorsBySpecialization" >
        <div *ngFor="let doctor of spec.childDoctorOfSpecializations"  >
          
@@ -156,7 +154,7 @@
     </div>
    </ng-container> 
 
-  <ng-container *ngIf="doctorById && isSearching">
+  <ng-container *ngIf="dId != '0' && isSearching">
     <div class="row">
       <div class="cardDoctor card d-flex align-items-stretch">
         <div class="member" data-aos="fade-up" data-aos-delay="100">
@@ -168,12 +166,12 @@
           </div> -->
 
           <div class="member-info">
-            <h3 class="doctorName">{{doctorById.name}}</h3>
-            <h4 class="doctorTitle">{{doctorById.title}}</h4>
-            <span class="doctorDes">{{doctorById.description}}</span>
+            <h3 class="doctorName">{{doctorById?.name}}</h3>
+            <h4 class="doctorTitle">{{doctorById?.title}}</h4>
+            <span class="doctorDes">{{doctorById?.description}}</span>
           </div></div>
           <ng-container *ngFor="let record of Visits">
-            <span *ngIf="doctorById.id==record.drId" class="appointments" >
+            <span *ngIf="doctorById?.id==record.drId" class="appointments" >
            <span  *ngFor="let c of record.visitrecord" class="box col">
             <ng-container *ngIf="c"  >
               <span *ngIf="c.day==3" class="divider"> Wednesday {{c.date}}</span>
@@ -185,7 +183,7 @@
               <span *ngIf="c.day==2" class="divider"> Tuesday {{c.date}}</span>
             </ng-container>
 
-          <div *ngFor="let schedule of doctorById.weekSchadual" class="time">
+          <div *ngFor="let schedule of doctorById?.weekSchadual" class="time">
             <span *ngIf="schedule.id== c.weekScheduleId">
                  <span *ngIf="schedule.isAvailable ">
                  <div >{{schedule.startTime}}</div>

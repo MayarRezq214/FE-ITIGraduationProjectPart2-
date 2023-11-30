@@ -41,7 +41,7 @@ export class BookAppointmentComponent implements OnInit{
   Doctors? : DoctorsForAllSpecializations[];
   ActiveDoctors?:DoctorsForAllSpecializations[];
   
-  id: any;
+    id: any;
 
     doctorId: string = '0';
     isDoctorSelected : boolean =false;
@@ -60,14 +60,6 @@ export class BookAppointmentComponent implements OnInit{
       this.data.currentId.subscribe(sId => this.sId = sId)
       this.data.currentDoctorId.subscribe(dId => this.dId = dId)
 
-      this.doctorService.getDoctors().subscribe({
-        next:(doctors) => {
-          this.doctors = doctors; 
-        },
-        error: (error) => {
-          console.log('calling All doctors api failed', error);
-        },
-      });
       this.doctorService.GetAllSpecializations().subscribe({
         next:(specializations) => {
           this.specializations = specializations;
@@ -77,6 +69,14 @@ export class BookAppointmentComponent implements OnInit{
         },
       })
       
+      this.doctorService.getDoctors().subscribe({
+        next:(doctors) => {
+          this.doctors = doctors; 
+        },
+        error: (error) => {
+          console.log('calling All doctors api failed', error);
+        },
+      });
     }
 
     book(bookDoctor:any, date:string){
@@ -124,43 +124,41 @@ export class BookAppointmentComponent implements OnInit{
         });   
     }
 
-    reload(e:Event)
-    {
-      this.isSearching = true
-      window.location.reload()
-      // this.router.navigate(['/bookAppointment'])
-
-        }
     selected(e: Event):void{
       
       this.data.currentId.subscribe(sId => this.sId = sId)
-      this.data.currentDoctorId.subscribe(dId => this.dId = dId)
+      //this.data.currentDoctorId.subscribe(dId => this.dId = dId)
       this.Doctors = []
-      this.isSpecializationSelected = true;
-      this.dId = '0'
+      
+      //this.dId = '0'
       this.isDoctorSelected = false
-      this.doctorId = '0'
+      //this.doctorId = '0'
   
       this.id = (e.target as any).value;
 
-      if(this.id === "All"){
+      if(this.id == "All"){
         this.isSpecializationSelected = false;
+      }else{
+        this.isSpecializationSelected = true;
+        
       }
-         this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
+      this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
     }
 
     doctorSelected(event: Event) : void{
-
-      this.data.currentId.subscribe(sId => this.sId = sId)
+      //this.data.currentId.subscribe(sId => this.sId = sId)
       this.data.currentDoctorId.subscribe(dId => this.dId = dId)
 
       this.doctorId = (event.target as HTMLSelectElement).value;
-      this.isDoctorSelected = true;
+      console.log(this.doctorId)
       if(this.doctorId == "allDoctors"){
+        //this.dId = '0'
         this.isDoctorSelected = false;
+      }else{
+        this.isDoctorSelected = true;
       }
 
-        }
+    }
       onSearch(event : Event): void {
           
           this.isSearching = false
@@ -169,6 +167,7 @@ export class BookAppointmentComponent implements OnInit{
 
           if(this.isSpecializationSelected)
           {
+            
             this.data.changeSpecializationId(this.id)
           }
 
@@ -177,7 +176,6 @@ export class BookAppointmentComponent implements OnInit{
           }
           if(!this.isDoctorSelected){
             this.data.changeDoctorId('0')
-
           }
           if(!this.isSpecializationSelected){
             this.data.changeSpecializationId(0)
@@ -204,7 +202,7 @@ export class BookAppointmentComponent implements OnInit{
             //#endregion
             //#region doctors by specialization
       
-            if(this.sId !=0 && this.dId=='0'){
+           else if(this.sId !=0 && this.dId=='0'){
             this.doctorService.getDoctorsBySpecialization(this.sId).subscribe({
       
               next:(doctorsBySpecialization) => {
@@ -235,7 +233,7 @@ export class BookAppointmentComponent implements OnInit{
             }
             //#endregion
             //#region doctor by id
-            if(this.dId!='0'){
+           else if(this.dId!='0'){
               this.doctorService.getDoctorById(this.dId).subscribe({
               next:(doctorById) => {
                 this.isSearching = true

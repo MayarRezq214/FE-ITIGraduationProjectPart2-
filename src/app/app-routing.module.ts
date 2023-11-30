@@ -23,6 +23,7 @@ import { ReceptionProfileComponent } from './reception-profile/reception-profile
 import { BookVisitComponent } from './book-visit/book-visit.component';
 import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
 
+import { PatientRegisterComponent } from './patient-register/patient-register.component';
 
 const routes: Routes = [
   {path: '' , component:DashboardComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
   {path: 'adminRegister', canActivate: [adminAuthGuard], component:AdminRegisterComponent},
   {path: 'receptionRegister',canActivate: [adminAuthGuard], component:ReceptionRegisterComponent},
   {path: 'receptionProfile', canActivate: [receptionAuthGuard], component: ReceptionProfileComponent },
+  {path: 'PatientRegister',component:PatientRegisterComponent},
   {path : 'bookAppointment' , canActivate: [receptionAuthGuard], component : BookAppointmentComponent}
 
 ];
