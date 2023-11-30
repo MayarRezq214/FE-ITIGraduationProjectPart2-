@@ -12,5 +12,5 @@ export interface GetDoctorByIDDto {
     imageStoredFileName? :string  
     imageContentType? :string 
     imageUrl? : string 
-
+    status ? :boolean
 }
