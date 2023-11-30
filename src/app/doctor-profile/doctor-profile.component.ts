@@ -115,11 +115,12 @@ export class DoctorProfileComponent  implements OnInit{
   }
   onEdit(){
     let date = new Date(this.doctor?.dateOfBirth!)
-    console.log(date)
+   // console.log(date)
     const offset = date.getTimezoneOffset()
     date = new Date(date.getTime() - (offset*60*1000))
 
-    console.log(date.toISOString().split('T')[0])
+   // console.log(date.toISOString().split('T')[0])
+  
     this.form?.setValue({
       name : this.doctor?.name,
       title : this.doctor?.title,
@@ -127,7 +128,7 @@ export class DoctorProfileComponent  implements OnInit{
       phoneNumber : this.doctor?.phoneNumber,
       salary : this.doctor?.salary,
       dateOfBirth : date.toISOString().split('T')[0],
-   
+      // photo : this.doctor?.i
     })
   }
       onOpenShifts(){
@@ -414,22 +415,23 @@ export class DoctorProfileComponent  implements OnInit{
          
       if(s=='true'){
         this.status = true
-    }
-    if( s=='false')
-    {this.status=false}
-      }
+        }
+        if( s=='false')
+          {this.status=false}
+          }
+
       onSave(e : Event, form : any){
         e.preventDefault();
         
-      //   if(this.form.controls.photo){
-      //     console.log(this.form.controls.photo.value?.split('\\')[2])
-      //   this.doctorService.UploadPhoto(this.doctorId, this.form.controls.photo.value!).subscribe({
+      //   if(this.isUploading){
+      //   console.log(this.form?.value.photo!)
+      //   console.log(this.doctorId)
+      //   this.doctorService.UploadPhoto(this.doctorId, this.form?.value.photo).subscribe({
       //     next:() =>{
-
       //     },
       //     error:(error)=>{
             
-      //       console.log("upload phot api failed",error)
+      //       console.log("upload photo api failed",error)
       //     }
       //   })
       // }
@@ -443,8 +445,8 @@ export class DoctorProfileComponent  implements OnInit{
             phoneNumber : this.form?.value.phoneNumber,
             dateOfBirth : this.form?.value.dateOfBirth,
             status :  this.status
+
           }
-          console.log(this.updateDoctor)
 
           this.doctorService.UpdateDoctor(this.doctorId,this.updateDoctor).subscribe({
             next:()=>{
