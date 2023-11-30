@@ -27,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReceptionRegisterComponent } from './reception-register/reception-register.component';
 import { AdminRegisterComponent } from './admin-register/admin-register.component';
 import { ReceptionProfileComponent } from './reception-profile/reception-profile.component';
+import { PatientRegisterComponent } from './patient-register/patient-register.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ReceptionProfileComponent } from './reception-profile/reception-profile
     BookDialog1Component,
     ReceptionRegisterComponent,
     AdminRegisterComponent,
-    ReceptionProfileComponent
+    ReceptionProfileComponent,
+    PatientRegisterComponent
   ],
 
   imports: [
