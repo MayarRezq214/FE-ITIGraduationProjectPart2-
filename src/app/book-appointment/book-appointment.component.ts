@@ -250,8 +250,5 @@ export class BookAppointmentComponent implements OnInit{
             });}
             //#endregion
         }
-    // clear(){
-      
-    //   document.getElementById('docs')!.innerHTML = ' '
-    //   }
+
 }

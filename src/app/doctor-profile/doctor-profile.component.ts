@@ -379,7 +379,7 @@ export class DoctorProfileComponent  implements OnInit{
            {this.available6=false}
       }
 
-      onSearch(e: Event){
+      getDoctorById(){
         this.doctorService.getDoctorByIdForAdmin(this.doctorId).subscribe({
           next:(doctor) => {
             this.doctor = doctor;
@@ -389,6 +389,11 @@ export class DoctorProfileComponent  implements OnInit{
             console.log('calling dr by id api failed', error);
           },
         })
+
+
+      }
+      onSearch(e: Event){
+        this.getDoctorById()
 
       }
       uploadPhoto(e:Event){
@@ -436,16 +441,7 @@ export class DoctorProfileComponent  implements OnInit{
 
           this.doctorService.UpdateDoctor(this.doctorId,this.updateDoctor).subscribe({
             next:()=>{
-              this.doctorService.getDoctorByIdForAdmin(this.doctorId).subscribe({
-                next:(doctor) => {
-                  this.doctor = doctor;
-                  console.log(this.doctor)
-                  
-                },
-                error: (error) => {
-                  console.log('calling dr by id api failed', error);
-                },
-              })
+              this.getDoctorById()
             },
             error:(error)=>{
               console.log("update api failed",error)
