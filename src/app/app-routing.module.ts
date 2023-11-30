@@ -20,6 +20,9 @@ import { AdminRegisterComponent } from './admin-register/admin-register.componen
 import { ReceptionRegisterComponent } from './reception-register/reception-register.component';
 import { receptionAuthGuard } from './gurds/reception-auth.guard';
 import { ReceptionProfileComponent } from './reception-profile/reception-profile.component';
+import { BookVisitComponent } from './book-visit/book-visit.component';
+import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
+
 import { PatientRegisterComponent } from './patient-register/patient-register.component';
 
 const routes: Routes = [
@@ -34,13 +37,15 @@ const routes: Routes = [
   {path : 'dataTables' ,canActivate: [adminAuthGuard], component : DataTablesComponent},
   {path : 'doctorProfile' ,canActivate: [adminAuthGuard], component : DoctorProfileComponent},
   {path : 'adminProfile' ,canActivate: [adminAuthGuard], component : AdminProfileComponent},
-  {path : 'patientProfile', canActivate: [doctorAuthGuard] , component : PatientProfileComponent},
+  {path : 'patientProfile', canActivate: [doctorAuthGuard,receptionAuthGuard] , component : PatientProfileComponent},
   {path: 'myDoctorProfile' , canActivate: [doctorAuthGuard], component : MyDoctorProfileComponent},
   {path : 'specialization' ,canActivate: [adminAuthGuard], component : SpecializtionComponent},
   {path: 'adminRegister', canActivate: [adminAuthGuard], component:AdminRegisterComponent},
   {path: 'receptionRegister',canActivate: [adminAuthGuard], component:ReceptionRegisterComponent},
   {path: 'receptionProfile', canActivate: [receptionAuthGuard], component: ReceptionProfileComponent },
-  {path: 'PatientRegister',component:PatientRegisterComponent}
+  {path: 'PatientRegister',component:PatientRegisterComponent},
+  {path : 'bookAppointment' , canActivate: [receptionAuthGuard], component : BookAppointmentComponent}
+
 ];
 
 @NgModule({
