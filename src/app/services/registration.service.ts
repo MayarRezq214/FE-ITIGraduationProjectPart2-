@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { ReceptionRegisterDto } from '../types/RegisterReceptionDto';
-import { RegisterAdminDto } from '../types/RegisterAdminDto';
+import { ReceptionRegisterDto } from '../Types/RegisterReceptionDto';
+import { RegisterAdminDto } from '../Types/RegisterAdminDto';
+import {RegisterPatientDto} from '../Types/RegisterPatientDto';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,4 +19,8 @@ export class registrationService {
   public registerAdmin(register : RegisterAdminDto) : Observable<object>{
     return this.client.post(`https://localhost:7267/api/Admins/Admins/register`,register);
   }
+  public registerPatient(register : RegisterPatientDto) : Observable<object>{
+    return this.client.post(`https://localhost:7267/api/Patient/register`,register);
+  }
+
 }
