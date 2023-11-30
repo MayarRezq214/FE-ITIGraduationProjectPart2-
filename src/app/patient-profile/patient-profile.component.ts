@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../services/patientByPhoneNumber.service';
 import { GetPatientByPhoneDTO } from '../types/GetPatientByPhoneNumberDto';
-import { MedicalHistoryDto } from '../Types/MedicalHistoryDto';
+import { MedicalHistoryDto } from '../types/MedicalHistoryDto';
 import { MedicalHistoryService } from '../services/MedicalHistroy.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
@@ -10,6 +10,8 @@ import { MutualVisitsService } from '../services/getMutualVisits.service';
 import { GetPatientVisitsChildDTO } from '../types/GetPatientVisitChildDto';
 import { UpdatePatientVisitService } from '../services/updatePatientVisit.service';
 import { UpdatePatientVisitDto } from '../types/UpdatePatientVisitDto';
+import { PhoneNumberBetweenDashboardAndPatientProfileService } from '../services/phone-number-between-dashboard-and-patient-profile.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-patient-profile',
@@ -33,11 +35,16 @@ export class PatientProfileComponent implements OnInit {
   formSubmitted: boolean[] = [];
   cardButtonEnabled: boolean[] = [];
   patientId: string | null = null;
+  patientPhoneNumber!: string;
+  doctorPhoneNumber!: string;
 
   constructor(private patientService: PatientService,
     private mutualVisits: MutualVisitsService,
     private updateParientVisitService: UpdatePatientVisitService,
-    private medicalHistoryService: MedicalHistoryService, private toast: NgToastService) { }
+    private medicalHistoryService: MedicalHistoryService, 
+    private toast: NgToastService ,
+    private phoneNumberService: PhoneNumberBetweenDashboardAndPatientProfileService,
+    private authenticationService: AuthenticationService) { }
 
 
 
@@ -65,7 +72,14 @@ export class PatientProfileComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.patientService.getPatientByPhoneNumber("400200200200").subscribe({
+    
+   this.phoneNumberService.currentPhoneNumber.subscribe(
+    (phoneNumber) => {
+      this.patientPhoneNumber = phoneNumber;
+      console.log(this.patientPhoneNumber)
+    }
+   )
+    this.patientService.getPatientByPhoneNumber(this.patientPhoneNumber).subscribe({
       next: (patient: GetPatientByPhoneDTO) => {
         this.patientDto = patient;
         this.name = patient.name!;
@@ -78,7 +92,7 @@ export class PatientProfileComponent implements OnInit {
       },
     });
 
-    this.medicalHistoryService.getMedicalHistory("400200200200").subscribe({
+    this.medicalHistoryService.getMedicalHistory(this.patientPhoneNumber).subscribe({
       next: (medicalHistoryData: MedicalHistoryDto) => {
         this.id = medicalHistoryData.id;
         this.patientId = medicalHistoryData.patientId;
@@ -93,7 +107,12 @@ export class PatientProfileComponent implements OnInit {
       },
     });
 
-    this.mutualVisits.getMutualVisits("01289603610", "string").subscribe({
+this.doctorPhoneNumber = localStorage.getItem("phoneNumber")!;
+if(!this.doctorPhoneNumber){
+   this.doctorPhoneNumber = this.authenticationService.PhoneNumber!;
+}
+
+    this.mutualVisits.getMutualVisits(this.patientPhoneNumber, this.doctorPhoneNumber).subscribe({
       next: (mutualVisit: GetPatientVisitsChildDTO) => {
         console.log(typeof (mutualVisit))
         this.visits = Object.values(mutualVisit);

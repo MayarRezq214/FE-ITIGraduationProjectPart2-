@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from '../services/admin.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { GetAdminByPhoneNumberDto } from '../types/GetAdminByPhoneNumberDto';
+import { UpdateAdminByPhoneDto } from '../types/UpdateAdminByPhoneDto';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-profile',
@@ -11,9 +13,12 @@ import { GetAdminByPhoneNumberDto } from '../types/GetAdminByPhoneNumberDto';
 export class AdminProfileComponent implements OnInit{
   admin? : GetAdminByPhoneNumberDto;
   phoneNumber?: string;
+  updateAdmin? : UpdateAdminByPhoneDto;
 constructor(private adminservice: AdminService ,
   private authenticationservice: AuthenticationService){}
-  
+
+  @ViewChild('form') form : NgForm | undefined ;
+
 
   ngOnInit(): void {
     this.phoneNumber = localStorage.getItem('phoneNumber')!
@@ -32,4 +37,43 @@ constructor(private adminservice: AdminService ,
     })
   }
 
+  onEdit(){
+
+    this.form?.setValue({
+      name : this.admin?.name,
+      phoneNumber : this.admin?.phoneNumber
+    })
+  }
+
+  onSave(e : Event, form : any){
+    e.preventDefault();
+    
+
+      this.updateAdmin = {
+        id : this.admin?.id!,
+        name: this.form?.value.name,
+        phoneNumber : this.form?.value.phoneNumber,
+      }
+      console.log(this.updateAdmin)
+
+      this.adminservice.updateAdminProfile(this.admin?.phoneNumber!,this.updateAdmin).subscribe({
+        next:()=>{
+          this.adminservice.getAdminByPhoneNumber(this.admin?.phoneNumber!).subscribe({
+            next:(Admin) => {
+              this.admin = Admin
+              console.log(Admin)
+            },
+            error:(error) => {
+              console.log('calling get admin by phone number api faild', error);
+            }
+          })
+        
+        },
+        error:(error)=>{
+          console.log("update api failed",error)
+        }
+      })
+    
+  }
 }
+

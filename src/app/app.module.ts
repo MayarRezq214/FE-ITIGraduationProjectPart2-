@@ -19,6 +19,9 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
 import { SpecializtionComponent } from './specializtion/specializtion.component';
 import { NgToastModule } from 'ng-angular-popup';
 import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
+import { ReceptionRegisterComponent } from './reception-register/reception-register.component';
+import { AdminRegisterComponent } from './admin-register/admin-register.component';
+import { ReceptionProfileComponent } from './reception-profile/reception-profile.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.
     AdminProfileComponent,
     PatientProfileComponent,
     MyDoctorProfileComponent,
-    SpecializtionComponent
+    SpecializtionComponent,
+    ReceptionRegisterComponent,
+    AdminRegisterComponent,
+    ReceptionProfileComponent
   ],
 
   imports: [

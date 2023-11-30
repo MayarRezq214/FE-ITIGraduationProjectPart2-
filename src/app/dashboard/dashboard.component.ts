@@ -10,6 +10,8 @@ import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import { UpdateArrivalPatientStatusDto } from '../types/UpdateArrivalPatientStatusDto';
 import { ReceptionService } from '../services/reception.service';
+import { BehaviorSubject } from 'rxjs';
+import { PhoneNumberBetweenDashboardAndPatientProfileService } from '../services/phone-number-between-dashboard-and-patient-profile.service';
 import { GetAllPatientForADayService } from '../services/GetNumberOfPatientForADay.service';
 import { GetDoctorForADayService } from '../services/GetDoctorsForADay.service';
 import { ChildActivationStart } from '@angular/router';
@@ -31,12 +33,15 @@ isLoggedIn? : boolean;
 doctorId: string = '0';
 done: boolean = false;
 
+
 constructor(private doctorService: DoctorService,
   private authenticationService : AuthenticationService,
-  private receptionService: ReceptionService ,
+  private receptionService: ReceptionService,
+  private patientPhoneNumberService : PhoneNumberBetweenDashboardAndPatientProfileService ,
   private getNumberOfPatientForADay: GetAllPatientForADayService,
   private getDoctorsforADay:GetDoctorForADayService,
   private getTopRatedDoctorsService: GetTopRatedDoctorsService){}
+
 
   currentDate? = new Date();
   doctors?: GetAllDoctorsDto[];
@@ -212,9 +217,12 @@ constructor(private doctorService: DoctorService,
       this.isSpecializationSelected = false;
     }
     this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
-    console.log(this.Doctors)
+    // console.log(this.Doctors)
   }
-
+  
+  goToProfile(PhoneNumber: string){
+    this.patientPhoneNumberService.ChangePatientPhoneNumber(PhoneNumber);
+  }
 
   doctorSelected(event: Event):void{
 
@@ -247,18 +255,18 @@ constructor(private doctorService: DoctorService,
 
   }
   onArrive( status : string, id: number){
-    console.log(id)
+    // console.log(id)
     this.patientVisit = ({
       id : id,
       visitStatus : status,
     });
-    console.log(this.patientVisit!.id)
+    // console.log(this.patientVisit!.id)
     this.receptionService.UpdatePatientVisitStatus(this.patientVisit!).subscribe({
       next:(patientVisit) => {
-        console.log(patientVisit as GetAllPatientsWithDateDto)
+        // console.log(patientVisit as GetAllPatientsWithDateDto)
         const index = this.visits?.findIndex(v => v.id === (patientVisit as GetAllPatientsWithDateDto).id)
         this.visits![index!] = patientVisit as GetAllPatientsWithDateDto;
-        console.log();
+        console.log(patientVisit as GetAllPatientsWithDateDto)
       },
       error:(error) => {
         console.log('calling update patient visit status failed', error)
