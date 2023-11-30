@@ -12,6 +12,7 @@ import { AddWeekScheduleDto } from '../types/AddWeekScheduleDto';
 import { WeekScheduleForDoctorsDto } from '../types/WeekScheduleForDoctorsDto';
 import { GetAllSpecializationsDto } from '../types/GetAllSpecializationsDto';
 import { GetAllPatientsWithDateDto } from '../types/GetAllPatientsWithDateDto';
+import { VisitCountDto } from '../types/VisitCountDto';
 @Injectable({
   providedIn: 'root'
 })
@@ -62,4 +63,7 @@ export class DoctorService {
    public addVisitCount(startDate : string, endDate: string):Observable<object>{
     return this.client.post(`https://localhost:7267/api/Doctor/addVisitCount/${startDate}?EndDate=${endDate}`,endDate)
    }
+   public GetVisitCountForWeek(date: string , date2 : string ,drId : string): Observable<VisitCountDto[]>{
+    return this.client.get<VisitCountDto[]>(`https://localhost:7267/api/Doctor/visitCount/${date}/${date2}?DoctorId=${drId}`);
+  }
   }

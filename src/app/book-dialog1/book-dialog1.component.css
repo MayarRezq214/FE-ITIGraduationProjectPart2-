@@ -1,0 +1,65 @@
+.container{
+    position: fixed;
+    left: 60%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center; /* horizontal */
+    align-items: center; /* vertical */ 
+    background-color: white;
+    width: auto;
+    border-radius: 10px;
+
+}
+.btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.book-btn{
+        width: 55px;
+        height: 50px;
+        border-radius: 10px;
+        align-items: center;
+        text-align: center;
+        color: white;
+        background-color: rgb(0, 128, 51);
+        border: 1px ;
+  }
+  .close-btn{
+    width: 55px;
+    height: 50px;
+    border-radius: 10px;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-color: rgb(128, 0, 0);
+    border: 1px ;
+
+  }
+  .close-btn1{
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    margin-top: 2%;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-color: rgb(128, 0, 0);
+    border: 1px ;
+    padding: 0px;
+
+  }
+  .text{
+    margin-left: 3%;
+    color: black;
+  }
+  .modal-dialog {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+  .form-label{
+    color: black;
+  }

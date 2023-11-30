@@ -19,6 +19,11 @@ import { PatientProfileComponent } from './patient-profile/patient-profile.compo
 import { SpecializtionComponent } from './specializtion/specializtion.component';
 import { NgToastModule } from 'ng-angular-popup';
 import { MyDoctorProfileComponent } from './my-doctor-profile/my-doctor-profile.component';
+import { BookVisitComponent } from './book-visit/book-visit.component';
+import { BookAppointmentComponent } from './book-appointment/book-appointment.component';
+import { BookDialog1Component } from './book-dialog1/book-dialog1.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ReceptionRegisterComponent } from './reception-register/reception-register.component';
 import { AdminRegisterComponent } from './admin-register/admin-register.component';
 import { ReceptionProfileComponent } from './reception-profile/reception-profile.component';
@@ -40,6 +45,9 @@ import { ReceptionProfileComponent } from './reception-profile/reception-profile
     PatientProfileComponent,
     MyDoctorProfileComponent,
     SpecializtionComponent,
+    BookVisitComponent,
+    BookAppointmentComponent,
+    BookDialog1Component,
     ReceptionRegisterComponent,
     AdminRegisterComponent,
     ReceptionProfileComponent
@@ -51,7 +59,9 @@ import { ReceptionProfileComponent } from './reception-profile/reception-profile
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    NgToastModule
+    NgToastModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
