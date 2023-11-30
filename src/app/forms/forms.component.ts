@@ -151,7 +151,7 @@ export class FormsComponent implements OnInit{
    
   }
   private showSuccess() {
-    this.toast.success({ detail: "SUCCESS", summary: 'Receptionist added successfully', duration: 4000 });
+    this.toast.success({ detail: "SUCCESS", summary: 'Doctor added successfully', duration: 4000 });
   }
   onSelect(e:Event)
   {
