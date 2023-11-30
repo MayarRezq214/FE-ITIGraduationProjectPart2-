@@ -147,8 +147,6 @@ export class BookAppointmentComponent implements OnInit{
         this.isSpecializationSelected = false;
       }
          this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
-         
-        
     }
 
     doctorSelected(event: Event) : void{

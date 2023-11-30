@@ -12,6 +12,7 @@ import { PatientService2 } from '../services/patient.service';
 import { AddPatientVisitDto } from '../types/AddPatientVisitDto';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-book-dialog1',
@@ -50,11 +51,11 @@ export class BookDialog1Component {
     }[] = [];
 
     bookedDate : string = ' '
+    date : string = ''
   constructor(private dialog : DoctorDialogService, 
     @Inject(MAT_DIALOG_DATA) public data : any , 
     private PatientService : PatientService2,
-    private router: Router,
-   ){}
+    private router: Router, private toast: NgToastService){}
 
   Form = new FormGroup({
     phoneNumber : new FormControl<string>('')
@@ -66,7 +67,9 @@ export class BookDialog1Component {
   
 
   }
-
+  private showSuccess() {
+    this.toast.success({ detail: "SUCCESS", summary: `Visit added successfully on ${this.date} with Dr. ${this.data.data.name}`, duration: 9000 });
+  }
   getPhoneNumber(e: Event){
     
     this.patientAlreadyBooked = false;
@@ -77,7 +80,7 @@ export class BookDialog1Component {
     let year = this.data.date.split('/')[2]
     
     let formattedDate  = `${year}-${month}-${day}`
-
+    this.date = formattedDate
     this.PatientPhoneNumber = (e.target as HTMLInputElement).value;
     console.log(this.PatientPhoneNumber)
     this.PatientService.getPatientByPhoneNumber(this.PatientPhoneNumber!).subscribe({
@@ -104,11 +107,10 @@ export class BookDialog1Component {
         this.getAllPatientsWithDate?.forEach((patient)=>{
           if(patient.patientId==this.PatientByPhoneNumber?.id){
             this.patientAlreadyBooked = true;
-            
-            console.log(this.PatientByPhoneNumber?.id)
+           
+            // console.log(this.PatientByPhoneNumber?.id)
             this.bookedDate=formattedDate
-            console.log(this.bookedDate)
-
+            // console.log(this.bookedDate)
           }
         })
       },
@@ -135,7 +137,8 @@ export class BookDialog1Component {
         console.log(this.addPatientVisit)
         this.PatientService.addPatientVisit(this.addPatientVisit).subscribe({
           next :  ()=>{
-            
+            this.showSuccess()
+
             console.log("done")         
           },
 

@@ -16,6 +16,7 @@ import { WeekScheduleForDoctorsDto } from '../types/WeekScheduleForDoctorsDto';
 import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializations';
 import * as moment from 'moment';
 import { shareReplay } from 'rxjs';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -63,7 +64,8 @@ export class DoctorProfileComponent  implements OnInit{
       constructor( private route: ActivatedRoute ,
                     private doctorService : DoctorService, 
                     private navigate : NavigateToDoctorProfileAfterOnboardingService,
-                    private dataFromRegisterDr: DataBetweenAddDrDrProfileService
+                    private dataFromRegisterDr: DataBetweenAddDrDrProfileService,
+                    private toast: NgToastService
                     ) {}
 
   ngOnInit() {
@@ -105,7 +107,12 @@ export class DoctorProfileComponent  implements OnInit{
       })
 
   }
-
+  private showSuccess() {
+    this.toast.success({ detail: "SUCCESS", summary: 'Doctor profile updated successfully', duration: 9000 });
+  }
+  private showSuccessSchedule() {
+    this.toast.success({ detail: "SUCCESS", summary: 'Doctor schedule updated successfully', duration: 9000 });
+  }
   onEdit(){
     let date = new Date(this.doctor?.dateOfBirth!)
     console.log(date)
@@ -267,7 +274,7 @@ export class DoctorProfileComponent  implements OnInit{
               next:(doctor) => {
                 this.doctor = doctor;
                 console.log(this.doctor)
-                
+                this.showSuccessSchedule()
               },
               error: (error) => {
                 console.log('calling dr by id api failed', error);
@@ -442,6 +449,7 @@ export class DoctorProfileComponent  implements OnInit{
           this.doctorService.UpdateDoctor(this.doctorId,this.updateDoctor).subscribe({
             next:()=>{
               this.getDoctorById()
+              this.showSuccess()
             },
             error:(error)=>{
               console.log("update api failed",error)

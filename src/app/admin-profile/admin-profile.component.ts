@@ -4,6 +4,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { GetAdminByPhoneNumberDto } from '../types/GetAdminByPhoneNumberDto';
 import { UpdateAdminByPhoneDto } from '../types/UpdateAdminByPhoneDto';
 import { NgForm } from '@angular/forms';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-admin-profile',
@@ -15,7 +16,8 @@ export class AdminProfileComponent implements OnInit{
   phoneNumber?: string;
   updateAdmin? : UpdateAdminByPhoneDto;
 constructor(private adminservice: AdminService ,
-  private authenticationservice: AuthenticationService){}
+  private authenticationservice: AuthenticationService,
+  private toast: NgToastService){}
 
   @ViewChild('form') form : NgForm | undefined ;
 
@@ -44,6 +46,9 @@ constructor(private adminservice: AdminService ,
       phoneNumber : this.admin?.phoneNumber
     })
   }
+  private showSuccess() {
+    this.toast.success({ detail: "SUCCESS", summary: 'Admin profile updated successfully', duration: 9000 });
+  }
 
   onSave(e : Event, form : any){
     e.preventDefault();
@@ -61,7 +66,8 @@ constructor(private adminservice: AdminService ,
           this.adminservice.getAdminByPhoneNumber(this.updateAdmin?.phoneNumber!).subscribe({
             next:(Admin) => {
               this.admin = Admin
-              console.log(Admin)
+              // console.log(Admin)
+              this.showSuccess()
             },
             error:(error) => {
               console.log('calling get admin by phone number api faild', error);

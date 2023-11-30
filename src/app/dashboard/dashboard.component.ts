@@ -58,7 +58,7 @@ constructor(private doctorService: DoctorService,
    
 
    
-    let endDate =new Date (date.setDate(date.getDate() + 32));
+    let endDate =new Date (date.setDate(date.getDate() + 38));
 
     const endyear : number = endDate.getFullYear()
     const endmonth : number = endDate.getMonth()+1
@@ -69,7 +69,7 @@ constructor(private doctorService: DoctorService,
    
    let endDate1 = `${endyear}-${endmonth.toString().padStart(2,'0')}-${endDay.toString().padStart(2,'0')}`
    
-        if(day==22){
+        if(day==28 || day == 29 || day == 30 || day == 31  || day == 1){
         this.doctorService.addVisitCount(startDateVC,endDate1).subscribe({
           next:()=>{
               
