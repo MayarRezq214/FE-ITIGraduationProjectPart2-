@@ -94,7 +94,7 @@ export class ReceptionRegisterComponent {
     });
    }
    private showSuccess() {
-    this.toast.success({ detail: "SUCCESS", summary: 'Receptionist added successfully', duration: 9000 });
+    this.toast.success({ detail: "SUCCESS", summary: `Receptionist ${this.RegisterReception.name} added successfully`, duration: 4000 });
  }
 
 }

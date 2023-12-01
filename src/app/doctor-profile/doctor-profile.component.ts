@@ -108,10 +108,10 @@ export class DoctorProfileComponent  implements OnInit{
 
   }
   private showSuccess() {
-    this.toast.success({ detail: "SUCCESS", summary: 'Doctor profile updated successfully', duration: 9000 });
+    this.toast.success({ detail: "SUCCESS", summary: `Doctor ${this.doctor?.name} profile updated successfully`, duration: 4000 });
   }
   private showSuccessSchedule() {
-    this.toast.success({ detail: "SUCCESS", summary: 'Doctor schedule updated successfully', duration: 9000 });
+    this.toast.success({ detail: "SUCCESS", summary: `Doctor ${this.doctor?.name} schedule updated successfully`, duration: 4000 });
   }
   onEdit(){
     let date = new Date(this.doctor?.dateOfBirth!)
