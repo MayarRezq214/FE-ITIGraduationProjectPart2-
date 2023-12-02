@@ -147,7 +147,7 @@ export class DoctorProfileComponent  implements OnInit{
   }
   onEdit(){
     let date = new Date(this.doctor?.dateOfBirth!)
-    console.log(date)
+   // console.log(date)
     const offset = date.getTimezoneOffset()
     date = new Date(date.getTime() - (offset*60*1000))
 
@@ -159,6 +159,7 @@ export class DoctorProfileComponent  implements OnInit{
       phoneNumber : this.doctor?.phoneNumber,
       salary : this.doctor?.salary,
       dateOfBirth : date.toISOString().split('T')[0],
+      // photo : this.doctor?.i
     })
   }
       onOpenShifts(){
@@ -452,10 +453,11 @@ export class DoctorProfileComponent  implements OnInit{
          
       if(s=='true'){
         this.status = true
-    }
-    if( s=='false')
-    {this.status=false}
-      }
+        }
+        if( s=='false')
+          {this.status=false}
+          }
+
       onSave(e : Event, form : any){
         e.preventDefault();
         
@@ -479,8 +481,8 @@ export class DoctorProfileComponent  implements OnInit{
             phoneNumber : this.form?.value.phoneNumber,
             dateOfBirth : this.form?.value.dateOfBirth,
             status :  this.status
+
           }
-          console.log(this.updateDoctor)
 
           this.doctorService.UpdateDoctor(this.doctorId,this.updateDoctor).subscribe({
             next:()=>{
