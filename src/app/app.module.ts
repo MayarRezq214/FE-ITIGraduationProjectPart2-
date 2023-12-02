@@ -30,6 +30,7 @@ import { ReceptionProfileComponent } from './reception-profile/reception-profile
 import { PatientRegisterComponent } from './patient-register/patient-register.component';
 import { PatientVisitsComponent } from './patient-visits/patient-visits.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
