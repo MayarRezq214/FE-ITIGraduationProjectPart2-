@@ -4,6 +4,7 @@ import { GetPatientVisitDto } from '../types/GetPatientVisitDto';
 import { PatientService2 } from '../services/patient.service';
 import { empty } from 'rxjs';
 
+
 @Component({
   selector: 'app-patient-visits',
   templateUrl: './patient-visits.component.html',
@@ -13,10 +14,13 @@ export class PatientVisitsComponent {
 patientPhoneNumbaer?: string;
 patientVisits?: GetPatientVisitDto
   constructor(private patientService : PatientService2){}
-  search(e: Event){
-    e.preventDefault
-    this. patientPhoneNumbaer= (e.target as HTMLInputElement).value; 
-    console.log(this.patientPhoneNumbaer)
+  
+  
+  search() {
+    if (!this.patientPhoneNumbaer) {
+      return;
+    }
+
     this.patientService.GetPatientVisitsByPhone(this.patientPhoneNumbaer).subscribe({
       next: (patientVisits) => {
         this.patientVisits = patientVisits;
