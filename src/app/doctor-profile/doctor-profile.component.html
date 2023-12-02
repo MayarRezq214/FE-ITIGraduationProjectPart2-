@@ -133,7 +133,7 @@
                               <div class="row mb-3"  *ngIf="isUploading">
                                   <label for="inputNumber" class="col-sm-2 col-form-label">Upload Photo</label>
                                   <div class="col-sm-10">
-                                    <input class="form-control" type="file" id="formFile" name="photo" ngModel>
+                                    <input class="form-control" (change)="photoFile($event)" type="file" id="formFile" name="photo" ngModel>
                                   </div>
                                 </div> 
                           </div>
