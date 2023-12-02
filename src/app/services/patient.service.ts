@@ -4,6 +4,7 @@ import { GetPatientByPhoneDTO } from '../types/GetPatientByPhoneNumberDto';
 import { GetAllPatientsWithDateDto } from '../types/GetAllPatientsWithDateDto';
 import { Observable } from 'rxjs';
 import { AddPatientVisitDto } from '../types/AddPatientVisitDto';
+import { GetPatientVisitDto } from '../types/GetPatientVisitDto';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,8 @@ export class PatientService2 {
   
   public deleteAppointment (patientVisitId : number): Observable<object>{
     return this.client.delete(`https://localhost:7267/api/Patient/deletepatientvisit/${patientVisitId}`)
+  }
+  public GetPatientVisitsByPhone(phoneNumber: string):Observable<GetPatientVisitDto>{
+    return this.client.get<GetPatientVisitDto>(`https://localhost:7267/api/Patient/patient_visits/${phoneNumber}`)
   }
 }
