@@ -29,6 +29,8 @@ export class BookDialog1Component {
   patientAlreadyBooked : boolean = false;
   patient? : GetAllPatientsWithDateDto;
   patientRegistered? : boolean = false;
+  showNotRegisteredMsg: boolean = false;
+
   addPatientVisit? : AddPatientVisitDto
     
       visitCountsModal : 
@@ -87,9 +89,11 @@ export class BookDialog1Component {
       next:(PatientByPhoneNumber) => {
         this.PatientByPhoneNumber = PatientByPhoneNumber;
         this.patientRegistered = true;
+        this.showNotRegisteredMsg = false;
       },
       error: (error) => {
        console.log('calling Patient api failed', error);
+       this.showNotRegisteredMsg = true;
        this.PatientByPhoneNumber = {
         id : ' ',
         name : ' ',
