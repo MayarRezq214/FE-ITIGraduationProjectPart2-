@@ -5,6 +5,7 @@ import { GetAdminByPhoneNumberDto } from '../types/GetAdminByPhoneNumberDto';
 import { UpdateAdminByPhoneDto } from '../types/UpdateAdminByPhoneDto';
 import { NgForm } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
+import { Route, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-profile',
@@ -17,7 +18,8 @@ export class AdminProfileComponent implements OnInit{
   updateAdmin? : UpdateAdminByPhoneDto;
 constructor(private adminservice: AdminService ,
   private authenticationservice: AuthenticationService,
-  private toast: NgToastService){}
+  private toast: NgToastService, 
+  private routerLink: RouterLink){}
 
   @ViewChild('form') form : NgForm | undefined ;
 

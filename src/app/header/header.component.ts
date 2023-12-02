@@ -64,7 +64,7 @@ constructor(private authenticationService: AuthenticationService,
     this.doctorService.GetDoctorByPhone(this.phoneNumber!).subscribe({
       next:(doctor) => {
         this.doctor = doctor
-        // console.log(this.doctor)
+        console.log(this.doctor.imageUrl)
       },
       error:(error) => {
         console.log('calling get Doctor by phone number api faild', error);
