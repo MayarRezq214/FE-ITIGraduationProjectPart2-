@@ -28,6 +28,8 @@ import { ReceptionRegisterComponent } from './reception-register/reception-regis
 import { AdminRegisterComponent } from './admin-register/admin-register.component';
 import { ReceptionProfileComponent } from './reception-profile/reception-profile.component';
 import { PatientRegisterComponent } from './patient-register/patient-register.component';
+import { PatientVisitsComponent } from './patient-visits/patient-visits.component';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { PatientRegisterComponent } from './patient-register/patient-register.co
     ReceptionRegisterComponent,
     AdminRegisterComponent,
     ReceptionProfileComponent,
-    PatientRegisterComponent
+    PatientRegisterComponent,
+    PatientVisitsComponent
   ],
 
   imports: [
