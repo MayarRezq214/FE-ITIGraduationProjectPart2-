@@ -108,10 +108,39 @@ export class DoctorProfileComponent  implements OnInit{
 
   }
   private showSuccess() {
-    this.toast.success({ detail: "SUCCESS", summary: 'Doctor profile updated successfully', duration: 9000 });
+    this.toast.success({ detail: "SUCCESS", summary: `Doctor ${this.doctor?.name} profile updated successfully`, duration: 4000 });
   }
-  private showSuccessSchedule() {
-    this.toast.success({ detail: "SUCCESS", summary: 'Doctor schedule updated successfully', duration: 9000 });
+  private showSuccessSchedule(schedule : any) {
+    let day :string
+    if(schedule.dayOfWeek==0)
+    {
+      day = 'Sunday'
+    }
+    if(schedule.dayOfWeek==1)
+    {
+      day = 'Monday'
+    }
+    if(schedule.dayOfWeek==2)
+    {
+      day = 'Tuesday'
+    }
+    if(schedule.dayOfWeek==3)
+    {
+      day = 'Wednesday'
+    }
+    if(schedule.dayOfWeek==4)
+    {
+      day = 'Thursday'
+    }
+    if(schedule.dayOfWeek==5)
+    {
+      day = 'Friday'
+    }
+    if(schedule.dayOfWeek==6)
+    {
+      day = 'Friday'
+    }
+    this.toast.success({ detail: "SUCCESS", summary: `Doctor ${this.doctor?.name} schedule for ${day!} updated successfully`, duration: 4000 });
   }
   onEdit(){
     let date = new Date(this.doctor?.dateOfBirth!)
@@ -274,7 +303,7 @@ export class DoctorProfileComponent  implements OnInit{
               next:(doctor) => {
                 this.doctor = doctor;
                 console.log(this.doctor)
-                this.showSuccessSchedule()
+                this.showSuccessSchedule( this.doctor?.weekSchadual[index])
               },
               error: (error) => {
                 console.log('calling dr by id api failed', error);
@@ -401,7 +430,8 @@ export class DoctorProfileComponent  implements OnInit{
       }
       onSearch(e: Event){
         this.getDoctorById()
-
+        this.onEdit()
+        this.onOpenShifts()
       }
       uploadPhoto(e:Event){
         e.preventDefault()
