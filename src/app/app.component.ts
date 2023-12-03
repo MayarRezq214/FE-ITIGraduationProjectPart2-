@@ -13,7 +13,11 @@ export class AppComponent implements OnInit{
   isReceptionLoggedIn:boolean = false;
   isSidebarOpen?: boolean;
   constructor(private authenticationService: AuthenticationService,
-    private toggleSidebarService: ToggleSidebarService){}
+    public toggleSidebarService: ToggleSidebarService){
+      this.toggleSidebarService.isSideBarOpen$.subscribe(isOpen => {
+        this.isSidebarOpen = isOpen});
+    }
+
   ngOnInit(): void {
     if(localStorage.getItem('AdminToken')){
       this.authenticationService.isLoggedIn$.next(true);
@@ -33,5 +37,8 @@ export class AppComponent implements OnInit{
     this.authenticationService.isReceptionLoggedIn$.subscribe((isReceptionLoggedIn) => {
       this.isReceptionLoggedIn = isReceptionLoggedIn;
     });
+  }
+  get sidebarOpen(): boolean {
+    return this.toggleSidebarService.isSideBarOpen$.value;
   }
 }

@@ -29,6 +29,7 @@ import { AdminRegisterComponent } from './admin-register/admin-register.componen
 import { ReceptionProfileComponent } from './reception-profile/reception-profile.component';
 import { PatientRegisterComponent } from './patient-register/patient-register.component';
 import { PatientVisitsComponent } from './patient-visits/patient-visits.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { PatientVisitsComponent } from './patient-visits/patient-visits.componen
     NgToastModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
