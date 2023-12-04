@@ -439,7 +439,7 @@ export class DoctorProfileComponent  implements OnInit{
 
       photoFile(e: Event){
          this.file = (e.target as HTMLInputElement).files![0];
-         this.formData?.append('imageFiles', this.file);
+         this.formData?.append('imageFile', this.file);
       }
 
       uploadPhoto(e:Event){
@@ -461,16 +461,17 @@ export class DoctorProfileComponent  implements OnInit{
       onSave(e : Event, form : any){
         e.preventDefault();
         
-         if(this.formData){
+         if(this.file){
+          console.log("in")
          this.doctorService.UploadPhoto(this.doctor?.id!, this.formData!).subscribe({
           next:(upload) => {
-          console.log(upload)
+            this.getDoctorById()
           },
           error : (error) => {
            console.log('Calling Upload photo Api faild' , error)
           }
       })
-       }
+      }
      
           this.updateDoctor = {
             id : this.doctorId,
@@ -495,7 +496,7 @@ export class DoctorProfileComponent  implements OnInit{
           })
 
 
-          console.log(this.file)
+          // console.log(this.file)
          
           
 

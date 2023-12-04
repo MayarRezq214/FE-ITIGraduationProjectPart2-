@@ -22,4 +22,7 @@ export class AdminService {
   public updateAdminProfile(phoneNumber : string, admin : UpdateAdminByPhoneDto): Observable<object>{
     return this.client.put(`https://localhost:7267/api/Admins/admins/updateAdmin/${phoneNumber}`,admin);
   }
+  public UploadPhoto(adminId : string, photo:FormData):Observable<object>{
+    return this.client.post(`https://localhost:7267/api/Admins/admins/uploadimage/${adminId}`,photo);
+  }
 }
