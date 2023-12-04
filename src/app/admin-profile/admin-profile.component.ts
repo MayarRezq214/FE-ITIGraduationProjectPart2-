@@ -16,10 +16,12 @@ export class AdminProfileComponent implements OnInit{
   admin? : GetAdminByPhoneNumberDto;
   phoneNumber?: string;
   updateAdmin? : UpdateAdminByPhoneDto;
+  formData?: FormData = new FormData();
+  file?: File
+  
 constructor(private adminservice: AdminService ,
   private authenticationservice: AuthenticationService,
-  private toast: NgToastService, 
-  private routerLink: RouterLink){}
+  private toast: NgToastService){}
 
   @ViewChild('form') form : NgForm | undefined ;
 
@@ -51,7 +53,10 @@ constructor(private adminservice: AdminService ,
   private showSuccess() {
     this.toast.success({ detail: "SUCCESS", summary: 'Admin profile updated successfully', duration: 9000 });
   }
-
+  photoFile(e: Event){
+    this.file = (e.target as HTMLInputElement).files![0];
+    this.formData?.append('imageFile', this.file);
+ }
   onSave(e : Event, form : any){
     e.preventDefault();
     

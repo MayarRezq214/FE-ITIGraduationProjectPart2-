@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -29,6 +30,7 @@ import { AdminRegisterComponent } from './admin-register/admin-register.componen
 import { ReceptionProfileComponent } from './reception-profile/reception-profile.component';
 import { PatientRegisterComponent } from './patient-register/patient-register.component';
 import { PatientVisitsComponent } from './patient-visits/patient-visits.component';
+
 
 
 @NgModule({
@@ -67,6 +69,7 @@ import { PatientVisitsComponent } from './patient-visits/patient-visits.componen
     NgToastModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
