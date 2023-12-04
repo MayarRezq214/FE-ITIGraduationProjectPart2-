@@ -25,6 +25,9 @@ import { NgToastService } from 'ng-angular-popup';
 })
 export class DoctorProfileComponent  implements OnInit{
   doctor? : GetDoctorByIDForAdminDto
+  photo?:string;
+  formData?: FormData = new FormData();
+  file?: File
   updateDoctor? : UpdateDoctorStatusDto = 
   {
     name : '',
@@ -144,11 +147,11 @@ export class DoctorProfileComponent  implements OnInit{
   }
   onEdit(){
     let date = new Date(this.doctor?.dateOfBirth!)
-    console.log(date)
+   // console.log(date)
     const offset = date.getTimezoneOffset()
     date = new Date(date.getTime() - (offset*60*1000))
 
-    console.log(date.toISOString().split('T')[0])
+    //console.log(date.toISOString().split('T')[0])
     this.form?.setValue({
       name : this.doctor?.name,
       title : this.doctor?.title,
@@ -156,7 +159,7 @@ export class DoctorProfileComponent  implements OnInit{
       phoneNumber : this.doctor?.phoneNumber,
       salary : this.doctor?.salary,
       dateOfBirth : date.toISOString().split('T')[0],
-   
+      // photo : this.doctor?.i
     })
   }
       onOpenShifts(){
@@ -433,36 +436,42 @@ export class DoctorProfileComponent  implements OnInit{
         this.onEdit()
         this.onOpenShifts()
       }
+
+      photoFile(e: Event){
+         this.file = (e.target as HTMLInputElement).files![0];
+         this.formData?.append('imageFile', this.file);
+      }
+
       uploadPhoto(e:Event){
         e.preventDefault()
         this.isUploading = true
-        
       }
+
       doctorStatusChange(e:Event){
         e.preventDefault();
        const s= (e.target as HTMLInputElement).value
          
       if(s=='true'){
         this.status = true
-    }
-    if( s=='false')
-    {this.status=false}
-      }
+        }
+        if( s=='false')
+          {this.status=false}
+          }
+
       onSave(e : Event, form : any){
         e.preventDefault();
         
-      //   if(this.form.controls.photo){
-      //     console.log(this.form.controls.photo.value?.split('\\')[2])
-      //   this.doctorService.UploadPhoto(this.doctorId, this.form.controls.photo.value!).subscribe({
-      //     next:() =>{
-
-      //     },
-      //     error:(error)=>{
-            
-      //       console.log("upload phot api failed",error)
-      //     }
-      //   })
-      // }
+         if(this.file){
+          console.log("in")
+         this.doctorService.UploadPhoto(this.doctor?.id!, this.formData!).subscribe({
+          next:(upload) => {
+            this.getDoctorById()
+          },
+          error : (error) => {
+           console.log('Calling Upload photo Api faild' , error)
+          }
+      })
+      }
      
           this.updateDoctor = {
             id : this.doctorId,
@@ -473,8 +482,8 @@ export class DoctorProfileComponent  implements OnInit{
             phoneNumber : this.form?.value.phoneNumber,
             dateOfBirth : this.form?.value.dateOfBirth,
             status :  this.status
+
           }
-          console.log(this.updateDoctor)
 
           this.doctorService.UpdateDoctor(this.doctorId,this.updateDoctor).subscribe({
             next:()=>{
@@ -485,6 +494,14 @@ export class DoctorProfileComponent  implements OnInit{
               console.log("update api failed",error)
             }
           })
+
+
+          // console.log(this.file)
+         
+          
+
+
+          
         
       }
       

@@ -172,7 +172,10 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/userProj2.png" alt="Profile" class="rounded-circle">
+
+            <img  *ngIf="isDoctorLoggedIn && doctor?.imageStoredFileName"  src={{doctor?.imageUrl}} alt="Profile" class="rounded-circle">
+            <img  *ngIf="!isDoctorLoggedIn || !doctor?.imageStoredFileName" src="assets/img/userProj2.png"  alt="Profile" class="rounded-circle">
+
             <span *ngIf="isLoggedIn" class="d-none d-md-block dropdown-toggle ps-2">{{admin?.name}}</span>
             <span *ngIf="isDoctorLoggedIn" class="d-none d-md-block dropdown-toggle ps-2">{{doctor?.name}}</span>
             <span *ngIf="isReceptionLoggedIn" class="d-none d-md-block dropdown-toggle ps-2">{{reception?.name}}</span>
