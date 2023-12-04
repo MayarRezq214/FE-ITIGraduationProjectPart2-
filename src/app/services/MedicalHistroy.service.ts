@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MedicalHistoryDto } from '../types/MedicalHistoryDto';
+import { MedicalHistoryDto } from '../Types/MedicalHistoryDto';
+import {AddMedicalHistoryDto} from '../Types/AddMedicalHistoryDto';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +17,9 @@ export class MedicalHistoryService {
 
   public getMedicalHistory(phone: string): Observable<MedicalHistoryDto> {
     return this.client.get<MedicalHistoryDto>(`https://localhost:7267/api/Patient/medical_history/${phone}`);
+  }
+
+  public addMedicalHistory(medicalHistory: AddMedicalHistoryDto): Observable<object>{
+    return this.client.post('https://localhost:7267/api/Doctor/MedicalHistory',medicalHistory)
   }
 }
