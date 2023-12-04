@@ -48,7 +48,10 @@
                   <li class="nav-item">
                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Profile</button>
                   </li>
-  
+
+                  <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#weekSchedule">Week Schedule</button>
+                  </li>
                   <!-- <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
                   </li>
@@ -107,6 +110,24 @@
   
                  
   
+                  </div>
+                  <div class="tab-pane fade profile-edit pt-3" id="weekSchedule">
+                    <table class="table table-dark">
+                      <thead>
+                        <tr>
+                          <th scope="col">Day</th>
+                          <th scope="col">Start Time</th>
+                          <th scope="col">End Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let day of doctor?.weekSchadual">
+                          <th scope="row">{{this.days[day.dayOfWeek]}}</th>
+                          <td>{{day.startTime}}</td>
+                          <td>{{day.endTime}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
   
                   <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
