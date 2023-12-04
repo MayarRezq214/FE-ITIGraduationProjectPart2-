@@ -92,10 +92,12 @@ constructor(private authenticationService: AuthenticationService,
     localStorage.removeItem('phoneNumber')
     localStorage.removeItem('DoctorId')
   } 
-  toggleSideBar(e: Event){
-    this.toggleSidebarService.isSideBarOpen$.subscribe((isSideBarOpen) => {
-      this.isSideBarOpen = isSideBarOpen;
-    });
-    this.toggleSidebarService.isSideBarOpen$.next(!this.isSideBarOpen)
+  toggleSideBar(event: Event): void {
+    event.preventDefault();
+    console.log('Before toggle:', this.toggleSidebarService.isSideBarOpen$.value);
+    this.toggleSidebarService.isSideBarOpen$.next(!this.toggleSidebarService.isSideBarOpen$.value);
+    console.log('After toggle:', this.toggleSidebarService.isSideBarOpen$.value);
   }
+  
+  
 }
