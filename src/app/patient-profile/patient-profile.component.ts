@@ -2,8 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../services/patientByPhoneNumber.service';
 import { GetPatientByPhoneDTO } from '../types/GetPatientByPhoneNumberDto';
-import { MedicalHistoryDto } from '../Types/MedicalHistoryDto';
-import {AddMedicalHistoryDto} from '../Types/AddMedicalHistoryDto';
+import { MedicalHistoryDto } from '../types/MedicalHistoryDto';
+import {AddMedicalHistoryDto} from '../types/AddMedicalHistoryDto';
 import { MedicalHistoryService } from '../services/MedicalHistroy.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';

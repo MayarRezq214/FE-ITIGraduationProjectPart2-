@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MedicalHistoryDto } from '../Types/MedicalHistoryDto';
-import {AddMedicalHistoryDto} from '../Types/AddMedicalHistoryDto';
+import { MedicalHistoryDto } from '../types/MedicalHistoryDto';
+import {AddMedicalHistoryDto} from '../types/AddMedicalHistoryDto';
 
 @Injectable({
   providedIn: 'root',
