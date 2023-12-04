@@ -16,6 +16,8 @@ import { GetAllPatientForADayService } from '../services/GetNumberOfPatientForAD
 import { GetDoctorForADayService } from '../services/GetDoctorsForADay.service';
 import { ChildActivationStart } from '@angular/router';
 import { GetTopRatedDoctorsService } from '../services/TopRatedDoctors.service';
+import { GetHighDemandSpecializationService } from '../services/getHighDemandSpecialization.service';
+import { GetAllSpecializationsService } from '../services/getAllSpecializations.service';
 
 
 @Component({
@@ -40,7 +42,9 @@ constructor(private doctorService: DoctorService,
   private patientPhoneNumberService : PhoneNumberBetweenDashboardAndPatientProfileService ,
   private getNumberOfPatientForADay: GetAllPatientForADayService,
   private getDoctorsforADay:GetDoctorForADayService,
-  private getTopRatedDoctorsService: GetTopRatedDoctorsService){}
+  private getTopRatedDoctorsService: GetTopRatedDoctorsService,
+  private getHighDemandSpecialization : GetHighDemandSpecializationService,
+  private getAllSpecialization : GetAllSpecializationsService){}
 
 
   currentDate? = new Date();
@@ -65,6 +69,8 @@ constructor(private doctorService: DoctorService,
   topRatedArray: any;
   lowestRatedArray: any;
   ratedArray: any;
+  HighDemandArray: { specializationId: any, specializationName:String , length: number }[] = [];
+  maxLength:number =0;
   ngOnInit(): void {
     const date = new Date()
 
@@ -80,7 +86,15 @@ constructor(private doctorService: DoctorService,
     const day : number = date.getDate()+0
     let startDate  = `${year}-${month.toString().padStart(2,'0')}-${day.toString().padStart(2,'0')}`
 
-   
+
+    const today = new Date();
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    const lastDayOfMonth = new Date(nextMonth.getTime() - 1);
+
+    const formattedStartOfMonth = this.formatDate(startOfMonth);
+    const formattedLastDayOfMonth = this.formatDate(lastDayOfMonth);
 
    
     let endDate =new Date (date.setDate(date.getDate() + 32));
@@ -91,7 +105,7 @@ constructor(private doctorService: DoctorService,
 
     let startDateVC  = `${endyear}-${endmonth.toString().padStart(2,'0')}-${'1'.toString().padStart(2,'0')}`
 
-   
+
    let endDate1 = `${endyear}-${endmonth.toString().padStart(2,'0')}-${endDay.toString().padStart(2,'0')}`
    
         if(day==25){
@@ -192,7 +206,6 @@ constructor(private doctorService: DoctorService,
         this.doctorService.getDoctors().subscribe({
           next : (drs) =>{
             this.numberOfAllDoctors = drs.length;
-            console.log(this.numberOfAllDoctors)
           }
         })
 
@@ -209,7 +222,37 @@ constructor(private doctorService: DoctorService,
             this.ratedArray.sort((a:any, b:any) => b.averageRate - a.averageRate);
           }
         })
+
+      //Get High Demand Specialization
+      this.getAllSpecialization.getAllSpecializations().subscribe({
+        next: (Allspecializations:any) => {
+          Allspecializations.forEach((e :any)  => {
+            console.log(e.id);
+            console.log(e.name);
+            this.getHighDemandSpecialization.getHighDemandSpecialization(formattedStartOfMonth,formattedLastDayOfMonth,e.id).subscribe({
+              next:(spec) => {
+                const arrayOfValues = Object.values(spec);
+                const specializationId = e.id;
+                const SpecializationName = e.name;
+                this.HighDemandArray.push({ specializationId, specializationName:SpecializationName, length: arrayOfValues.length });
+                console.log(this.HighDemandArray);
+                this.maxLength = this.calculateMaxLength();
+                console.log("Max Length:", this.maxLength);
+              },
+              error: (error) => {
+                console.error(error);
+              }
+
+            })
+          });
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      })
+
       }
+
 
   }
 
@@ -225,7 +268,7 @@ constructor(private doctorService: DoctorService,
     this.Doctors = this.specializations?.find(s => s.id == this.id)?.doctorsForAllSpecializations!
     // console.log(this.Doctors)
   }
-  
+
   goToProfile(PhoneNumber: string){
     this.patientPhoneNumberService.ChangePatientPhoneNumber(PhoneNumber);
   }
@@ -285,7 +328,7 @@ constructor(private doctorService: DoctorService,
 
   formatDate(date:Date) {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Add 1 because months are zero-based
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
@@ -309,4 +352,26 @@ constructor(private doctorService: DoctorService,
       }
     })
   }
+  calculateProgressBarWidth(length: number): any {
+    const percentage = (length / this.maxLength) * 100;
+    return percentage;
+  }
+
+  calculateMaxLength(): number {
+    let maxLength = 0;
+    for (const item of this.HighDemandArray) {
+      if (item.length > maxLength) {
+        maxLength = item.length;
+      }
+    }
+    return maxLength;
+  }
+
+  getProgressBarColor(): string {
+    const randomColor = () => Math.floor(Math.random() * 256);
+    const rgbColor = `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`;
+    return rgbColor;
+  }
+
+
 }

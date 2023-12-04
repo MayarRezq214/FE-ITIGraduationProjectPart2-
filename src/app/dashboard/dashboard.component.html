@@ -189,7 +189,7 @@
                                 </thead>
                                 <tbody>
                                   <tr *ngFor="let lowDoctor of lowestRatedArray ; let i = index">
-                                    <th class="clr2">{{topRatedArray.length-i}}</th>
+                                    <th class="clr2">{{ numberOfAllDoctors-topRatedArray.length+1+i}}</th>
                                     <td class="clr2">{{lowDoctor.name}}</td>
                                     <td class="clr2">{{lowDoctor.averageRate.toFixed(2)}}</td>
                                   </tr>
@@ -201,7 +201,42 @@
                           </div>
             </div><!-- End Top rated -->
 
+            <!-- High Demand Specializations -->
+            <div class="col-12" *ngIf="isLoggedIn">
 
+            <div class=" card card-body pb-0">
+              <h3 class="card-title">High Demand Specialization <span>| This Month</span></h3>
+
+              <table class="table table-borderless HighDemand">
+                <thead class="HighDemandTHead">
+                  <tr>
+                    <td class="fw-bold">Name</td>
+                    <td class="fw-bold">Number Of Visits This Month</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let highOne of HighDemandArray ; let i = index">
+                    <td> {{ highOne.specializationName }}</td>
+                    <td>
+                      <div class="Highprogress">
+                        <div class="HighDemandprogress-bar"
+                            role="progressbar"
+                            [style.width.%]="calculateProgressBarWidth(highOne.length)"
+                            [attr.aria-valuenow]="highOne.length"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            [style.backgroundColor]="getProgressBarColor()">
+                          {{ highOne.length }}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+            </div>
+          </div><!-- End High Demand-->
 
 
             <!-- Recent Sales -->
@@ -396,79 +431,7 @@
             </div>
           </div><!-- End Recent Activity -->
 
-          <!-- Budget Report -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
 
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-            <div class="card-body pb-0">
-              <h5 class="card-title">Budget Report <span>| This Month</span></h5>
-
-              <div id="budgetChart" style="min-height: 400px;" class="echart"></div>
-
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
-                    legend: {
-                      data: ['Allocated Budget', 'Actual Spending']
-                    },
-                    radar: {
-                      // shape: 'circle',
-                      indicator: [{
-                          name: 'Sales',
-                          max: 6500
-                        },
-                        {
-                          name: 'Administration',
-                          max: 16000
-                        },
-                        {
-                          name: 'Information Technology',
-                          max: 30000
-                        },
-                        {
-                          name: 'Customer Support',
-                          max: 38000
-                        },
-                        {
-                          name: 'Development',
-                          max: 52000
-                        },
-                        {
-                          name: 'Marketing',
-                          max: 25000
-                        }
-                      ]
-                    },
-                    series: [{
-                      name: 'Budget vs spending',
-                      type: 'radar',
-                      data: [{
-                          value: [4200, 3000, 20000, 35000, 50000, 18000],
-                          name: 'Allocated Budget'
-                        },
-                        {
-                          value: [5000, 14000, 28000, 26000, 42000, 21000],
-                          name: 'Actual Spending'
-                        }
-                      ]
-                    }]
-                  });
-                });
-              </script>
-
-            </div>
-          </div><!-- End Budget Report -->
 
           <!-- Website Traffic -->
           <div class="card">
