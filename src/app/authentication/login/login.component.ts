@@ -4,6 +4,7 @@ import { LoginDto } from '../../types/LoginDto';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Token } from '@angular/compiler';
 import { phoneNumberLengthValidator } from 'src/app/services/loginPhonNumber.serrvice';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit{
   selctedOption?: string;
   errorrString?: string;
 
-  constructor(private authenticationService: AuthenticationService){}
+  constructor(private authenticationService: AuthenticationService,
+    private router: Router){}
   ngOnInit(): void {
     localStorage.removeItem('DoctorId');
   }
@@ -68,6 +70,7 @@ export class LoginComponent implements OnInit{
         next:(token) => {
         
         this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+        this.router.navigate(['/dashboard'])
       },error:(error) => {
         console.log('calling admin login api faild', error.error)
         this.errorrString = error.error
@@ -77,20 +80,24 @@ export class LoginComponent implements OnInit{
       this.authenticationService.Doctorlogin(this.credentials! , this.rememberMe).subscribe({
         next:(token) => {
         this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+        this.router.navigate(['/dashboard'])
       }, error:(error) => {
         console.log('calling Doctor login api faild', error.error)
         this.errorrString = error.error
+        
       }
     });
     }else if(this.selctedOption == 'Reception'){
       this.authenticationService.receptionLogin(this.credentials! , this.rememberMe).subscribe({
         next:(token) => {
         this.authenticationService.PhoneNumber =  this.credentials!.phoneNumber;
+        this.router.navigate(['/dashboard'])
       }, error:(error) => {
         console.log('calling Reception login api faild', error.error)
         this.errorrString = error.error
       }
     });
+    
     }else{
       this.errorrString = 'Please Chose your Role'
     }

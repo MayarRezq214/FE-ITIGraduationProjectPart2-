@@ -121,7 +121,7 @@ export class AdminRegisterComponent implements OnInit {
   }
   
   private showSuccess() {
-    this.toast.success({ detail: "SUCCESS", summary: 'Admin added successfully', duration: 9000 });
+    this.toast.success({ detail: "SUCCESS", summary: `Admin ${this.RegisterAdminDto.name} added successfully`, duration: 9000 });
   }
   onSelect(event: any) {
   this.selectedSpecializationId = (event.target as any).value;

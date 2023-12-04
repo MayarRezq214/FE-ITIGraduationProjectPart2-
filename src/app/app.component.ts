@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './services/authentication.service';
+import { ToggleSidebarService } from './services/toggle-sidebar.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,13 @@ export class AppComponent implements OnInit{
   isLoggedIn:boolean = false;
   isDoctorLoggedIn:boolean = false;
   isReceptionLoggedIn:boolean = false;
-  constructor(private authenticationService: AuthenticationService){}
+  isSidebarOpen?: boolean;
+  constructor(private authenticationService: AuthenticationService,
+    public toggleSidebarService: ToggleSidebarService){
+      this.toggleSidebarService.isSideBarOpen$.subscribe(isOpen => {
+        this.isSidebarOpen = isOpen});
+    }
+
   ngOnInit(): void {
     if(localStorage.getItem('AdminToken')){
       this.authenticationService.isLoggedIn$.next(true);
@@ -30,5 +37,8 @@ export class AppComponent implements OnInit{
     this.authenticationService.isReceptionLoggedIn$.subscribe((isReceptionLoggedIn) => {
       this.isReceptionLoggedIn = isReceptionLoggedIn;
     });
+  }
+  get sidebarOpen(): boolean {
+    return this.toggleSidebarService.isSideBarOpen$.value;
   }
 }

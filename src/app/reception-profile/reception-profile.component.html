@@ -4,12 +4,12 @@
      
     </div>
       <div class="pagetitle">
-        <h1>Profile</h1>
+        <h1>Receptionist Profile</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
             <li class="breadcrumb-item">Users</li>
-            <li class="breadcrumb-item active">Profile</li>
+            <li class="breadcrumb-item active">Receptionist Profile</li>
           </ol>
         </nav>
       </div><!-- End Page Title -->
@@ -22,16 +22,17 @@
               <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
   
 
-                <img src="assets/img/userB.png"  alt="Profile" class="rounded-circle">
+                <img src="assets/img/userProj2.png"  alt="Profile" class="rounded-circle">
   
                 <h2>{{reception?.name}}</h2>
+                <h3>Receptionist</h3>
                 
-                <div class="social-links mt-2">
+                <!-- <div class="social-links mt-2">
                   <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                   <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
                   <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                   <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                </div>
+                </div> -->
               </div>
             </div>
   
@@ -48,24 +49,25 @@
                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Profile</button>
                   </li>
   
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
-                  </li>
+                  </li> -->
   
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Shifts</button>
                   </li>
-  
-                  <li class="nav-item">
+   -->
+                  <!-- <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-                  </li>
+                  </li> -->
+
   
                 </ul>
                 <div class="tab-content pt-2">
   
                   <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                    <h5 class="card-title">About</h5>
-                    <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
+                    <!-- <h5 class="card-title">About</h5>
+                    <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p> -->
   
                     <h5 class="card-title">Profile Details</h5>
   
@@ -84,11 +86,11 @@
                   <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
   
                     <!-- Profile Edit Form -->
-                    <form #form="ngForm">
+                    <!-- <form #form="ngForm">
                       <div class="row mb-3">
                         <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                         <div class="col-md-8 col-lg-9">
-                          <img src="assets/img/userB.png"  alt="Profile" class="rounded-circle">
+                          <img src="assets/img/userbw.png"  alt="Profile" class="rounded-circle">
             
                           <div class="pt-2 photo-btns">
                             <div>
@@ -105,7 +107,7 @@
                             <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                          </div> </div>
                         </div>
-                      </div>
+                      </div> -->
   
                       <div class="row mb-3">
                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Name</label>
@@ -149,24 +151,25 @@
                           <input name="address" type="date" class="form-control" name="dateOfBirth" ngModel   >
                         </div>
                       </div> 
-  
+   -->
                       <!-- <div class="row mb-3">
                         <label for="Country" class="col-md-4 col-lg-3 col-form-label">Status</label>
                         <div class="col-md-8 col-lg-9">
                           <input name="country" type="text" class="form-control" name="status" ngModel >
                         </div>
                       </div> -->
-                      <div class="text-center">
+                      <!-- <div class="text-center">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                       </div>
-                    </form><!-- End Profile Edit Form -->
+                    </form> -->
+                    <!-- End Profile Edit Form -->
   
                   </div>
   
                   <div class="tab-pane fade pt-3" id="profile-settings">
   
                     <!-- Settings Form -->
-                    <form>
+                    <!-- <form>
   
                       <div class="row mb-3">
                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
@@ -201,13 +204,14 @@
                       <div class="text-center">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                       </div>
-                    </form><!-- End settings Form -->
+                    </form> -->
+                    <!-- End settings Form -->
   
                   </div>
   
                   <div class="tab-pane fade pt-3" id="profile-change-password">
                     <!-- Change Password Form -->
-                    <form>
+                    <!-- <form>
   
                       <div class="row mb-3">
                         <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
@@ -233,7 +237,8 @@
                       <div class="text-center">
                         <button type="submit" class="btn btn-primary">Change Password</button>
                       </div>
-                    </form><!-- End Change Password Form -->
+                    </form> -->
+                    <!-- End Change Password Form -->
   
                   </div>
   

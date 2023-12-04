@@ -25,6 +25,9 @@ import { NgToastService } from 'ng-angular-popup';
 })
 export class DoctorProfileComponent  implements OnInit{
   doctor? : GetDoctorByIDForAdminDto
+  photo?:string;
+  formData?: FormData = new FormData();
+  file?: File
   updateDoctor? : UpdateDoctorStatusDto = 
   {
     name : '',
@@ -108,18 +111,47 @@ export class DoctorProfileComponent  implements OnInit{
 
   }
   private showSuccess() {
-    this.toast.success({ detail: "SUCCESS", summary: 'Doctor profile updated successfully', duration: 9000 });
+    this.toast.success({ detail: "SUCCESS", summary: `Doctor ${this.doctor?.name} profile updated successfully`, duration: 4000 });
   }
-  private showSuccessSchedule() {
-    this.toast.success({ detail: "SUCCESS", summary: 'Doctor schedule updated successfully', duration: 9000 });
+  private showSuccessSchedule(schedule : any) {
+    let day :string
+    if(schedule.dayOfWeek==0)
+    {
+      day = 'Sunday'
+    }
+    if(schedule.dayOfWeek==1)
+    {
+      day = 'Monday'
+    }
+    if(schedule.dayOfWeek==2)
+    {
+      day = 'Tuesday'
+    }
+    if(schedule.dayOfWeek==3)
+    {
+      day = 'Wednesday'
+    }
+    if(schedule.dayOfWeek==4)
+    {
+      day = 'Thursday'
+    }
+    if(schedule.dayOfWeek==5)
+    {
+      day = 'Friday'
+    }
+    if(schedule.dayOfWeek==6)
+    {
+      day = 'Friday'
+    }
+    this.toast.success({ detail: "SUCCESS", summary: `Doctor ${this.doctor?.name} schedule for ${day!} updated successfully`, duration: 4000 });
   }
   onEdit(){
     let date = new Date(this.doctor?.dateOfBirth!)
-    console.log(date)
+   // console.log(date)
     const offset = date.getTimezoneOffset()
     date = new Date(date.getTime() - (offset*60*1000))
 
-    console.log(date.toISOString().split('T')[0])
+    //console.log(date.toISOString().split('T')[0])
     this.form?.setValue({
       name : this.doctor?.name,
       title : this.doctor?.title,
@@ -127,7 +159,7 @@ export class DoctorProfileComponent  implements OnInit{
       phoneNumber : this.doctor?.phoneNumber,
       salary : this.doctor?.salary,
       dateOfBirth : date.toISOString().split('T')[0],
-   
+      // photo : this.doctor?.i
     })
   }
       onOpenShifts(){
@@ -274,7 +306,7 @@ export class DoctorProfileComponent  implements OnInit{
               next:(doctor) => {
                 this.doctor = doctor;
                 console.log(this.doctor)
-                this.showSuccessSchedule()
+                this.showSuccessSchedule( this.doctor?.weekSchadual[index])
               },
               error: (error) => {
                 console.log('calling dr by id api failed', error);
@@ -401,38 +433,45 @@ export class DoctorProfileComponent  implements OnInit{
       }
       onSearch(e: Event){
         this.getDoctorById()
-
+        this.onEdit()
+        this.onOpenShifts()
       }
+
+      photoFile(e: Event){
+         this.file = (e.target as HTMLInputElement).files![0];
+         this.formData?.append('imageFile', this.file);
+      }
+
       uploadPhoto(e:Event){
         e.preventDefault()
         this.isUploading = true
-        
       }
+
       doctorStatusChange(e:Event){
         e.preventDefault();
        const s= (e.target as HTMLInputElement).value
          
       if(s=='true'){
         this.status = true
-    }
-    if( s=='false')
-    {this.status=false}
-      }
+        }
+        if( s=='false')
+          {this.status=false}
+          }
+
       onSave(e : Event, form : any){
         e.preventDefault();
         
-      //   if(this.form.controls.photo){
-      //     console.log(this.form.controls.photo.value?.split('\\')[2])
-      //   this.doctorService.UploadPhoto(this.doctorId, this.form.controls.photo.value!).subscribe({
-      //     next:() =>{
-
-      //     },
-      //     error:(error)=>{
-            
-      //       console.log("upload phot api failed",error)
-      //     }
-      //   })
-      // }
+         if(this.file){
+          console.log("in")
+         this.doctorService.UploadPhoto(this.doctor?.id!, this.formData!).subscribe({
+          next:(upload) => {
+            this.getDoctorById()
+          },
+          error : (error) => {
+           console.log('Calling Upload photo Api faild' , error)
+          }
+      })
+      }
      
           this.updateDoctor = {
             id : this.doctorId,
@@ -443,8 +482,8 @@ export class DoctorProfileComponent  implements OnInit{
             phoneNumber : this.form?.value.phoneNumber,
             dateOfBirth : this.form?.value.dateOfBirth,
             status :  this.status
+
           }
-          console.log(this.updateDoctor)
 
           this.doctorService.UpdateDoctor(this.doctorId,this.updateDoctor).subscribe({
             next:()=>{
@@ -455,6 +494,14 @@ export class DoctorProfileComponent  implements OnInit{
               console.log("update api failed",error)
             }
           })
+
+
+          // console.log(this.file)
+         
+          
+
+
+          
         
       }
       

@@ -8,6 +8,7 @@ import { GetDoctorByIDDto } from '../types/GetDoctorrByIDDto';
 import { GetDoctorByIDForAdminDto } from '../types/GetDoctorByIDForAdminDto';
 import { ReceptionService } from '../services/reception.service';
 import { GetReceptionByPhoneNumberDto } from '../types/GetReceptionByPhoneNumberDto';
+import { ToggleSidebarService } from '../services/toggle-sidebar.service';
 
 @Component({
   selector: 'app-header',
@@ -22,11 +23,13 @@ export class HeaderComponent implements OnInit{
   isLoggedIn:boolean = false;
   isDoctorLoggedIn:boolean = false;
   isReceptionLoggedIn:boolean = false;
+  isSideBarOpen?:boolean = false;
 
 constructor(private authenticationService: AuthenticationService,
   private adminService: AdminService,
   private doctorService: DoctorService, 
-  private receptionService: ReceptionService){}
+  private receptionService: ReceptionService,
+  private toggleSidebarService: ToggleSidebarService){}
   ngOnInit(): void {
     
     this.authenticationService.isLoggedIn$.subscribe((isLoggedIn) => {
@@ -61,7 +64,7 @@ constructor(private authenticationService: AuthenticationService,
     this.doctorService.GetDoctorByPhone(this.phoneNumber!).subscribe({
       next:(doctor) => {
         this.doctor = doctor
-        // console.log(this.doctor)
+        console.log(this.doctor.imageUrl)
       },
       error:(error) => {
         console.log('calling get Doctor by phone number api faild', error);
@@ -89,5 +92,12 @@ constructor(private authenticationService: AuthenticationService,
     localStorage.removeItem('phoneNumber')
     localStorage.removeItem('DoctorId')
   } 
-
+  toggleSideBar(event: Event): void {
+    event.preventDefault();
+    console.log('Before toggle:', this.toggleSidebarService.isSideBarOpen$.value);
+    this.toggleSidebarService.isSideBarOpen$.next(!this.toggleSidebarService.isSideBarOpen$.value);
+    console.log('After toggle:', this.toggleSidebarService.isSideBarOpen$.value);
+  }
+  
+  
 }

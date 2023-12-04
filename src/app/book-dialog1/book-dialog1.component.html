@@ -1,16 +1,24 @@
 <div class="container">
-   <div modal-dialog modal-dialog-centered >
-    
+  <div class="custom-dialog" modal-dialog modal-dialog-centered >
     <form [formGroup]="Form">
-      <div [hidden]="patientRegistered" class="form-label ">Patient Phone Number</div>
-      <input class="form-control" id="formInput" (change)="getPhoneNumber($event)" formControlName="phoneNumber" type="text" placeholder="Phone number" [hidden]="patientRegistered">
+        <h2  [hidden]="patientRegistered" class="modal-title fs-5 mb-4 text-primary" fs-5>Press Enter When You Are Done</h2>
+      <div [hidden]="patientRegistered" class="form-label fs-6 my-2">Patient Phone Number</div>
+      <input class="form-control mb-4" id="formInput" (keyup.enter)="getPhoneNumber($event)"  formControlName="phoneNumber" type="text" placeholder="Phone number" [hidden]="patientRegistered">
       <ng-container mat-dialog-content *ngIf="patientAlreadyBooked">
-       <span class="text">Patient already has an appointment with Dr {{this.data.data.name}} on {{bookedDate}}</span></ng-container>
+        <div class="text-center">
+          <span class="text-black fs-5">
+            Patient already has an appointment with Dr {{ this.data.data.name }} on {{ bookedDate }}
+          </span>
+        </div>
+      </ng-container>
+       <mat-dialog-actions class="btns center-button mt-2"> 
        <button  mat-button mat-dialog-close class="close-btn1" *ngIf="patientAlreadyBooked || !patientRegistered"><span >Close</span></button>
-
+       </mat-dialog-actions>
+       <div *ngIf="!patientRegistered && !patientAlreadyBooked && showNotRegisteredMsg" class="notRegisteredMsg">
+        This phone number is not associated with any registered patient. Please register the patient first.
+      </div>
       </form>
-       <div  *ngIf="patientRegistered && !patientAlreadyBooked" >
-        
+       <div   *ngIf="patientRegistered && !patientAlreadyBooked" >
           <table class="table table-borderless datatable tableb">
             <body>
               <tr>

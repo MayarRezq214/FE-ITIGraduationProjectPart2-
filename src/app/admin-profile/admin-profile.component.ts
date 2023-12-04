@@ -5,6 +5,7 @@ import { GetAdminByPhoneNumberDto } from '../types/GetAdminByPhoneNumberDto';
 import { UpdateAdminByPhoneDto } from '../types/UpdateAdminByPhoneDto';
 import { NgForm } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
+import { Route, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-profile',
@@ -15,6 +16,9 @@ export class AdminProfileComponent implements OnInit{
   admin? : GetAdminByPhoneNumberDto;
   phoneNumber?: string;
   updateAdmin? : UpdateAdminByPhoneDto;
+  formData?: FormData = new FormData();
+  file?: File
+  
 constructor(private adminservice: AdminService ,
   private authenticationservice: AuthenticationService,
   private toast: NgToastService){}
@@ -49,7 +53,10 @@ constructor(private adminservice: AdminService ,
   private showSuccess() {
     this.toast.success({ detail: "SUCCESS", summary: 'Admin profile updated successfully', duration: 9000 });
   }
-
+  photoFile(e: Event){
+    this.file = (e.target as HTMLInputElement).files![0];
+    this.formData?.append('imageFile', this.file);
+ }
   onSave(e : Event, form : any){
     e.preventDefault();
     
