@@ -86,7 +86,7 @@ export class DoctorProfileComponent  implements OnInit{
         this.doctorService.getDoctorByIdForAdmin(this.doctor.id!).subscribe({
           next:(doctor) => {
             this.doctor = doctor;
-
+           this.status= this.doctor.status
           },
           error: (error) => {
             console.log('calling dr by id api failed', error);
@@ -144,7 +144,7 @@ export class DoctorProfileComponent  implements OnInit{
     }
     if(schedule.dayOfWeek==6)
     {
-      day = 'Friday'
+      day = 'Saturday'
     }
     this.toast.success({ detail: "SUCCESS", summary: `Doctor ${this.doctor?.name} schedule for ${day!} updated successfully`, duration: 4000 });
   }
@@ -425,7 +425,7 @@ export class DoctorProfileComponent  implements OnInit{
         this.doctorService.getDoctorByIdForAdmin(this.doctorId).subscribe({
           next:(doctor) => {
             this.doctor = doctor;
-
+            this.status = this.doctor.status
           },
           error: (error) => {
             console.log('calling dr by id api failed', error);
@@ -453,8 +453,8 @@ export class DoctorProfileComponent  implements OnInit{
       doctorStatusChange(e:Event){
         e.preventDefault();
        const s= (e.target as HTMLInputElement).value
-         
-      if(s=='true'){
+           
+         if(s=='true'){
         this.status = true
         }
         if( s=='false')
@@ -475,7 +475,7 @@ export class DoctorProfileComponent  implements OnInit{
           }
       })
       }
-     
+    console.log(this.status)
           this.updateDoctor = {
             id : this.doctorId,
             name: this.form?.value.name,
@@ -485,7 +485,6 @@ export class DoctorProfileComponent  implements OnInit{
             phoneNumber : this.form?.value.phoneNumber,
             dateOfBirth : this.form?.value.dateOfBirth,
             status :  this.status
-
           }
 
           this.doctorService.UpdateDoctor(this.doctorId,this.updateDoctor).subscribe({
@@ -508,7 +507,8 @@ export class DoctorProfileComponent  implements OnInit{
         
       }
       visits(e: Event){
-        // console.log((e.target as HTMLInputElement).value)
+         console.log((e.target as HTMLInputElement).value)
+         console.log(this.doctor?.id)
         this.adminService.GetRateAndReviewByDocIdAndDate((e.target as HTMLInputElement).value , this.doctor?.id!).subscribe({
           next: (visitsRate) =>{
             this.visitsRate = visitsRate
