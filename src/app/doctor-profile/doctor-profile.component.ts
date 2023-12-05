@@ -17,6 +17,8 @@ import { DoctorsForAllSpecializations } from '../types/DoctorsForAllSpecializati
 import * as moment from 'moment';
 import { shareReplay } from 'rxjs';
 import { NgToastService } from 'ng-angular-popup';
+import { AdminService } from '../services/admin.service';
+import { GetRateAndReviewDto } from '../types/GetRateAndReviewDto';
 
 @Component({
   selector: 'app-doctor-profile',
@@ -28,6 +30,7 @@ export class DoctorProfileComponent  implements OnInit{
   photo?:string;
   formData?: FormData = new FormData();
   file?: File
+  visitsRate?: GetRateAndReviewDto[];
   updateDoctor? : UpdateDoctorStatusDto = 
   {
     name : '',
@@ -68,7 +71,8 @@ export class DoctorProfileComponent  implements OnInit{
                     private doctorService : DoctorService, 
                     private navigate : NavigateToDoctorProfileAfterOnboardingService,
                     private dataFromRegisterDr: DataBetweenAddDrDrProfileService,
-                    private toast: NgToastService
+                    private toast: NgToastService,
+                    private adminService: AdminService
                     ) {}
 
   ngOnInit() {
@@ -108,7 +112,6 @@ export class DoctorProfileComponent  implements OnInit{
           console.log('calling All specializations api failed', error);
         },
       })
-
   }
   private showSuccess() {
     this.toast.success({ detail: "SUCCESS", summary: `Doctor ${this.doctor?.name} profile updated successfully`, duration: 4000 });
@@ -504,5 +507,18 @@ export class DoctorProfileComponent  implements OnInit{
           
         
       }
-      
+      visits(e: Event){
+        // console.log((e.target as HTMLInputElement).value)
+        this.adminService.GetRateAndReviewByDocIdAndDate((e.target as HTMLInputElement).value , this.doctor?.id!).subscribe({
+          next: (visitsRate) =>{
+            this.visitsRate = visitsRate
+            // this.visitsRate.forEach(rates => {
+
+            // });
+          },
+          error: (error) => {
+            console.log('calling Get Rate And review api failed')
+          }
+        })
+      }
     }
