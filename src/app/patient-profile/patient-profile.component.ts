@@ -103,7 +103,8 @@ export class PatientProfileComponent implements OnInit {
 
     this.mutualVisits.getMutualVisits(this.patientPhoneNumber, this.doctorPhoneNumber).subscribe({
       next: (mutualVisit: GetPatientVisitsChildDTO) => {
-        console.log(typeof (mutualVisit))
+      //  console.log(typeof (mutualVisit))
+   
         this.visits = Object.values(mutualVisit);
         this.id = mutualVisit.id;
         this.dateOfVisit = mutualVisit.dateOfVisit;
