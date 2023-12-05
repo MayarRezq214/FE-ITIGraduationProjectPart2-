@@ -11,6 +11,6 @@ export interface GetPatientVisitsChildDTO {
   arrivalTime: string;
   visitStartTime: string;
   visitEndTime: string;
-  doctorName:string; 
+  doctorName: string;
   prescription: string | null;
 }

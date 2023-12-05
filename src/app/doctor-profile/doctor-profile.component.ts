@@ -31,6 +31,7 @@ export class DoctorProfileComponent  implements OnInit{
   formData?: FormData = new FormData();
   file?: File
   visitsRate?: GetRateAndReviewDto[];
+  upload?: boolean;
   updateDoctor? : UpdateDoctorStatusDto = 
   {
     name : '',
@@ -443,6 +444,7 @@ export class DoctorProfileComponent  implements OnInit{
       photoFile(e: Event){
          this.file = (e.target as HTMLInputElement).files![0];
          this.formData?.append('imageFile', this.file);
+         this.upload = true;
       }
 
       uploadPhoto(e:Event){
@@ -464,11 +466,12 @@ export class DoctorProfileComponent  implements OnInit{
       onSave(e : Event, form : any){
         e.preventDefault();
         
-         if(this.file){
-          console.log("in")
+         if(this.upload){
+          // console.log("in")
          this.doctorService.UploadPhoto(this.doctor?.id!, this.formData!).subscribe({
           next:(upload) => {
             this.getDoctorById()
+            this.upload = false;
           },
           error : (error) => {
            console.log('Calling Upload photo Api faild' , error)
@@ -512,9 +515,6 @@ export class DoctorProfileComponent  implements OnInit{
         this.adminService.GetRateAndReviewByDocIdAndDate((e.target as HTMLInputElement).value , this.doctor?.id!).subscribe({
           next: (visitsRate) =>{
             this.visitsRate = visitsRate
-            // this.visitsRate.forEach(rates => {
-
-            // });
           },
           error: (error) => {
             console.log('calling Get Rate And review api failed')
