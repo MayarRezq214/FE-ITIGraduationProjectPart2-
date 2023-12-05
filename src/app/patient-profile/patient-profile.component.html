@@ -421,7 +421,7 @@
                       }}</p>
                     <p *ngIf="visit.comments"><span class="clr2">Comments: </span>{{ visit.comments }}</p>
                     <div
-                      *ngIf="!visit.comments && !visit.prescription && !visit.symptoms && visit.visitStatus == 'done' ">
+                      *ngIf="!visit.comments && !visit.prescription && !visit.symptoms && visit.visitStatus == 'inProgress' ">
 
                       <div class="d-md-flex d-block textareaDiv">
                         <p for="symptoms"><span class="clr2">Symptoms:</span></p>
