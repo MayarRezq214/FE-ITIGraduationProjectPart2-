@@ -121,11 +121,18 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let day of doctor?.weekSchadual">
+                      <ng-container *ngFor="let day of doctor?.weekSchadual">
+                        <tr *ngIf="day.isAvailable != false">
                           <th scope="row">{{this.days[day.dayOfWeek]}}</th>
                           <td>{{day.startTime}}</td>
                           <td>{{day.endTime}}</td>
                         </tr>
+                        <tr class="table-active" *ngIf="day.isAvailable == false">
+                          <th scope="row">{{this.days[day.dayOfWeek]}}</th>
+                          <td>00:00</td>
+                          <td>00:00</td>
+                        </tr>
+                      </ng-container>
                       </tbody>
                     </table>
                   </div>
