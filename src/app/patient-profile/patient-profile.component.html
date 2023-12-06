@@ -388,81 +388,81 @@
                 </div>
 
               </div><!-- End Bordered Tabs -->
+              <div class="tab-pane fade pt-3" id="profile-settings">
 
+                <!-- Visits Form -->
+        
+                <form [formGroup]="form">
+                  <div class="row mb-3">
+                    <div>
+                      <!-- col-md-8 col-lg-9 -->
+                      <div *ngIf="visits && visits.length > 0">
+        
+                        <div *ngFor="let visit of visits; let i = index" class="card visitCard p-5">
+                          <div class="cardSign">
+                            <i class="bi bi-clock"
+                              *ngIf="!visit.comments && !visit.prescription && !visit.symptoms && !formSubmitted[i]"></i>
+                            <i class="bi bi-check"
+                              *ngIf="visit.comments || visit.prescription || visit.symptoms || formSubmitted[i]"></i>
+                          </div>
+        
+                          <h3 class="clr3">Visit <span class="clr title">#{{ visits.length - i }}</span></h3>
+                          <div class="card p-3">
+                            <p><span class="clr2">Date of Visit: </span>{{ visit.dateOfVisit | date }}</p>
+                            <p *ngIf="visit.symptoms"><span class="clr2">Symptoms: </span>{{ visit.symptoms }}</p>
+                            <p *ngIf="visit.prescription"><span class="clr2">Prescription: </span>{{
+                              visit.prescription
+                              }}</p>
+                            <p *ngIf="visit.comments"><span class="clr2">Comments: </span>{{ visit.comments }}</p>
+                            <div
+                              *ngIf="!visit.comments && !visit.prescription && !visit.symptoms && visit.visitStatus == 'inProgress' ">
+        
+                              <div class="d-md-flex d-block textareaDiv">
+                                <p for="symptoms"><span class="clr2">Symptoms:</span></p>
+                                <textarea type="text" id="symptoms" formControlName="symptoms"
+                                  (input)="enableButton(i)"
+                                  [attr.disabled]="!cardButtonEnabled[i] ? true : null"></textarea>
+                              </div>
+        
+                              <div class="d-md-flex d-block textareaDiv">
+                                <p for="prescription"><span class="clr2">Prescription:</span></p>
+                                <textarea type="text" id="prescription" formControlName="prescription"
+                                  (input)="enableButton(i)"
+                                  [attr.disabled]="!cardButtonEnabled[i] ? true : null"></textarea>
+                              </div>
+        
+                              <div class="d-md-flex d-block textareaDiv">
+                                <p for="comments"><span class="clr2">Comments:</span></p>
+                                <textarea type="text" id="comments" formControlName="comments"
+                                  (input)="enableButton(i)"
+                                  [attr.disabled]="!cardButtonEnabled[i] ? true : null"></textarea>
+                              </div>
+        
+                              <div class="text-center submitButton">
+                                <button type="submit" class="btn btn-primary" (click)="onSubmit($event, visit.id, i)"
+                                  [attr.disabled]="!cardButtonEnabled[i] || formSubmitted[i] ? true : null">
+                                  Save Changes
+                                </button>
+                              </div>
+        
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form><!-- End visits Form -->
+        
+        
+        
+        
+              </div>
             </div>
           </div>
 
         </div>
       </div>
-      <div class="tab-pane fade pt-3" id="profile-settings">
-
-        <!-- Visits Form -->
-
-        <form [formGroup]="form">
-          <div class="row mb-3">
-            <div>
-              <!-- col-md-8 col-lg-9 -->
-              <div *ngIf="visits && visits.length > 0">
-
-                <div *ngFor="let visit of visits; let i = index" class="card visitCard p-5">
-                  <div class="cardSign">
-                    <i class="bi bi-clock"
-                      *ngIf="!visit.comments && !visit.prescription && !visit.symptoms && !formSubmitted[i]"></i>
-                    <i class="bi bi-check"
-                      *ngIf="visit.comments || visit.prescription || visit.symptoms || formSubmitted[i]"></i>
-                  </div>
-
-                  <h3 class="clr3">Visit <span class="clr title">#{{ visits.length - i }}</span></h3>
-                  <div class="card p-3">
-                    <p><span class="clr2">Date of Visit: </span>{{ visit.dateOfVisit | date }}</p>
-                    <p *ngIf="visit.symptoms"><span class="clr2">Symptoms: </span>{{ visit.symptoms }}</p>
-                    <p *ngIf="visit.prescription"><span class="clr2">Prescription: </span>{{
-                      visit.prescription
-                      }}</p>
-                    <p *ngIf="visit.comments"><span class="clr2">Comments: </span>{{ visit.comments }}</p>
-                    <div
-                      *ngIf="!visit.comments && !visit.prescription && !visit.symptoms && visit.visitStatus == 'inProgress' ">
-
-                      <div class="d-md-flex d-block textareaDiv">
-                        <p for="symptoms"><span class="clr2">Symptoms:</span></p>
-                        <textarea type="text" id="symptoms" formControlName="symptoms"
-                          (input)="enableButton(i)"
-                          [attr.disabled]="!cardButtonEnabled[i] ? true : null"></textarea>
-                      </div>
-
-                      <div class="d-md-flex d-block textareaDiv">
-                        <p for="prescription"><span class="clr2">Prescription:</span></p>
-                        <textarea type="text" id="prescription" formControlName="prescription"
-                          (input)="enableButton(i)"
-                          [attr.disabled]="!cardButtonEnabled[i] ? true : null"></textarea>
-                      </div>
-
-                      <div class="d-md-flex d-block textareaDiv">
-                        <p for="comments"><span class="clr2">Comments:</span></p>
-                        <textarea type="text" id="comments" formControlName="comments"
-                          (input)="enableButton(i)"
-                          [attr.disabled]="!cardButtonEnabled[i] ? true : null"></textarea>
-                      </div>
-
-                      <div class="text-center submitButton">
-                        <button type="submit" class="btn btn-primary" (click)="onSubmit($event, visit.id, i)"
-                          [attr.disabled]="!cardButtonEnabled[i] || formSubmitted[i] ? true : null">
-                          Save Changes
-                        </button>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form><!-- End visits Form -->
-
-
-
-
-      </div>
+      
     </div>
   </section>
 
