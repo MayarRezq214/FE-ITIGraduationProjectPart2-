@@ -26,7 +26,7 @@
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Phone Number</label>
                       <div class="input-group has-validation">
-                        <input style="display: block;" type="text" formControlName="username" class="form-control" id="yourUsername" required>
+                        <input style="display: flex; flex-direction: column; width: 100%;" type="text" formControlName="username" class="form-control" id="yourUsername" required>
                         <div>
                           <div *ngIf="form.controls.username.dirty && form.controls.username.errors?.['required']" class="text-danger text-start ErrorFont">*Phone Number is required</div>
                           <div *ngIf=" form.controls.username.dirty&& form.get('phoneNumber')?.hasError('invalidNumber')" class="text-danger text-start ErrorFont">
