@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit{
   isLoggedIn:boolean = false;
   isDoctorLoggedIn:boolean = false;
   isReceptionLoggedIn:boolean = false;
-  isSideBarOpen?:boolean = false;
+  isSideBarOpen?:boolean = true;
 
 constructor(private authenticationService: AuthenticationService,
   private adminService: AdminService,
@@ -94,9 +94,9 @@ constructor(private authenticationService: AuthenticationService,
   } 
   toggleSideBar(event: Event): void {
     event.preventDefault();
-    console.log('Before toggle:', this.toggleSidebarService.isSideBarOpen$.value);
+    // console.log('Before toggle:', this.toggleSidebarService.isSideBarOpen$.value);
     this.toggleSidebarService.isSideBarOpen$.next(!this.toggleSidebarService.isSideBarOpen$.value);
-    console.log('After toggle:', this.toggleSidebarService.isSideBarOpen$.value);
+    // console.log('After toggle:', this.toggleSidebarService.isSideBarOpen$.value);
   }
   
   

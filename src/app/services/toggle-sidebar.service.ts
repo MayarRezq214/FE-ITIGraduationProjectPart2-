@@ -7,5 +7,5 @@ import { BehaviorSubject } from 'rxjs';
 export class ToggleSidebarService {
 
   constructor() { }
-  public isSideBarOpen$ = new BehaviorSubject<boolean>(false);
+  public isSideBarOpen$ = new BehaviorSubject<boolean>(true);
 }

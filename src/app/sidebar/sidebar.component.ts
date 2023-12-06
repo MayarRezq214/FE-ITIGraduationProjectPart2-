@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit, OnDestroy {
+export class SidebarComponent implements OnInit {
 
   isSidebarEnabled = true;
   private subscription: Subscription;
@@ -39,8 +39,5 @@ export class SidebarComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    // Unsubscribe to avoid memory leaks
-    this.subscription.unsubscribe();
-  }
+
 }
